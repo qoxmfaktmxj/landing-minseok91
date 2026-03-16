@@ -41,7 +41,7 @@ export default function HeroSection() {
             </div>
 
             <h1 className="mt-8 text-4xl font-semibold tracking-[-0.035em] text-[var(--foreground)] md:text-[3.2rem] md:leading-none lg:whitespace-nowrap xl:text-[3.55rem]">
-              사내 시스템을 실제로 운영 가능한 제품으로 다시 설계합니다.
+              레거시 시스템을 현대화 합니다.
             </h1>
 
             <p className="mt-6 max-w-3xl text-lg leading-8 text-[var(--muted)] md:text-xl">

@@ -32,7 +32,7 @@ export default function ContactSection() {
               <SectionHeader
                 eyebrow="Contact"
                 title="복잡한 업무 시스템을 구현 한다면"
-                description="채용, 프로젝트 협업, 내부 도구 개선, 레거시 현대화 논의 모두 편하게 연락주세요."
+                description="채용 관련 문의, 내부 도구 개선, 레거시 현대화 논의 등 연락주세요."
                 inverse
                 className="max-w-none"
                 titleClassName="xl:whitespace-nowrap xl:text-[2.9rem]"
