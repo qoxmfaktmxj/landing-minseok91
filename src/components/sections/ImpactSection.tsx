@@ -13,6 +13,8 @@ export default function ImpactSection() {
             title="문제 정의부터 공통 패턴 정리까지, 운영 흐름 중심으로 접근합니다."
             description="업무 문맥이 복잡한 시스템일수록 화면보다 흐름이 중요합니다. 구조를 작게 나누고, 실제 동작으로 검증하면서 확장합니다."
             inverse
+            className="max-w-none"
+            titleClassName="xl:whitespace-nowrap xl:text-[2.9rem]"
           />
         </ScrollReveal>
 
