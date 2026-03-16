@@ -6,7 +6,7 @@ import { portfolioProjects } from "@/data/siteContent";
 
 export default function ProjectsSection() {
   return (
-    <section id="projects" className="px-6 py-20 md:px-8 md:py-28">
+    <section id="projects" className="px-6 py-10 md:px-8 md:py-14">
       <SectionFrame>
         <ScrollReveal>
           <SectionHeader

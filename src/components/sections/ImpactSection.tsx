@@ -5,7 +5,7 @@ import { focusAreas } from "@/data/siteContent";
 
 export default function ImpactSection() {
   return (
-    <section id="focus" className="px-6 py-20 md:px-8 md:py-28">
+    <section id="focus" className="px-6 py-10 md:px-8 md:py-14">
       <SectionFrame>
         <ScrollReveal>
           <SectionHeader
