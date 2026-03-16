@@ -26,29 +26,23 @@ export default function ContactSection() {
   return (
     <section id="contact" className="px-6 py-20 md:px-8 md:py-28">
       <SectionFrame>
-        <ScrollReveal>
-          <SectionHeader
-            eyebrow="Contact"
-            title="복잡한 사내 시스템을 개선, 신규 프로젝트 진행"
-            description="채용, 프로젝트 협업, 내부 도구 개선, 레거시 현대화 논의 모두 편하게 연락주세요."
-          />
-        </ScrollReveal>
-
-        <div className="mt-10 grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
           <ScrollReveal direction="left">
-            <div className="rounded-[32px] border border-[rgba(18,25,44,0.08)] bg-white/92 p-7 shadow-[0_16px_40px_rgba(18,25,44,0.06)]">
-              <p
-                className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#3559D6]"
-                style={{ fontFamily: "var(--font-geist-mono), monospace" }}
-              >
-              </p>
-              <ul className="mt-4 grid gap-1 text-sm leading-7 text-[#596176]">
+            <div>
+              <SectionHeader
+                eyebrow="Contact"
+                title="복잡한 업무 시스템을 더 나은 제품으로 바꿀 일이 있다면."
+                description="채용, 프로젝트 협업, 내부 도구 개선, 레거시 현대화 논의 모두 편하게 연락주세요."
+                inverse
+              />
+
+              <ul className="mt-8 grid gap-3 text-sm leading-7 text-[var(--muted)]">
                 {contactPrompts.map((prompt) => (
                   <li
                     key={prompt}
-                    className="rounded-[22px] border border-[rgba(18,25,44,0.08)] bg-white px-5 py-4 shadow-[0_10px_26px_rgba(18,25,44,0.05)]"
+                    className="rounded-[24px] border border-[var(--line)] bg-[rgba(19,27,46,0.76)] px-5 py-4"
                   >
-                    <span className="block text-[15px] leading-7 text-[#4C5870]">
+                    <span className="block text-[15px] leading-7 text-[var(--foreground)]">
                       {prompt}
                     </span>
                   </li>
@@ -58,28 +52,37 @@ export default function ContactSection() {
           </ScrollReveal>
 
           <ScrollReveal direction="right" delay={0.1}>
-            <div className="grid gap-3">
-              {contacts.map(({ icon: Icon, label, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={label === "Email" ? undefined : "_blank"}
-                  rel={label === "Email" ? undefined : "noopener noreferrer"}
-                  className="flex items-center justify-between rounded-[24px] border border-[rgba(18,25,44,0.08)] bg-white/84 px-5 py-4 transition hover:border-[#1F5EFF] hover:bg-white"
-                >
-                  <span className="flex items-center gap-3">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#F2F6FF] text-[#1F5EFF]">
-                      <Icon className="h-5 w-5" />
+            <div className="rounded-[30px] border border-[var(--line)] bg-[rgba(11,19,38,0.36)] p-6">
+              <p
+                className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[var(--accent)]"
+                style={{ fontFamily: "var(--font-geist-mono), monospace" }}
+              >
+                Reach Out
+              </p>
+
+              <div className="mt-6 grid gap-3">
+                {contacts.map(({ icon: Icon, label, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target={label === "Email" ? undefined : "_blank"}
+                    rel={label === "Email" ? undefined : "noopener noreferrer"}
+                    className="flex items-center justify-between rounded-[24px] border border-[var(--line)] bg-[rgba(19,27,46,0.82)] px-5 py-4 transition hover:border-[rgba(78,222,163,0.32)] hover:bg-[rgba(23,31,51,0.96)]"
+                  >
+                    <span className="flex items-center gap-3">
+                      <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[rgba(78,222,163,0.08)] text-[var(--accent)]">
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <span className="text-sm font-semibold text-[var(--foreground)]">
+                        {label}
+                      </span>
                     </span>
-                    <span className="text-sm font-semibold text-[#12192C]">
-                      {label}
+                    <span className="text-sm font-medium text-[var(--muted)]">
+                      연결하기
                     </span>
-                  </span>
-                  <span className="text-sm font-medium text-[#596176]">
-                    연결하기
-                  </span>
-                </a>
-              ))}
+                  </a>
+                ))}
+              </div>
             </div>
           </ScrollReveal>
         </div>

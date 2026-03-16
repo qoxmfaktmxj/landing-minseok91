@@ -12,9 +12,9 @@ export default function SectionFrame({
   return (
     <div
       className={cn(
-        "mx-auto max-w-container rounded-[40px] border border-[rgba(18,25,44,0.08)]",
-        "bg-[linear-gradient(135deg,_rgba(31,94,255,0.1),_rgba(255,255,255,0.88)_32%,_rgba(18,25,44,0.02))]",
-        "p-8 shadow-[0_18px_70px_rgba(18,25,44,0.08)] md:p-10",
+        "mx-auto max-w-container rounded-[34px] border border-[var(--line)]",
+        "bg-[linear-gradient(180deg,rgba(23,31,51,0.94),rgba(11,19,38,0.96))]",
+        "p-8 shadow-[0_24px_90px_rgba(2,6,23,0.34)] md:p-10",
         className
       )}
     >

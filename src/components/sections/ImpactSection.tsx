@@ -5,28 +5,31 @@ import { focusAreas } from "@/data/siteContent";
 
 export default function ImpactSection() {
   return (
-    <section id="impact" className="px-6 py-20 md:px-8 md:py-28">
+    <section id="focus" className="px-6 py-20 md:px-8 md:py-28">
       <SectionFrame>
         <ScrollReveal>
           <SectionHeader
-            eyebrow="Impact"
-            title=""
+            eyebrow="Focus"
+            title="문제 정의부터 공통 패턴 정리까지, 운영 흐름 중심으로 접근합니다."
+            description="업무 문맥이 복잡한 시스템일수록 화면보다 흐름이 중요합니다. 구조를 작게 나누고, 실제 동작으로 검증하면서 확장합니다."
+            inverse
           />
         </ScrollReveal>
 
         <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {focusAreas.map((area, index) => (
             <ScrollReveal key={area.title} delay={index * 0.06}>
-              <article className="flex h-full flex-col rounded-[28px] border border-[rgba(18,25,44,0.08)] bg-white/82 p-6 shadow-[0_14px_44px_rgba(18,25,44,0.05)]">
+              <article className="flex h-full flex-col rounded-[28px] border border-[var(--line)] bg-[rgba(19,27,46,0.76)] p-6 transition duration-300 hover:-translate-y-1 hover:border-[rgba(78,222,163,0.3)]">
                 <p
-                  className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#3559D6]"
+                  className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[var(--accent)]"
                   style={{ fontFamily: "var(--font-geist-mono), monospace" }}
                 >
+                  {String(index + 1).padStart(2, "0")}
                 </p>
-                <h3 className="mt-4 text-xl font-semibold tracking-tight text-[#12192C]">
+                <h3 className="mt-4 text-xl font-semibold tracking-tight text-[var(--foreground)]">
                   {area.title}
                 </h3>
-                <p className="mt-4 text-sm leading-7 text-[#596176]">
+                <p className="mt-4 text-sm leading-7 text-[var(--muted)]">
                   {area.description}
                 </p>
               </article>

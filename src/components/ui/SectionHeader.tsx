@@ -11,9 +11,9 @@ export default function SectionHeader({
   description,
   inverse = false,
 }: SectionHeaderProps) {
-  const eyebrowClass = inverse ? "text-[#B6C3FF]" : "text-[#3559D6]";
-  const titleClass = inverse ? "text-white" : "text-[#12192C]";
-  const descriptionClass = inverse ? "text-[#CDD5EA]" : "text-[#596176]";
+  const eyebrowClass = inverse ? "text-[var(--accent)]" : "text-[#1F5EFF]";
+  const titleClass = inverse ? "text-[var(--foreground)]" : "text-[#12192C]";
+  const descriptionClass = inverse ? "text-[var(--muted)]" : "text-[#596176]";
 
   return (
     <div className="max-w-3xl">
@@ -23,7 +23,7 @@ export default function SectionHeader({
       >
         {eyebrow}
       </p>
-      <h2 className={`text-3xl font-semibold tracking-tight md:text-4xl ${titleClass}`}>
+      <h2 className={`text-3xl font-semibold tracking-[-0.02em] md:text-4xl ${titleClass}`}>
         {title}
       </h2>
       {description ? (

@@ -3,19 +3,24 @@
 @tailwind utilities;
 
 :root {
-  --background: #f3f1eb;
-  --foreground: #12192c;
-  --muted: #596176;
-  --soft: #7b8599;
-  --line: rgba(18, 25, 44, 0.1);
-  --surface: rgba(255, 255, 255, 0.78);
-  --surface-strong: #ffffff;
-  --accent: #1f5eff;
-  --accent-strong: #194ac4;
+  color-scheme: dark;
+  --background: #0b1326;
+  --foreground: #dae2fd;
+  --muted: #c4c6cd;
+  --soft: #8e9197;
+  --line: rgba(196, 198, 205, 0.14);
+  --line-strong: rgba(196, 198, 205, 0.22);
+  --surface: rgba(19, 27, 46, 0.82);
+  --surface-strong: rgba(23, 31, 51, 0.96);
+  --surface-muted: rgba(34, 42, 61, 0.92);
+  --accent: #4edea3;
+  --accent-soft: #b8c8da;
+  --accent-strong: #00a572;
+  --tertiary: #e3c199;
   --page-background:
-    radial-gradient(circle at top left, rgba(31, 94, 255, 0.08), transparent 28%),
-    radial-gradient(circle at top right, rgba(18, 25, 44, 0.06), transparent 22%),
-    linear-gradient(180deg, #f8f6f1 0%, #f3f1eb 46%, #efece5 100%);
+    radial-gradient(circle at top left, rgba(184, 200, 218, 0.18), transparent 24%),
+    radial-gradient(circle at 82% 12%, rgba(78, 222, 163, 0.12), transparent 18%),
+    linear-gradient(180deg, #10182d 0%, #0b1326 36%, #060e20 100%);
 }
 
 html {
@@ -43,6 +48,29 @@ body {
   text-rendering: optimizeLegibility;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(218, 226, 253, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(218, 226, 253, 0.04) 1px, transparent 1px);
+  background-size: 120px 120px;
+  mask-image: linear-gradient(180deg, rgba(255, 255, 255, 0.42), transparent 78%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(circle at center, transparent 40%, rgba(6, 14, 32, 0.44) 100%);
 }
 
 html::-webkit-scrollbar,
@@ -60,6 +88,6 @@ a {
 }
 
 ::selection {
-  background: rgba(31, 94, 255, 0.18);
-  color: var(--foreground);
+  background: rgba(78, 222, 163, 0.18);
+  color: #f8faff;
 }
