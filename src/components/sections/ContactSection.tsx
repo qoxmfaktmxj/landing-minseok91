@@ -34,6 +34,8 @@ export default function ContactSection() {
                 title="복잡한 업무 시스템을 더 나은 제품으로 바꿀 일이 있다면."
                 description="채용, 프로젝트 협업, 내부 도구 개선, 레거시 현대화 논의 모두 편하게 연락주세요."
                 inverse
+                className="max-w-none"
+                titleClassName="xl:whitespace-nowrap xl:text-[2.9rem]"
               />
 
               <ul className="mt-8 grid gap-3 text-sm leading-7 text-[var(--muted)]">
@@ -51,7 +53,7 @@ export default function ContactSection() {
             </div>
           </ScrollReveal>
 
-          <ScrollReveal direction="right" delay={0.1}>
+          <ScrollReveal direction="right" delay={0.1} className="lg:self-end">
             <div className="rounded-[30px] border border-[var(--line)] bg-[rgba(11,19,38,0.36)] p-6">
               <p
                 className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[var(--accent)]"
