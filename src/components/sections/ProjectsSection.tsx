@@ -12,7 +12,7 @@ export default function ProjectsSection() {
           <SectionHeader
             eyebrow="Projects"
             title="실제 동작하는 네 가지 제품을 카드 형태로 정리했습니다."
-            description="긴 케이스 스터디 대신 핵심 맥락만 읽히도록 구성했습니다. 각 카드는 바로 열어볼 수 있는 라이브 프로젝트로 연결됩니다."
+            description="긴 케이스 스터디 대신 핵심 맥락만 읽히도록 구성했습니다."
             inverse
           />
         </ScrollReveal>
