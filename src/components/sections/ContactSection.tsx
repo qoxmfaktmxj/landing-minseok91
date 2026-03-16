@@ -31,7 +31,7 @@ export default function ContactSection() {
             <div>
               <SectionHeader
                 eyebrow="Contact"
-                title="복잡한 업무 시스템을 더 나은 제품으로 바꿀 일이 있다면."
+                title="복잡한 업무 시스템을 구현 한다면"
                 description="채용, 프로젝트 협업, 내부 도구 개선, 레거시 현대화 논의 모두 편하게 연락주세요."
                 inverse
                 className="max-w-none"
