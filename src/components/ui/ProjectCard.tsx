@@ -13,7 +13,13 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-[var(--line)] bg-[linear-gradient(180deg,rgba(19,27,46,0.92),rgba(11,19,38,0.98))] shadow-[0_18px_60px_rgba(2,6,23,0.28)]">
-      <div className="relative aspect-[16/10] overflow-hidden border-b border-[var(--line)]">
+      <a
+        href={project.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="relative block aspect-[16/10] overflow-hidden border-b border-[var(--line)]"
+        aria-label={`${project.title} 사이트 열기`}
+      >
         <Image
           src={project.thumbnail}
           alt={project.title}
@@ -28,7 +34,7 @@ export default function ProjectCard({
             {project.evidence}
           </span>
         ) : null}
-      </div>
+      </a>
 
       <div className="flex flex-1 flex-col p-6">
         <p
