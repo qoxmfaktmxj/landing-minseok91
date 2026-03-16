@@ -11,13 +11,12 @@ export default function WritingSection() {
         <ScrollReveal>
           <SectionHeader
             eyebrow="Links"
-            title="작동하는 결과물과 그 뒤의 기록을 함께 남깁니다."
-            description="라이브 제품만 보여주지 않고, 코드 저장소와 기술 기록도 같이 공개합니다."
+            title=""
             inverse
           />
         </ScrollReveal>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
           {writingItems.map((item, index) => (
             <ScrollReveal key={item.title} delay={index * 0.08}>
               <article className="flex h-full flex-col rounded-[30px] border border-[var(--line)] bg-[rgba(19,27,46,0.76)] p-7 transition duration-300 hover:-translate-y-1 hover:border-[rgba(78,222,163,0.3)]">
