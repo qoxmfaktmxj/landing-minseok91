@@ -165,15 +165,13 @@ export const portfolioProjects: PortfolioProject[] = [
 export const writingItems = [
   {
     title: "GitHub",
-    description:
-      "랜딩에 소개된 제품들뿐 아니라 구조를 어떻게 나누고 발전시키는지 저장소 단위로 확인할 수 있습니다.",
+    description: "코드 저장소 확인하기",
     href: "https://github.com/qoxmfaktmxj",
     label: "저장소 보기",
   },
   {
     title: "Tech Blog",
-    description:
-      "AI 활용 방식, 학습 기록, 구현 과정 메모를 꾸준히 남기고 있는 기술 블로그입니다.",
+    description: "기술 블로그 확인하기",
     href: "https://qoxmfaktmxj.github.io",
     label: "글 보러 가기",
   },
