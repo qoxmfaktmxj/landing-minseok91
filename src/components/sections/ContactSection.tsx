@@ -6,21 +6,21 @@ const contacts = [
     icon: Mail,
     label: "Email",
     href: "mailto:qoxmfaktmxj@naver.com",
-    bgClass: "bg-primary text-on-primary hover:bg-primary-dim",
+    bgClass: "bg-black text-white hover:bg-neutral-800",
   },
   {
     icon: Github,
     label: "GitHub",
     href: "https://github.com/qoxmfaktmxj",
     bgClass:
-      "bg-secondary-container text-on-secondary-container hover:brightness-95",
+      "bg-surface-container text-on-surface hover:bg-surface-container-high",
   },
   {
     icon: BookOpen,
     label: "Blog",
     href: "https://qoxmfaktmxj.github.io",
     bgClass:
-      "bg-tertiary-container text-on-tertiary-container hover:brightness-95",
+      "bg-surface-container text-on-surface hover:bg-surface-container-high",
   },
 ];
 
@@ -28,7 +28,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="border-t border-outline-variant/10 bg-surface-container-lowest py-32"
+      className="border-t border-outline-variant/20 bg-white py-32"
     >
       <div className="mx-auto max-w-7xl px-6 text-center">
         <ScrollReveal>
