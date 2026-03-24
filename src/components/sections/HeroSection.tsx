@@ -16,7 +16,7 @@ export default function HeroSection() {
       id="about"
       className="relative flex min-h-[614px] items-center justify-center overflow-hidden bg-surface-container-low px-6"
     >
-      <div className="absolute right-0 top-0 -z-10 h-full w-1/2 translate-x-1/4 rounded-l-full bg-primary/5 blur-3xl" />
+      <div className="absolute right-0 top-0 -z-10 h-full w-1/2 translate-x-1/4 rounded-l-full bg-black/[0.02] blur-3xl" />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -24,12 +24,12 @@ export default function HeroSection() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="max-w-4xl text-center"
       >
-        <div className="mb-6 inline-flex items-center rounded-full bg-primary-container px-4 py-1 text-xs font-bold uppercase tracking-widest text-on-primary-container">
+        <div className="mb-6 inline-flex items-center rounded-full border border-outline-variant bg-surface-container px-4 py-1 text-xs font-bold uppercase tracking-widest text-on-surface">
           Enterprise Systems Builder
         </div>
 
         <h1 className="mb-8 text-4xl font-extrabold leading-tight tracking-tighter text-on-background md:text-6xl lg:text-7xl">
-          <span className="text-primary">AI</span> 활용해 제품을
+          AI 활용해 제품을
           <br className="hidden md:block" />
           개발하고 유지보수 합니다.
         </h1>
@@ -42,13 +42,13 @@ export default function HeroSection() {
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <button
             onClick={() => scrollToSection("projects")}
-            className="w-full rounded-full bg-primary px-10 py-4 font-bold text-on-primary shadow-lg shadow-primary/20 transition-all hover:bg-primary-dim sm:w-auto"
+            className="w-full rounded-full bg-black px-10 py-4 font-bold text-white shadow-lg shadow-black/10 transition-all hover:bg-neutral-800 sm:w-auto"
           >
             프로젝트 보기
           </button>
           <button
             onClick={() => scrollToSection("contact")}
-            className="w-full rounded-full bg-surface-container-high px-10 py-4 font-bold text-primary transition-all hover:bg-surface-container-highest sm:w-auto"
+            className="w-full rounded-full border border-outline-variant bg-white px-10 py-4 font-bold text-on-surface transition-all hover:bg-surface-container sm:w-auto"
           >
             연락하기
           </button>

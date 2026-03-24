@@ -21,7 +21,7 @@ const links = [
 
 export default function WritingSection() {
   return (
-    <section id="contact" className="bg-surface-container-low py-24">
+    <section id="contact" className="bg-white py-24">
       <div className="mx-auto max-w-7xl px-6 text-center">
         <ScrollReveal>
           <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-on-background md:text-5xl">
@@ -40,11 +40,11 @@ export default function WritingSection() {
                 href={href}
                 target={label === "Email" ? undefined : "_blank"}
                 rel={label === "Email" ? undefined : "noopener noreferrer"}
-                className="group inline-flex items-center gap-3 rounded-full border border-outline-variant/20 bg-surface-container-lowest px-8 py-4 font-bold text-on-background shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/20 hover:shadow-md"
+                className="group inline-flex items-center gap-3 rounded-full border border-outline-variant/60 bg-white px-8 py-4 font-bold text-on-background transition-all hover:-translate-y-0.5 hover:border-black hover:shadow-md"
               >
-                <Icon className="h-5 w-5 text-primary" />
+                <Icon className="h-5 w-5 text-on-surface-variant transition-colors group-hover:text-black" />
                 {label}
-                <ArrowUpRight className="h-4 w-4 text-on-surface-variant transition-colors group-hover:text-primary" />
+                <ArrowUpRight className="h-4 w-4 text-on-surface-variant transition-colors group-hover:text-black" />
               </a>
             ))}
           </div>

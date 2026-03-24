@@ -2,7 +2,6 @@ export const navItems = [
   { label: "About", href: "#about" },
   { label: "Focus", href: "#focus" },
   { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
 ];
 
 export const heroSignals = [

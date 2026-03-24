@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="w-full bg-surface-container-low py-12">
+    <footer className="w-full border-t border-outline-variant/20 bg-surface-container-low py-12">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-8 md:flex-row">
         <div className="text-lg font-bold text-on-background">MINSEOK91</div>
 
@@ -9,7 +9,7 @@ export default function Footer() {
             href="https://github.com/qoxmfaktmxj"
             target="_blank"
             rel="noopener noreferrer"
-            className="opacity-80 transition-colors hover:text-primary hover:opacity-100"
+            className="opacity-60 transition-colors hover:text-black hover:opacity-100"
           >
             GitHub
           </a>
@@ -17,13 +17,13 @@ export default function Footer() {
             href="https://qoxmfaktmxj.github.io"
             target="_blank"
             rel="noopener noreferrer"
-            className="opacity-80 transition-colors hover:text-primary hover:opacity-100"
+            className="opacity-60 transition-colors hover:text-black hover:opacity-100"
           >
             Blog
           </a>
           <a
             href="mailto:qoxmfaktmxj@naver.com"
-            className="opacity-80 transition-colors hover:text-primary hover:opacity-100"
+            className="opacity-60 transition-colors hover:text-black hover:opacity-100"
           >
             Contact
           </a>

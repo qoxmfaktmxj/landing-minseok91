@@ -14,6 +14,16 @@ export default function Navbar() {
     const updateNavState = () => {
       setScrolled(window.scrollY > 16);
 
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 40;
+
+      if (atBottom) {
+        const lastHref = navItems[navItems.length - 1]?.href.replace("#", "") ?? "";
+        setActiveSection(lastHref);
+        return;
+      }
+
       const viewportMarker = window.scrollY + window.innerHeight * 0.32;
       let currentSection = navItems[0]?.href.replace("#", "") ?? "";
 
@@ -56,7 +66,7 @@ export default function Navbar() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-[#f0f7f5]/80 shadow-sm backdrop-blur-xl"
+          ? "bg-white/80 shadow-sm backdrop-blur-xl"
           : "bg-transparent"
       )}
     >
