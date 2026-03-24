@@ -13,28 +13,30 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-[var(--line)] bg-[linear-gradient(180deg,rgba(19,27,46,0.92),rgba(11,19,38,0.98))] shadow-[0_18px_60px_rgba(2,6,23,0.28)]">
-      <a
-        href={project.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="relative block aspect-[16/10] overflow-hidden border-b border-[var(--line)]"
-        aria-label={`${project.title} 사이트 열기`}
-      >
-        <Image
-          src={project.thumbnail}
-          alt={project.title}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 560px"
-          className="object-cover object-top transition duration-700 group-hover:scale-105"
-          priority={priority}
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,14,32,0.04),rgba(6,14,32,0.58))]" />
-        {project.evidence ? (
-          <span className="absolute left-4 top-4 inline-flex rounded-full border border-[rgba(196,198,205,0.14)] bg-[rgba(11,19,38,0.74)] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--foreground)]">
-            {project.evidence}
-          </span>
-        ) : null}
-      </a>
+      {project.thumbnail ? (
+        <a
+          href={project.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative block aspect-[16/10] overflow-hidden border-b border-[var(--line)]"
+          aria-label={`${project.title} 사이트 열기`}
+        >
+          <Image
+            src={project.thumbnail}
+            alt={project.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 560px"
+            className="object-cover object-top transition duration-700 group-hover:scale-105"
+            priority={priority}
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,14,32,0.04),rgba(6,14,32,0.58))]" />
+          {project.evidence ? (
+            <span className="absolute left-4 top-4 inline-flex rounded-full border border-[rgba(196,198,205,0.14)] bg-[rgba(11,19,38,0.74)] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--foreground)]">
+              {project.evidence}
+            </span>
+          ) : null}
+        </a>
+      ) : null}
 
       <div className="flex flex-1 flex-col p-6">
         <p
