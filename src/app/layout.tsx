@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
+import { Manrope } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const geist = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist",
-  weight: "100 900",
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
   display: "swap",
 });
 
@@ -57,7 +57,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`${geist.variable} ${geistMono.variable}`}>
+    <html lang="ko" className={`${manrope.variable} ${geistMono.variable}`}>
       <head>
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
         <link

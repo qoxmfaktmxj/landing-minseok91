@@ -4,18 +4,16 @@ import HeroSection from "@/components/sections/HeroSection";
 import ImpactSection from "@/components/sections/ImpactSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import WritingSection from "@/components/sections/WritingSection";
-import ContactSection from "@/components/sections/ContactSection";
 
 export default function Home() {
   return (
     <>
       <Navbar />
-      <main>
+      <main className="pt-16">
         <HeroSection />
         <ImpactSection />
         <ProjectsSection />
         <WritingSection />
-        <ContactSection />
       </main>
       <Footer />
     </>

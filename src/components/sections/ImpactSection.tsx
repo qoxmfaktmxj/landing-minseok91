@@ -1,44 +1,59 @@
+import { BookOpen, RefreshCw, Bot, Workflow } from "lucide-react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import SectionFrame from "@/components/ui/SectionFrame";
-import SectionHeader from "@/components/ui/SectionHeader";
 import { focusAreas } from "@/data/siteContent";
+
+const icons = [BookOpen, RefreshCw, Bot, Workflow];
+const iconBgColors = [
+  "bg-primary-container",
+  "bg-secondary-container",
+  "bg-tertiary-container",
+  "bg-primary-container",
+];
+const iconTextColors = [
+  "text-primary",
+  "text-secondary",
+  "text-tertiary",
+  "text-primary",
+];
 
 export default function ImpactSection() {
   return (
-    <section id="focus" className="px-6 py-10 md:px-8 md:py-14">
-      <SectionFrame>
+    <section id="focus" className="bg-surface-container-lowest py-24">
+      <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal>
-          <SectionHeader
-            eyebrow="Focus"
-            title="문제 정의, 공통 패턴 정리, 운영 흐름 중심으로 접근합니다."
-            description="업무 문맥이 복잡한 시스템일수록 화면보다 흐름이 중요합니다. 구조를 작게 나누고, 실제 동작으로 검증하면서 확장합니다."
-            inverse
-            className="max-w-none"
-            titleClassName="xl:whitespace-nowrap xl:text-[2.9rem]"
-          />
+          <div className="mb-16">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-tertiary">
+              CORE FOCUS 01
+            </span>
+            <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-on-background">
+              깊은 도메인 지식과 최신 AI 트렌드를 함께 활용합니다.
+            </h2>
+          </div>
         </ScrollReveal>
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {focusAreas.map((area, index) => (
-            <ScrollReveal key={area.title} delay={index * 0.06}>
-              <article className="flex h-full flex-col rounded-[28px] border border-[var(--line)] bg-[rgba(19,27,46,0.76)] p-6 transition duration-300 hover:-translate-y-1 hover:border-[rgba(78,222,163,0.3)]">
-                <p
-                  className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[var(--accent)]"
-                  style={{ fontFamily: "var(--font-geist-mono), monospace" }}
-                >
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <h3 className="mt-4 text-xl font-semibold tracking-tight text-[var(--foreground)]">
-                  {area.title}
-                </h3>
-                <p className="mt-4 text-sm leading-7 text-[var(--muted)]">
-                  {area.description}
-                </p>
-              </article>
-            </ScrollReveal>
-          ))}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {focusAreas.map((area, index) => {
+            const Icon = icons[index];
+            return (
+              <ScrollReveal key={area.title} delay={index * 0.06} className="h-full">
+                <article className="flex h-full flex-col rounded-xl bg-surface-container-low p-8 transition-transform duration-300 hover:-translate-y-1">
+                  <div
+                    className={`mb-6 flex h-12 w-12 items-center justify-center rounded-xl ${iconBgColors[index]}`}
+                  >
+                    <Icon className={`h-5 w-5 ${iconTextColors[index]}`} />
+                  </div>
+                  <h3 className="mb-3 text-xl font-bold text-on-background">
+                    {area.title}
+                  </h3>
+                  <p className="flex-1 text-sm leading-relaxed text-on-surface-variant">
+                    {area.description}
+                  </p>
+                </article>
+              </ScrollReveal>
+            );
+          })}
         </div>
-      </SectionFrame>
+      </div>
     </section>
   );
 }

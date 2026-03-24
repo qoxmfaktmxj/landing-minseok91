@@ -2,7 +2,7 @@ export const navItems = [
   { label: "About", href: "#about" },
   { label: "Focus", href: "#focus" },
   { label: "Projects", href: "#projects" },
-  { label: "Links", href: "#links" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export const heroSignals = [
@@ -28,24 +28,24 @@ export const heroSignals = [
 
 export const focusAreas = [
   {
-    title: "업무 흐름 중심 UX 재정리",
+    title: "도메인 중심 설계",
     description:
-      "입력, 조회, 승인, 관리가 많은 화면에서도 사용자가 다음 행동을 쉽게 판단할 수 있게 흐름을 다시 구성합니다.",
+      "HR, 채용, 커머스 등 복잡한 업무 도메인을 깊이 이해하고, 운영 흐름과 데이터 구조에 맞춰 실무에 바로 쓰이는 제품을 설계합니다.",
   },
   {
     title: "레거시 현대화",
     description:
-      "빅뱅 교체보다 점진적 전환을 택합니다. 화면, API, 공통 모듈을 나눠 바꾸며 운영 중단 위험을 줄입니다.",
+      "레거시 프로젝트들을 화면, API, 공통 모듈을 단위로 단계적으로 현대화 합니다. 운영 중단 없이 시스템을 현대 스택으로 전환 합니다.",
   },
   {
-    title: "공통 패턴과 프레임워크",
+    title: "AI 활용 개발",
     description:
-      "폼, 테이블, 인증, 공통코드처럼 반복되는 요소를 정리해 팀 전체의 변경 비용을 낮춥니다.",
+      "Harness Engineering, Agent Orchestration 등 최신 AI 트렌드를 실무에 적용해 MVP를 빠르게 만들고, 유지보수를 수월하게 진행할 수 있는 AI개발환경을 구축합니다.",
   },
   {
-    title: "AI 기반 전달 가속",
+    title: "AI 기반 유지보수",
     description:
-      "AI를 탐색과 설계 보조, UI 개선, 문서화에 연결해 개발 속도와 유지보수 대응력을 함께 끌어올립니다.",
+      "코드 리뷰, 테스트, 문서화, 반복 업무를 AI 에이전트에 연결해 개발 속도와 운영 대응력을 끌어올립니다.",
   },
 ];
 
@@ -102,7 +102,7 @@ export interface PortfolioProject {
   category: string;
   summary: string;
   tech: string[];
-  thumbnail: string;
+  thumbnail?: string;
   href: string;
   linkLabel: string;
   evidence?: string;
@@ -114,10 +114,9 @@ export const portfolioProjects: PortfolioProject[] = [
     id: "vibe-grid",
     title: "VibeGrid",
     category: "Work Grid / Internal Tool",
-    summary:
-      "업무 화면에서 반복되는 조회, 편집, 대량 처리 인터랙션을 실제 데이터 그리드 시나리오로 검증하는 테스트 허브입니다.",
+    summary: "대량의 데이터를 저장할 수 있는 업무용 그리드",
     tech: ["Next.js", "React", "Data Grid", "B2B UI"],
-    thumbnail: "/images/grid-thumb.png",
+
     href: "https://grid.minseok91.cloud/",
     linkLabel: "사이트 열기",
     evidence: "GRID LAB",
@@ -126,10 +125,9 @@ export const portfolioProjects: PortfolioProject[] = [
     id: "vibe-hr",
     title: "VIBE-HR",
     category: "HR System",
-    summary:
-      "조직, 권한, 공통코드, 인사 운영 화면을 한 흐름으로 묶어 레거시 HR 시스템을 재구성한 인사시스템입니다.",
+    summary: "최신기술로 개발된 경량화된 인사시스템",
     tech: ["Next.js", "React", "PostgreSQL", "Prisma", "shadcn/ui"],
-    thumbnail: "/images/vibe-hr-login-thumb.png",
+
     href: "https://hr.minseok91.cloud/",
     linkLabel: "사이트 열기",
     evidence: "HR SYSTEM",
@@ -137,12 +135,12 @@ export const portfolioProjects: PortfolioProject[] = [
   },
   {
     id: "vibe-rec",
-    title: "Vibe Rec",
+    title: "Rec System",
     category: "Recruiting System",
     summary:
-      "공고 조회, 지원서 저장과 제출, 관리자 검토까지 채용 운영 플로우를 단계적으로 현대화한 채용시스템 MVP입니다.",
+      "신입공개채용, 경력상시채용 등 최신 채용 트렌드를 반영한 채용시스템",
     tech: ["Next.js", "Spring Boot", "PostgreSQL", "Admin UI"],
-    thumbnail: "/images/vibe-rec-thumb.png",
+
     href: "https://rec.minseok91.cloud/",
     linkLabel: "사이트 열기",
     evidence: "RECRUIT FLOW",
@@ -150,12 +148,11 @@ export const portfolioProjects: PortfolioProject[] = [
   },
   {
     id: "vibe-shop",
-    title: "Vibe Shop",
+    title: "Digital Atelier",
     category: "Commerce",
-    summary:
-      "홈, 카테고리, 상품 상세, 장바구니, 체크아웃까지 구매 퍼널을 새 구조로 다시 설계한 쇼핑몰 프로젝트입니다.",
+    summary: "집안 인테리어 꾸미기용 쇼핑몰",
     tech: ["Next.js", "Spring Boot", "PostgreSQL", "Commerce UI"],
-    thumbnail: "/images/vibe-shop-thumb.png",
+
     href: "https://shop.minseok91.cloud/",
     linkLabel: "사이트 열기",
     evidence: "STORE FRONT",

@@ -1,51 +1,55 @@
-import { ArrowUpRight } from "lucide-react";
+import { Github, BookOpen, Mail, ArrowUpRight } from "lucide-react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-import SectionHeader from "@/components/ui/SectionHeader";
-import SectionFrame from "@/components/ui/SectionFrame";
-import { writingItems } from "@/data/siteContent";
+
+const links = [
+  {
+    icon: Github,
+    label: "GitHub",
+    href: "https://github.com/qoxmfaktmxj",
+  },
+  {
+    icon: BookOpen,
+    label: "Tech Blog",
+    href: "https://qoxmfaktmxj.github.io",
+  },
+  {
+    icon: Mail,
+    label: "Email",
+    href: "mailto:qoxmfaktmxj@naver.com",
+  },
+];
 
 export default function WritingSection() {
   return (
-    <section id="links" className="px-6 py-20 md:px-8 md:py-28">
-      <SectionFrame>
+    <section id="contact" className="bg-surface-container-low py-24">
+      <div className="mx-auto max-w-7xl px-6 text-center">
         <ScrollReveal>
-          <SectionHeader
-            eyebrow="Links"
-            title=""
-            inverse
-          />
+          <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-on-background md:text-5xl">
+            함께 일할 사람을 찾고 계신가요?
+          </h2>
+          <p className="mx-auto mb-12 max-w-xl text-on-surface-variant">
+            채용 제안, 프로젝트 협업, 기술 논의 등 편하게 연락주세요.
+          </p>
         </ScrollReveal>
 
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
-          {writingItems.map((item, index) => (
-            <ScrollReveal key={item.title} delay={index * 0.08}>
-              <article className="flex h-full flex-col rounded-[30px] border border-[var(--line)] bg-[rgba(19,27,46,0.76)] p-7 transition duration-300 hover:-translate-y-1 hover:border-[rgba(78,222,163,0.3)]">
-                <p
-                  className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[var(--accent)]"
-                  style={{ fontFamily: "var(--font-geist-mono), monospace" }}
-                >
-                  {index === 0 ? "CODE" : "WRITING"}
-                </p>
-                <h3 className="mt-4 text-2xl font-semibold tracking-tight text-[var(--foreground)]">
-                  {item.title}
-                </h3>
-                <p className="mt-4 flex-1 text-sm leading-7 text-[var(--muted)]">
-                  {item.description}
-                </p>
-                <a
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--foreground)] transition hover:text-[var(--accent)]"
-                >
-                  {item.label}
-                  <ArrowUpRight className="h-4 w-4" />
-                </a>
-              </article>
-            </ScrollReveal>
-          ))}
-        </div>
-      </SectionFrame>
+        <ScrollReveal delay={0.1}>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            {links.map(({ icon: Icon, label, href }) => (
+              <a
+                key={label}
+                href={href}
+                target={label === "Email" ? undefined : "_blank"}
+                rel={label === "Email" ? undefined : "noopener noreferrer"}
+                className="group inline-flex items-center gap-3 rounded-full border border-outline-variant/20 bg-surface-container-lowest px-8 py-4 font-bold text-on-background shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/20 hover:shadow-md"
+              >
+                <Icon className="h-5 w-5 text-primary" />
+                {label}
+                <ArrowUpRight className="h-4 w-4 text-on-surface-variant transition-colors group-hover:text-primary" />
+              </a>
+            ))}
+          </div>
+        </ScrollReveal>
+      </div>
     </section>
   );
 }
