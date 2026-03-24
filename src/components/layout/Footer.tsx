@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="w-full bg-[#f5f7f8] py-12">
+    <footer className="w-full bg-surface-container-low py-12">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-8 md:flex-row">
         <div className="text-lg font-bold text-on-background">MINSEOK91</div>
 

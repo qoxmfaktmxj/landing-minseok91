@@ -56,7 +56,7 @@ export default function Navbar() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-white/80 shadow-sm backdrop-blur-xl"
+          ? "bg-[#f0f7f5]/80 shadow-sm backdrop-blur-xl"
           : "bg-transparent"
       )}
     >
@@ -105,7 +105,7 @@ export default function Navbar() {
       </div>
 
       {mobileOpen ? (
-        <div className="mx-4 mt-2 rounded-2xl bg-white p-4 shadow-lg md:hidden">
+        <div className="mx-4 mt-2 rounded-2xl bg-surface-container-lowest p-4 shadow-lg md:hidden">
           <div className="grid gap-1">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.replace("#", "");
