@@ -122,7 +122,7 @@ export const portfolioProjects: PortfolioProject[] = [
   },
   {
     id: "vibe-hr",
-    title: "VIBE-HR",
+    title: "VIBE HR",
     category: "HR System",
     summary: "최신기술로 개발된 경량화된 인사시스템",
     tech: ["Next.js", "React", "PostgreSQL", "Prisma", "shadcn/ui"],
@@ -134,7 +134,7 @@ export const portfolioProjects: PortfolioProject[] = [
   },
   {
     id: "vibe-rec",
-    title: "Rec System",
+    title: "HIRE FLOW",
     category: "Recruiting System",
     summary:
       "신입공개채용, 경력상시채용 등 최신 채용 트렌드를 반영한 채용시스템",
@@ -146,10 +146,10 @@ export const portfolioProjects: PortfolioProject[] = [
     accessNote: "로그인: admin / admin",
   },
   {
-    id: "vibe-shop",
-    title: "Digital Atelier",
+    id: "maru",
+    title: "MARU",
     category: "Commerce",
-    summary: "집안 인테리어 꾸미기용 쇼핑몰",
+    summary: "인테리어 쇼핑몰",
     tech: ["Next.js", "Spring Boot", "PostgreSQL", "Commerce UI"],
 
     href: "https://shop.minseok91.cloud/",
