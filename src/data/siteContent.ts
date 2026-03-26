@@ -136,8 +136,7 @@ export const portfolioProjects: PortfolioProject[] = [
     id: "vibe-rec",
     title: "HIRE FLOW",
     category: "Recruiting System",
-    summary:
-      "신입공개채용, 경력상시채용 등 최신 채용 트렌드를 반영한 채용시스템",
+    summary: "최신 채용 트렌드를 반영한 채용시스템",
     tech: ["Next.js", "Spring Boot", "PostgreSQL", "Admin UI"],
 
     href: "https://rec.minseok91.cloud/",
