@@ -97,13 +97,13 @@ export default function AxLeadershipSection() {
 
                 <div className="mt-8 flex flex-wrap items-center gap-3">
                   <a
-                    href="/harness-plugin.html"
+                    href="https://github.com/qoxmfaktmxj/ehr-harness-plugin"
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="EHR Harness Plugin 문서를 새 탭에서 열기"
+                    aria-label="EHR Harness Plugin GitHub 저장소를 새 탭에서 열기"
                     className="group inline-flex items-center gap-2 rounded-full bg-on-background px-6 py-3 text-sm font-bold text-on-primary transition-all hover:-translate-y-0.5 hover:shadow-md"
                   >
-                    플러그인 문서 보기
+                    GitHub 저장소 보기
                     <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
                   <span className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-white px-4 py-2.5 text-xs font-semibold text-on-surface-variant">

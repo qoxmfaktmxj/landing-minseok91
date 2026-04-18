@@ -164,8 +164,8 @@ export const portfolioProjects: PortfolioProject[] = [
       "Oracle 프로시저 기반 레거시 인사시스템을 위한 AI 코딩 하네스 자동 생성 플러그인",
     tech: ["Claude Code", "Agent", "Skill", "Hook"],
 
-    href: "/harness-plugin.html",
-    linkLabel: "문서 보기",
+    href: "https://github.com/qoxmfaktmxj/ehr-harness-plugin",
+    linkLabel: "GitHub 보기",
     evidence: "HARNESS PLUGIN",
   },
 ];
