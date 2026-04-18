@@ -9,7 +9,7 @@ export default function ProjectsSection() {
         <ScrollReveal>
           <div className="mb-12">
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-on-surface-variant">
-              PORTFOLIO 02
+              PORTFOLIO
             </span>
             <h2 className="mt-2 text-4xl font-extrabold tracking-tight text-on-background">
               개인 프로젝트 소개
@@ -17,7 +17,7 @@ export default function ProjectsSection() {
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {portfolioProjects.map((project, index) => (
             <ScrollReveal key={project.id} delay={index * 0.06}>
               <article className="group flex h-full flex-col rounded-xl border border-outline-variant/40 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">

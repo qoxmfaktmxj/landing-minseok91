@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>EHR Harness Plugin — 김민석</title>
+<meta name="description" content="Oracle 프로시저 기반 레거시 인사시스템(EHR)을 위한 AI 코딩 하네스 자동 생성 플러그인." />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #fafafa;
+    --border: #e5e5e5;
+    --border-soft: #f0f0f0;
+    --text: #111111;
+    --text-dim: #555555;
+    --text-muted: #888888;
+    --accent: #111111;
+    --code-bg: #0d1117;
+    --code-text: #e6edf3;
+    --code-inline-bg: #f2f2f2;
+    --table-header: #f7f7f7;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Pretendard Variable","Pretendard","Inter","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  header.site {
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: saturate(160%) blur(8px);
+    position: sticky; top: 0; z-index: 20;
+  }
+  header.site .inner {
+    max-width: 880px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  header.site .home {
+    font-size: 13px; font-weight: 700; letter-spacing: -0.01em;
+    text-decoration: none; color: var(--text);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  header.site .home:hover { opacity: 0.7; }
+  header.site .meta { font-size: 11px; color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase; }
+  main {
+    max-width: 880px; margin: 0 auto; padding: 48px 24px 96px;
+  }
+  .hero { margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border-soft); }
+  .hero .eyebrow {
+    display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--text-muted);
+    padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px;
+    margin-bottom: 14px;
+  }
+  article :is(h1,h2,h3,h4) {
+    font-weight: 800; letter-spacing: -0.015em; color: var(--text);
+    scroll-margin-top: 72px;
+  }
+  article h1 { font-size: 32px; line-height: 1.25; margin: 0 0 12px; }
+  article h2 {
+    font-size: 24px; line-height: 1.3;
+    margin: 56px 0 18px; padding-top: 28px;
+    border-top: 1px solid var(--border-soft);
+  }
+  article h2:first-of-type { border-top: 0; padding-top: 0; margin-top: 16px; }
+  article h3 { font-size: 18px; margin: 36px 0 12px; }
+  article h4 { font-size: 15px; margin: 24px 0 8px; color: var(--text-dim); }
+  article p { margin: 0 0 16px; color: var(--text-dim); }
+  article strong { color: var(--text); font-weight: 700; }
+  article ul, article ol { padding-left: 22px; margin: 0 0 16px; color: var(--text-dim); }
+  article li { margin: 4px 0; }
+  article li > p { margin: 0; }
+  article blockquote {
+    margin: 20px 0; padding: 12px 18px;
+    border-left: 3px solid var(--text); background: var(--bg-soft);
+    color: var(--text-dim); font-size: 14px;
+  }
+  article a { color: var(--text); border-bottom: 1px solid var(--border); }
+  article a:hover { border-bottom-color: var(--text); }
+  article hr { border: 0; border-top: 1px solid var(--border-soft); margin: 48px 0; }
+  article code {
+    font-family: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.875em;
+    background: var(--code-inline-bg);
+    padding: 2px 6px; border-radius: 4px;
+    color: var(--text);
+  }
+  article pre {
+    background: var(--code-bg); color: var(--code-text);
+    padding: 18px 20px; border-radius: 12px;
+    overflow-x: auto; font-size: 13px; line-height: 1.65;
+    margin: 0 0 20px;
+  }
+  article pre code {
+    background: transparent; padding: 0; color: inherit; font-size: inherit;
+  }
+  article table {
+    width: 100%; border-collapse: collapse; margin: 0 0 22px;
+    font-size: 14px; display: block; overflow-x: auto;
+  }
+  article table thead tr { background: var(--table-header); }
+  article table th, article table td {
+    border: 1px solid var(--border); padding: 8px 12px; text-align: left;
+    vertical-align: top;
+  }
+  article table th { font-weight: 700; color: var(--text); }
+  article table td { color: var(--text-dim); }
+  .toc {
+    background: var(--bg-soft); border: 1px solid var(--border-soft);
+    border-radius: 12px; padding: 20px 24px; margin: 24px 0 40px;
+  }
+  .toc .title { font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 10px; }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 14px; color: var(--text-dim); }
+  footer.site {
+    border-top: 1px solid var(--border-soft);
+    padding: 32px 24px; margin-top: 64px;
+    font-size: 12px; color: var(--text-muted); text-align: center;
+  }
+  @media (max-width: 640px) {
+    main { padding: 32px 20px 72px; }
+    article h1 { font-size: 26px; }
+    article h2 { font-size: 20px; }
+    article pre { font-size: 12px; padding: 14px 16px; }
+    article table { font-size: 13px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+  #loading { color: var(--text-muted); font-size: 13px; padding: 24px 0; }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="inner">
+    <a class="home" href="/">← 김민석 랜딩으로</a>
+    <span class="meta">EHR Harness Plugin</span>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <span class="eyebrow">Plugin Documentation</span>
+    <h1 style="font-weight:800;font-size:36px;line-height:1.2;letter-spacing:-0.02em;margin:0 0 14px;">EHR Harness Plugin</h1>
+    <p style="font-size:16px;color:var(--text-dim);margin:0;">
+      Oracle 프로시저 기반 레거시 인사시스템(EHR)을 위한 AI 코딩 하네스 자동 생성 플러그인.
+      "하네스 만들어줘" 한 마디로 EHR 프로젝트를 심층 분석하고, 프로젝트에 맞춤화된 하네스를 자동 생성한다.
+    </p>
+  </div>
+
+  <article id="doc">
+    <div id="loading">문서를 불러오는 중...</div>
+  </article>
+</main>
+
+<footer class="site">
+  김민석 책임 · Enterprise AX 혁신 사례 · 2026. 04
+</footer>
+
+<script id="md-source" type="text/markdown">## 목차
+
+1. [하네스란?](#1-하네스란)
+2. [플러그인 설치 방법](#2-플러그인-설치-방법)
+3. [플러그인 업데이트 방법](#3-플러그인-업데이트-방법)
+4. [사용 방법](#4-사용-방법)
+5. [생성되는 하네스 구조](#5-생성되는-하네스-구조)
+6. [문서 생성 기준](#6-문서-생성-기준)
+7. [생성 파이프라인 상세](#7-생성-파이프라인-상세)
+8. [프로파일 시스템](#8-프로파일-시스템)
+9. [EHR4 vs EHR5 차이점](#9-ehr4-vs-ehr5-차이점)
+10. [커스터마이징 범위](#10-커스터마이징-범위)
+11. [플러그인 디렉토리 구조](#11-플러그인-디렉토리-구조)
+
+---
+
+## 1. 하네스란?
+
+**하네스(Harness)** 는 AI 코딩 에이전트가 특정 프로젝트에서 일하기 위한 규칙·지식·도구의 패키지이다.
+
+```
+하네스 없이 AI에게 요청:
+  "휴가 신청 화면 만들어줘"
+  → AI가 React + REST API로 처음부터 만듦 (프로젝트와 완전히 다른 구조)
+
+하네스 있는 AI에게 요청:
+  "휴가 신청 화면 만들어줘"
+  → AI가 기존 vacationApp을 복제 베이스로 선택
+  → 법칙 C(하이브리드) 판정, AuthTableService 주입
+  → Anyframe Velocity 매퍼 생성, IBSheet7 JSP 생성
+  → 셀프 체크: :ssnEnterCd WHERE 확인, $query 확인, SaveName 일치 확인
+```
+
+하네스는 다음으로 구성된다:
+
+| 구성 요소 | 역할 | 파일 |
+|-----------|------|------|
+| **프로젝트 규칙** | AI가 따라야 할 기술 규칙, 금지 사항 | `AGENTS.md`, `CLAUDE.md` |
+| **도메인 지식** | 권한 모델, 법칙 판정, 화면 패턴 등 | `.claude/skills/domain-knowledge/` |
+| **전문 스킬** | 화면 생성, 코드 탐색, DB 조회 등 특화 능력 | `.claude/skills/*/SKILL.md` |
+| **전문 에이전트** | 복잡한 작업을 자율 수행하는 서브 에이전트 | `.claude/agents/*.md` |
+| **안전 장치** | DB 변경 차단 + VCS 커밋 차단 훅 | `.claude/hooks/`, `settings.json` |
+| **멀티 플랫폼** | Codex, Gemini CLI 호환 | `.agents/`, `GEMINI.md`, `.codex/` |
+
+### 하네스 구조 예시 (EHR5 프로젝트)
+
+```
+your-ehr5-project/
+├── AGENTS.md                     ← 범용 프로젝트 규칙 (모든 AI 플랫폼 공통)
+├── CLAUDE.md                     ← Claude Code 전용 확장 (스킬 라우팅)
+├── GEMINI.md                     ← Gemini CLI 진입점 (Heavy: 스킬 전체 인라인)
+├── README.md                     ← 하네스 개요
+│
+├── .claude/                      ← Claude Code 플랫폼
+│   ├── settings.json             ← PreToolUse 훅 등록
+│   ├── hooks/
+│   │   ├── db-read-only.sh       ← DB SELECT-only 강제 (15개 DML/DDL 키워드 차단)
+│   │   └── vcs-no-commit.sh      ← Git/SVN 커밋·푸시 차단 (AI는 코드 수정까지만)
+│   ├── agents/
+│   │   ├── screen-builder.md     ← 화면 생성 에이전트
+│   │   ├── procedure-tracer.md   ← 프로시저 체인 분석 에이전트
+│   │   └── release-reviewer.md   ← 릴리즈 검증 + 회귀 판정 (EHR4: B1~B6 / EHR5: B1~B10)
+│   └── skills/
+│       ├── screen-builder/SKILL.md      ← 화면 생성 코드 템플릿
+│       ├── codebase-navigator/SKILL.md  ← 코드 경로 탐색
+│       ├── procedure-tracer/SKILL.md    ← 프로시저 추적 로직
+│       ├── impact-analyzer/SKILL.md     ← 변경 전 영향도 예측 + Go/HOLD/STOP 판정
+│       ├── db-query/SKILL.md            ← DB SELECT 조회
+│       ├── domain-knowledge/SKILL.md    ← 도메인 지식 레퍼런스
+│       └── design-guide/SKILL.md        ← IDS 컴포넌트 가이드 (프로젝트에 Storybook 존재 시에만 생성)
+│
+├── .agents/                      ← Codex CLI 호환 (스킬 복사본)
+│   └── skills/
+│       └── (위 .claude/skills/ 동일 구조)
+│
+├── .codex/
+│   └── config.toml               ← Codex 설정
+│
+└── .gitignore                    ← 런타임 산출물 제외
+```
+
+---
+
+## 2. 플러그인 설치 방법
+
+### 방법 1: Marketplace 설치 (권장)
+
+```bash
+# 1. 마켓플레이스 등록
+/plugin marketplace add qoxmfaktmxj/ehr-harness-plugin
+
+# 2. 플러그인 설치
+/plugin install ehr-harness@ehr-harness
+
+# 3. 이후 업데이트
+/plugin marketplace update
+```
+
+설치 후, 어떤 EHR 프로젝트에서든 "하네스 만들어줘"를 사용할 수 있다.
+
+### 방법 2: 로컬 설치 (개발/테스트용)
+
+```bash
+# 1. 플러그인 레포 클론
+git clone <plugin-repo-url> ~/Desktop/dev/ehr-harness-plugin
+
+# 2. 로컬 마켓플레이스로 등록
+/plugin marketplace add ~/Desktop/dev/ehr-harness-plugin
+
+# 3. 플러그인 설치
+/plugin install ehr-harness@ehr-harness
+```
+
+### 사전 요구사항
+
+- Claude Code (CLI, Desktop App, 또는 Web App)
+- EHR 프로젝트 소스 코드 (로컬에 체크아웃된 상태)
+- (선택) Oracle/Tibero DB 접속 가능 상태 (프로시저/트리거 전체 목록 수집용)
+
+---
+
+## 3. 플러그인 업데이트 방법
+
+### 방법 1: Marketplace 명령 (권장)
+
+```bash
+# 마켓플레이스 최신화 + 플러그인 업데이트 한번에
+/plugin marketplace update
+/plugin update ehr-harness@ehr-harness
+```
+
+### 방법 2: 수동 업데이트
+
+> **버전 경로 주의**: 아래 경로의 `1.8.0` 은 **현재 릴리즈 버전**이다. 설치된 버전은
+> `cat ~/.claude/plugins/cache/ehr-harness/ehr-harness/*/` *(wildcard)* 로 확인하거나,
+> `plugin.json::version` 을 따른다.
+
+```bash
+# 0. 현재 설치된 버전 확인
+VERSION=$(ls ~/.claude/plugins/cache/ehr-harness/ehr-harness/ | head -1)
+echo "설치된 버전: $VERSION"
+
+# 1. 마켓플레이스 캐시 git pull
+cd ~/.claude/plugins/marketplaces/ehr-harness
+git pull origin main
+
+# 2. 플러그인 캐시에 동기화
+cp -r ~/.claude/plugins/marketplaces/ehr-harness/plugins/ehr-harness/. \
+       ~/.claude/plugins/cache/ehr-harness/ehr-harness/$VERSION/
+```
+
+### 업데이트 확인
+
+```bash
+# 현재 설치된 버전과 plugin.json 버전 일치 여부 확인
+cat ~/.claude/plugins/cache/ehr-harness/ehr-harness/*/.claude-plugin/plugin.json | grep version
+```
+
+Claude Code를 재시작하지 않아도 다음 대화부터 바로 반영된다.
+
+---
+
+## 4. 사용 방법
+
+### 기본 사용
+
+```
+# EHR 프로젝트 디렉토리에서 Claude Code 실행
+cd /path/to/ehr-project
+
+# 다음 중 하나를 입력:
+"하네스 만들어줘"
+"하네스 생성해줘"
+"하네스 설계해줘"
+"하네스 구성해줘"
+```
+
+### 동작 과정
+
+```
+사용자: "하네스 만들어줘"
+   │
+   ▼
+[1] 플러그인 위치 자동 탐색 (Glob)
+   │
+   ▼
+[2] EHR 버전 자동 감지
+    pom.xml + *-sql-query.xml → EHR5 (MyBatis)
+    build.xml + *-mapping-query.xml → EHR4 (Anyframe)
+   │
+   ▼
+[3] 프로젝트 심층 분석 (~15개 분석 명령)
+    모듈 맵, 법칙별 사용 수, 세션 변수,
+    프로시저/트리거 목록, DB 접속 정보,
+    핵심 화면 코드 패턴 추출
+   │
+   ▼
+[4] 하네스 파일 생성 (~20개 파일)
+    프로파일 기본 틀 + 프로젝트 실측값 주입
+   │
+   ▼
+[5] 검증
+    생성 파일 교차 확인, 치명 요소 경고
+   │
+   ▼
+[완료] "하네스 생성 완료. 15개 모듈,
+       287개 프로시저, 45개 트리거 등록."
+```
+
+---
+
+## 5. 생성되는 하네스 구조
+
+### 파일 목록
+
+| # | 파일 | 크기 목표 | 설명 |
+|---|------|-----------|------|
+| 1 | `AGENTS.md` | ~150줄 | 범용 프로젝트 규칙. 모든 AI 플랫폼이 읽는 공통 규칙. |
+| 2 | `CLAUDE.md` | ~80줄 | Claude Code 전용. 스킬 라우팅 + 금지 사항. |
+| 3 | `GEMINI.md` | ~6줄 | Gemini CLI. `@` 참조로 전체 스킬을 Heavy 로드. |
+| 4 | `README.md` | ~100줄 | 하네스 개요, 스택, 규모. |
+| 5 | `.claude/settings.json` | ~15줄 | PreToolUse 훅 등록. |
+| 6 | `.claude/hooks/db-read-only.sh` | ~40줄 | DML/DDL/프로시저호출 차단 Bash 훅 (15개 키워드). |
+| 7 | `.claude/hooks/vcs-no-commit.sh` | ~30줄 | Git/SVN 커밋·푸시 차단 훅. AI는 코드 수정까지만 수행. |
+| 8 | `.claude/agents/screen-builder.md` | ~80줄 | 화면 생성 에이전트 시스템 프롬프트. |
+| 9 | `.claude/agents/procedure-tracer.md` | ~150줄 | 프로시저 분석 에이전트. |
+| 10 | `.claude/agents/release-reviewer.md` | EHR4 ~180줄 / EHR5 ~300줄 | 릴리즈 검증 + 회귀 판정 에이전트. |
+| 11 | `.claude/skills/domain-knowledge/SKILL.md` | ~400-750줄 | 도메인 지식 레퍼런스. |
+| 12 | `.claude/skills/screen-builder/SKILL.md` | ~400줄 | 화면 생성 코드 템플릿. |
+| 13 | `.claude/skills/codebase-navigator/SKILL.md` | ~200줄 | 코드 경로 탐색. |
+| 14 | `.claude/skills/procedure-tracer/SKILL.md` | ~300줄 | 프로시저 추적. |
+| 15 | `.claude/skills/db-query/SKILL.md` | ~200줄 | DB 조회 가이드. |
+| 16 | `.claude/skills/impact-analyzer/SKILL.md` | ~500줄 | 변경 전 영향도 예측 + HOLD·STOP/HOLD/Conditional-Go/Go 판정. |
+| 17 | `.claude/skills/design-guide/SKILL.md` | ~200줄 | IDS 컴포넌트 가이드 (조건부 생성). |
+| 18 | `.agents/skills/` | — | Codex 호환 복사본. |
+| 19 | `.codex/config.toml` | ~5줄 | Codex CLI 설정. |
+| 20 | `.gitignore` | ~15줄 | 런타임 산출물 제외. |
+
+**파일 총합 (design-guide 제외 기준)**: 문서 4 + 설정 2 + 훅 2 + 에이전트 3 + 스킬 6 × 2복사본 = **23개**. Storybook 있는 프로젝트는 design-guide 스킬 × 2복사본 + 카탈로그/MANIFEST 포함하여 **+4~5개** 추가 생성.
+
+### 플랫폼별 역할
+
+```
+Claude Code:
+  CLAUDE.md (진입) → .claude/skills/ (스킬 로드) → .claude/agents/ (에이전트 스폰)
+  토큰 경량: 필요한 스킬만 트리거 시 로드
+
+Gemini CLI:
+  GEMINI.md (진입) → @참조로 AGENTS.md + 전체 스킬 일괄 로드
+  토큰 풍부: Heavy 모드, 전체 컨텍스트 한 번에 로드
+
+Codex CLI:
+  AGENTS.md (진입) → .agents/skills/ (스킬 참조)
+  토큰 풍부: .agents/에 전체 스킬 복사본 유지
+```
+
+---
+
+## 6. 문서 생성 기준
+
+각 파일이 어떤 기준으로, 어떤 데이터를 기반으로 생성되는지 설명한다.
+
+### 6-1. AGENTS.md — 범용 프로젝트 규칙
+
+**생성 기준**: 프로젝트의 기술 스택, 구조, 규칙을 모든 AI 플랫폼이 이해할 수 있도록 작성.
+
+| 섹션 | 데이터 소스 | 고정/실측 |
+|------|-----------|----------|
+| 기술 스택 테이블 | EHR 버전 감지 결과 | **실측** |
+| 디스패처 패턴 (Law A/B/C/D) | EHR 아키텍처 DNA | 고정 |
+| 파일 구조 | 감지된 경로 패턴 | **실측** |
+| 모듈 맵 | `find` + `wc -l` 실측 | **실측** |
+| 필수 기술 규칙 | 프로파일별 고정 | 고정 |
+| 치명 프로시저 | `grep CALL P_` 실측 | **실측** |
+| 금지 사항 | 프로파일별 고정 | 고정 |
+
+### 6-2. domain-knowledge SKILL.md — 도메인 지식
+
+**생성 기준**: EHR 아키텍처 규칙 + 프로젝트 실측 수치.
+
+| 섹션 | 내용 | 고정/실측 |
+|------|------|----------|
+| §1 4축 권한 모델 | 개념 + 세션 변수 목록 | 고정 + **실측** |
+| §2 법칙 판정 | 흐름도 + authSqlID 값 | 고정 + **실측** |
+| §3 Family 카탈로그 | 분류표 + 화면 수 | 고정 + **실측** |
+| §4 APPL_STATUS_CD | 상태 코드 체계 | 고정 |
+| §5 IBSheet SaveName | 계약 규칙 | 고정 |
+| §6 재구현 금지 컴포넌트 | 목록 + 참조 수 | 고정 + **실측** |
+| §7 배치 청크 규칙 | 청크 사이즈 | 고정 + **실측** |
+
+### 6-3. impact-analyzer SKILL.md — 변경 전 영향도 예측
+
+**생성 기준**: procedure-tracer 재사용 + 위험 신호 스코어링 규칙.
+
+| 섹션 | 내용 | 고정/실측 |
+|------|------|----------|
+| Step 1 입력 판별 | 9가지 정규식 우선순위 | 고정 |
+| Step 2 체인 추적 | procedure-tracer SKILL 참조 | 고정 |
+| Step 3 위험 신호 | critical_proc + 재구현 금지 + 권한 경계 + Family C | 고정 + **실측** |
+| Step 4 Unresolved refs | 동적 queryId·AJAX·EXECUTE IMMEDIATE | 고정 |
+| Step 5 영향 화면 수렴 | 종점 JSP, 상한 10 | 고정 |
+| Step 6 판정 | HOLD·STOP / HOLD / Conditional-Go / Go + CHECK | 고정 |
+| Step 7 리포트 템플릿 | 표준 + 공용 STOP | 고정 |
+
+---
+
+## 7. 생성 파이프라인 상세
+
+하네스가 생성되기까지의 전체 과정을 단계별로 설명한다.
+
+### Phase 1: 플러그인 위치 탐색
+
+```
+Glob: "**/ehr-harness/profiles/ehr*/skeleton/AGENTS.md.skel"
+→ 플러그인 루트 디렉토리 확정
+→ 프로파일 디렉토리 경로 확보
+```
+
+### Phase 2: EHR 버전 감지
+
+```
+pom.xml 존재?
+  ├── YES → grep "mybatis" pom.xml
+  │         ├── 매칭 → EHR5 확정
+  │         └── 미매칭 → *-sql-query.xml 존재 확인
+  └── NO → build.xml 존재?
+           ├── YES → *-mapping-query.xml 존재?
+           │         └── 존재 → EHR4 확정
+           └── NO → 사용자에게 질문: "EHR 버전을 선택해주세요"
+```
+
+### Phase 3: 프로젝트 심층 분석
+
+```bash
+# 법칙 분석
+grep -rl "GetDataList.do" --include="*.jsp" | wc -l    # 법칙 B JSP 수
+grep -rl "SaveData.do" --include="*.jsp" | wc -l        # 법칙 B 저장 수
+grep -rl "ExecPrc.do" --include="*.jsp" | wc -l         # 법칙 D JSP 수
+grep -rl "AuthTableService" --include="*.java" | wc -l  # 법칙 C 컨트롤러 수
+
+# 세션 변수 수집
+grep -roh "session.getAttribute(\"[^\"]*\")" --include="*.java" | sort -u
+
+# 치명 프로시저 존재 확인
+for proc in P_CPN_CAL_PAY_MAIN P_HRM_POST P_TIM_WORK_HOUR_CHG \
+            P_HRI_AFTER_PROC_EXEC P_TIM_VACATION_CLEAN PKG_CPN_SEP; do
+  found=$(grep -rl "$proc" --include="*query.xml" 2>/dev/null | head -1)
+  echo "$proc: ${found:-NOT FOUND}"
+done
+```
+
+### Phase 5: 검증
+
+```
+1. 생성 파일 수 확인 (EHR4/EHR5: 23개 파일)
+2. AGENTS.md 교차 확인 (모듈 맵 vs 실제 디렉토리)
+3. 치명 요소 보고 ("치명 프로시저 5/6개 확인, 1개 미발견 — 확인 필요")
+4. DB 연결 상태 ("DB 연결 성공: 287개 프로시저, 45개 트리거 등록")
+```
+
+---
+
+## 8. 프로파일 시스템
+
+프로파일은 EHR 버전별 **고정 뼈대**를 제공한다. EHR4와 EHR5는 아키텍처가 다르므로 (Anyframe vs MyBatis, Velocity vs XML 등) 별도 프로파일이 필요하다.
+
+```
+profiles/
+├── shared/       ← 버전 무관 공통 파일
+├── ehr4/         ← Spring MVC + Anyframe + Velocity + Ant
+│   ├── skeleton/ ← 변수 치환용 문서 스켈레톤
+│   ├── agents/   ← 에이전트 시스템 프롬프트 (3개)
+│   ├── skills/   ← 스킬 스켈레톤 (7개)
+│   └── reference/ ← 고정 참조 (CODE_MAP, DB_MAP)
+└── ehr5/         ← Spring Boot + MyBatis + Maven
+    ├── skeleton/
+    ├── agents/
+    ├── skills/
+    └── reference/
+```
+
+### 스켈레톤 변수
+
+| 변수 | 설명 | 수집 방법 |
+|------|------|-----------|
+| `{{TECH_STACK}}` | 프레임워크/ORM 버전 | pom.xml / build.xml 파싱 |
+| `{{MODULE_MAP}}` | 모듈별 도메인명 + 파일 수 | find + wc -l |
+| `{{PROC_LIST}}` | 전체 프로시저 목록 | grep CALL + DB 조회 |
+| `{{CRITICAL_PROC}}` | 치명 프로시저 (존재 확인) | grep 존재 확인 |
+| `{{AUTH_SQL_IDS}}` | 사용 중인 authSqlID 값들 | grep |
+| `{{SESSION_VARS}}` | 세션 변수 목록 | grep session.getAttribute |
+| `{{LAW_B_COUNT}}` | 법칙 B JSP 수 | grep GetDataList.do |
+| `{{LAW_C_COUNT}}` | 법칙 C 컨트롤러 수 | grep AuthTableService |
+| `{{CODE_EXAMPLES}}` | 실제 코드 패턴 | 핵심 화면 파일 읽기 |
+
+---
+
+## 9. EHR4 vs EHR5 차이점
+
+| 항목 | EHR4 | EHR5 |
+|------|------|------|
+| 프레임워크 | Spring MVC | Spring Boot 2.7.18 |
+| ORM/쿼리 | Anyframe + Velocity | MyBatis 3 |
+| 빌드 | Ant (`build.xml`) | Maven (`pom.xml`) |
+| 매퍼 파일명 | `*-mapping-query.xml` | `*-sql-query.xml` |
+| 바인드 문법 | `:key` (Velocity) | `#{param}` (MyBatis) |
+| 조건문 | `#if ($var == "X")` | `<if test='var eq "X"'>` |
+| 반복문 | `#foreach ($rm in $list)` | `<foreach>` |
+| Java 경로 | `src/com/hr/{module}/` | `src/main/java/com/hr/{module}/` |
+| 배치 크기 | 50건 (Velocity 한계) | 1000건 (Oracle IN절 한계) |
+| domain-knowledge | 744줄 (10 섹션) | 411줄 (7 섹션) |
+
+### 공통 사항 (프로파일 무관)
+
+- `.do` + `cmd=` 디스패치 패턴
+- 4축 권한 모델 (ssnEnterCd, ssnSabun, ssnSearchType, ssnGrpCd)
+- 법칙 A/B/C/D 판정 체계
+- Family A~F 화면 분류
+- 재구현 금지 컴포넌트 (GetDataListController, SaveDataController 등)
+- 치명 프로시저 (P_CPN_CAL_PAY_MAIN, PKG_CPN_SEP 등)
+- 그린필드 금지 원칙
+- DB SELECT-only 정책
+
+---
+
+## 10. 커스터마이징 범위
+
+### 고정 (40%) — EHR 아키텍처 DNA
+
+- 4축 권한 모델 개념과 규칙
+- 법칙 A/B/C/D 판정 흐름도
+- Family A~F 분류 체계
+- 그린필드 금지 원칙
+- 경계 검증 매트릭스 + CHECK 판정 (EHR4 B1~B6, EHR5 B1~B10)
+- 에이전트 역할 정의
+- db-read-only 훅 + vcs-no-commit 훅
+
+### 실측 (60%) — 프로젝트 분석 결과
+
+- 모듈 맵 (어떤 모듈이 존재하는지, 파일 수)
+- 법칙별 사용 수 (법칙 B JSP 79개 vs 152개)
+- 세션 변수 목록
+- authSqlID 값 목록
+- 프로시저/트리거 전체 목록 + 존재 확인
+- DB 접속 정보
+- 실제 코드 패턴 (MERGE문, DELETE문, JSP 호출 체인)
+
+---
+
+## 11. Schema v3 · 하네스 Audit (현행)
+
+### 자동 감별 파이프라인
+
+하네스 생성 시점에 프로젝트의 특성을 자동 감별하여 HARNESS.json v3 에 기록한다:
+
+| 감별 항목 | 수집 방법 | 용도 |
+|-----------|----------|------|
+| `auth_model` | Java/매퍼 grep 으로 권한 주입 방식 검출 | reviewer 조건부 체크 판단 |
+| `db_verification` | DDL 폴더 존재 + DB 접속 상태로 b3_strategy 결정 | B3 검증 Tier 1/2/3 폴백 전략 |
+| `ddl_authoring` | repo 내 DDL 폴더 감별 | screen-builder 신규 DDL 파일 자동 생성 |
+
+### release-reviewer — 조건부 검증
+
+- **경계면 매트릭스**: B1~B10 (EHR5 전용 B7~B10 추가)
+- **조건부 적용**: `auth_model` 에 따라 B5/B6/R-2/R-4/R5 체크 생략 또는 변형
+- **판정**: PASS / FIX / REDO / HOLD / **CHECK** (5번째 — 자동 검증 불가 시 수동 확인)
+- **DB 검증 폴백**: DDL 파일 → DB 접속 → 수동 (3-tier)
+
+### 하네스 Audit (자동 drift 감지)
+
+**"하네스 점검해줘"** 명령 한 번으로:
+
+1. 플러그인 최신 변경분 반영
+2. 프로젝트 drift 감지 → 중요도 분류 → 반자동 반영
+
+### Drift 중요도 분류
+
+| 중요도 | 필드 | 사용자 흐름 |
+|-------|------|-----------|
+| **[상]** | auth_model 변경 / session_vars 추가·삭제 / critical_proc 추가 | 항목별 개별 확인 |
+| **[중]** | module_map 추가·삭제 / authSqlID 변경 | 일괄 승인 |
+| **[하]** | law_counts 변화 / procedure_count 증감 | 리포트 표시만 |
+
+### 반자동 UX
+
+```
+질문: "어떻게 진행할까요?"
+  1) 반자동 적용 (추천) — 안전한 건 자동, 상급 drift 개별 확인
+  2) 보고서만 저장 — docs/harness-audit-YYYYMMDD.md 생성
+  3) 전체 재생성 — 일괄 적용 (사용자 편집 보존)
+  4) 취소
+```
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js" crossorigin="anonymous"></script>
+<script>
+  (function(){
+    var src = document.getElementById('md-source').textContent;
+    var target = document.getElementById('doc');
+    try {
+      marked.setOptions({ gfm: true, breaks: false, headerIds: true, mangle: false });
+      target.innerHTML = marked.parse(src);
+      // add heading anchor slugs compatible with TOC links
+      document.querySelectorAll('article h2, article h3').forEach(function(h){
+        if (!h.id) {
+          h.id = h.textContent.trim().toLowerCase()
+            .replace(/[^\w\s가-힣-]/g,'')
+            .replace(/\s+/g,'-');
+        }
+      });
+    } catch (e) {
+      target.innerHTML = '<p style="color:#c00;">렌더 오류: '+ (e && e.message) +'</p>';
+    }
+  })();
+</script>
+</body>
+</html>

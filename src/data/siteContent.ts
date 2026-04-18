@@ -1,6 +1,7 @@
 export const navItems = [
   { label: "About", href: "#about" },
   { label: "Focus", href: "#focus" },
+  { label: "AX", href: "#ax-leadership" },
   { label: "Projects", href: "#projects" },
 ];
 
@@ -154,6 +155,18 @@ export const portfolioProjects: PortfolioProject[] = [
     href: "https://shop.minseok91.cloud/",
     linkLabel: "사이트 열기",
     evidence: "STORE FRONT",
+  },
+  {
+    id: "ehr-harness-plugin",
+    title: "EHR Harness Plugin",
+    category: "AI Harness / Enterprise",
+    summary:
+      "Oracle 프로시저 기반 레거시 인사시스템을 위한 AI 코딩 하네스 자동 생성 플러그인",
+    tech: ["Claude Code", "Agent", "Skill", "Hook"],
+
+    href: "/harness-plugin.html",
+    linkLabel: "문서 보기",
+    evidence: "HARNESS PLUGIN",
   },
 ];
 
