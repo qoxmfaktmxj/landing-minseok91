@@ -87,7 +87,7 @@ export default function AxLeadershipSection() {
                   EHR Harness Plugin
                 </span>
                 <h3 className="mt-5 text-2xl font-extrabold tracking-tight text-on-background md:text-3xl">
-                  AI 하네스 플러그인
+                  하네스 플러그인
                 </h3>
                 <p className="mt-5 max-w-xl text-sm leading-relaxed text-on-surface-variant md:text-base">
                   &ldquo;하네스 만들어줘&rdquo; 한 마디로 레거시 인사시스템을 심층 분석하고,
@@ -99,13 +99,13 @@ export default function AxLeadershipSection() {
 
                 <div className="mt-8 flex flex-wrap items-center gap-3">
                   <a
-                    href="https://github.com/qoxmfaktmxj/ehr-harness-plugin"
+                    href="/README_HARNESS.html"
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="EHR Harness Plugin GitHub 저장소를 새 탭에서 열기"
+                    aria-label="하네스 플러그인 README를 새 탭에서 열기"
                     className="group inline-flex items-center gap-2 rounded-full bg-on-background px-6 py-3 text-sm font-bold text-on-primary transition-all hover:-translate-y-0.5 hover:bg-accent hover:shadow-ambient-soft"
                   >
-                    GitHub 저장소 보기
+                    플러그인 README 보기
                     <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
                   <span className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-white px-4 py-2.5 font-mono-feature text-xs font-semibold text-on-surface-variant">
