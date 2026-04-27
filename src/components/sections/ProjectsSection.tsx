@@ -17,7 +17,7 @@ export default function ProjectsSection() {
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {portfolioProjects.map((project, index) => (
             <ScrollReveal key={project.id} delay={index * 0.06}>
               <article className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-outline-variant/60 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent-line hover:shadow-ambient-warm">

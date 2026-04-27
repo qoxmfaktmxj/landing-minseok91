@@ -156,18 +156,6 @@ export const portfolioProjects: PortfolioProject[] = [
     linkLabel: "사이트 열기",
     evidence: "STORE FRONT",
   },
-  {
-    id: "ehr-harness-plugin",
-    title: "EHR Harness Plugin",
-    category: "AI Harness / Enterprise",
-    summary:
-      "Oracle 프로시저 기반 레거시 인사시스템을 위한 AI 코딩 하네스 자동 생성 플러그인",
-    tech: ["Claude Code", "Agent", "Skill", "Hook"],
-
-    href: "https://github.com/qoxmfaktmxj/ehr-harness-plugin",
-    linkLabel: "GitHub 보기",
-    evidence: "HARNESS PLUGIN",
-  },
 ];
 
 export const writingItems = [
