@@ -24,8 +24,11 @@ export default function WritingSection() {
     <section id="contact" className="bg-white py-24">
       <div className="mx-auto max-w-7xl px-6 text-center">
         <ScrollReveal>
-          <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-on-background md:text-5xl">
-            함께 일할 사람을 찾고 계신가요?
+          <span className="font-mono-feature text-[11px] font-semibold uppercase tracking-overline text-accent">
+            // CONTACT
+          </span>
+          <h2 className="mb-4 mt-3 text-4xl font-extrabold leading-section tracking-section text-on-background md:text-5xl">
+            함께 일할 사람을 찾고 <span className="text-accent">계신가요?</span>
           </h2>
           <p className="mx-auto mb-12 max-w-xl text-on-surface-variant">
             채용 제안, 프로젝트 협업, 기술 논의 등 편하게 연락주세요.
@@ -40,11 +43,11 @@ export default function WritingSection() {
                 href={href}
                 target={label === "Email" ? undefined : "_blank"}
                 rel={label === "Email" ? undefined : "noopener noreferrer"}
-                className="group inline-flex items-center gap-3 rounded-full border border-outline-variant/60 bg-white px-8 py-4 font-bold text-on-background transition-all hover:-translate-y-0.5 hover:border-black hover:shadow-md"
+                className="group inline-flex items-center gap-3 rounded-full border border-outline-variant/60 bg-white px-8 py-4 font-bold text-on-background transition-all hover:-translate-y-0.5 hover:border-accent hover:text-accent hover:shadow-ambient-soft"
               >
-                <Icon className="h-5 w-5 text-on-surface-variant transition-colors group-hover:text-black" />
+                <Icon className="h-5 w-5 text-on-surface-variant transition-colors group-hover:text-accent" />
                 {label}
-                <ArrowUpRight className="h-4 w-4 text-on-surface-variant transition-colors group-hover:text-black" />
+                <ArrowUpRight className="h-4 w-4 text-on-surface-variant transition-colors group-hover:text-accent" />
               </a>
             ))}
           </div>

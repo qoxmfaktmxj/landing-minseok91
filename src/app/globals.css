@@ -3,28 +3,33 @@
 @tailwind utilities;
 
 :root {
-  --primary: #111111;
+  --primary: #0a0a0a;
   --primary-dim: #333333;
   --primary-container: #f0f0f0;
   --on-primary: #ffffff;
-  --on-primary-container: #111111;
+  --on-primary-container: #0a0a0a;
   --surface: #ffffff;
   --surface-container-lowest: #ffffff;
   --surface-container-low: #fafafa;
   --surface-container: #f5f5f5;
   --surface-container-high: #eeeeee;
   --surface-container-highest: #e5e5e5;
-  --on-surface: #111111;
-  --on-surface-variant: #666666;
-  --on-background: #111111;
-  --tertiary: #888888;
+  --on-surface: #0a0a0a;
+  --on-surface-variant: #525252;
+  --on-background: #0a0a0a;
+  --tertiary: #737373;
   --tertiary-container: #f0f0f0;
   --on-tertiary-container: #333333;
-  --secondary: #555555;
+  --secondary: #525252;
   --secondary-container: #f0f0f0;
   --on-secondary-container: #333333;
-  --outline: #999999;
-  --outline-variant: #d4d4d4;
+  --outline: #a3a3a3;
+  --outline-variant: #e5e5e5;
+  --accent: #00875e;
+  --accent-hover: #006e4c;
+  --accent-soft: #00d992;
+  --accent-tint: rgba(0, 135, 94, 0.08);
+  --accent-line: rgba(0, 135, 94, 0.34);
 }
 
 html {
@@ -64,7 +69,23 @@ a {
   text-decoration: none;
 }
 
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 ::selection {
-  background: rgba(0, 0, 0, 0.08);
-  color: #000000;
+  background: rgba(0, 165, 116, 0.18);
+  color: #0a0a0a;
+}
+
+.font-mono-feature {
+  font-family: var(--font-geist-mono), "SFMono-Regular", Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-feature-settings: "calt", "rlig";
 }

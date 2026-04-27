@@ -73,8 +73,12 @@ export default function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="text-xl font-black tracking-tighter text-primary"
+          className="group inline-flex items-baseline gap-1.5 text-xl font-black tracking-tighter text-primary"
         >
+          <span
+            aria-hidden="true"
+            className="h-1.5 w-1.5 self-center rounded-full bg-accent shadow-[0_0_10px_var(--accent-soft)] transition-all group-hover:shadow-[0_0_16px_var(--accent-soft)]"
+          />
           MINSEOK91
         </button>
 
@@ -87,10 +91,10 @@ export default function Navbar() {
                 key={item.href}
                 onClick={() => handleNavClick(item.href)}
                 className={cn(
-                  "transition-colors",
+                  "relative pb-1 transition-colors",
                   isActive
-                    ? "border-b-2 border-primary pb-1 text-primary"
-                    : "text-on-surface-variant hover:text-primary"
+                    ? "border-b-2 border-accent text-primary"
+                    : "border-b-2 border-transparent text-on-surface-variant hover:text-primary"
                 )}
               >
                 {item.label}
@@ -102,7 +106,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setMobileOpen((prev) => !prev)}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-container text-on-surface md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-surface-container text-on-surface md:hidden"
             aria-label={mobileOpen ? "메뉴 닫기" : "메뉴 열기"}
           >
             {mobileOpen ? (
@@ -125,13 +129,19 @@ export default function Navbar() {
                   key={item.href}
                   onClick={() => handleNavClick(item.href)}
                   className={cn(
-                    "rounded-xl px-4 py-3 text-left text-sm font-bold transition",
+                    "flex items-center justify-between rounded-xl px-4 py-3 text-left text-sm font-bold transition",
                     isActive
-                      ? "bg-primary-container/30 text-primary"
+                      ? "bg-accent-tint text-accent"
                       : "text-on-surface-variant hover:bg-surface-container-low"
                   )}
                 >
-                  {item.label}
+                  <span>{item.label}</span>
+                  {isActive ? (
+                    <span
+                      aria-hidden="true"
+                      className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_var(--accent-soft)]"
+                    />
+                  ) : null}
                 </button>
               );
             })}

@@ -33,21 +33,22 @@ export default function AxLeadershipSection() {
       <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal>
           <div className="mb-12">
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-on-surface-variant">
-              AX LEADERSHIP
+            <span className="font-mono-feature text-[11px] font-semibold uppercase tracking-overline text-accent">
+              // AX LEADERSHIP
             </span>
-            <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-on-background md:text-4xl">
-              통제된 AI 자동화 체계를 먼저 설계하고, 조직에 확산합니다.
+            <h2 className="mt-3 text-3xl font-extrabold leading-section tracking-section text-on-background md:text-4xl">
+              통제된 <span className="text-accent">AI 자동화 체계</span>를 먼저 설계하고, 조직에 확산합니다.
             </h2>
           </div>
         </ScrollReveal>
 
         <ScrollReveal delay={0.05}>
-          <article className="mb-6 overflow-hidden rounded-2xl border border-outline-variant/40 bg-surface-container-low p-8 md:p-10">
+          <article className="mb-6 overflow-hidden rounded-2xl border border-outline-variant/60 bg-surface-container-low p-8 transition-all duration-300 hover:border-accent-line hover:shadow-ambient-warm md:p-10">
             <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
               <div className="max-w-2xl">
                 <div className="mb-5 flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-white px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-on-surface-variant">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-accent-line bg-accent-tint px-3 py-1 font-mono-feature text-[11px] font-semibold uppercase tracking-overline text-accent">
+                    <span aria-hidden="true" className="h-1 w-1 rounded-full bg-accent" />
                     Harness Engineering 선제 도입
                   </span>
                 </div>
@@ -68,7 +69,7 @@ export default function AxLeadershipSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="AI 활용 혁신 보고서를 새 탭에서 열기"
-                className="group inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-on-background px-6 py-3 text-sm font-bold text-on-primary transition-all hover:-translate-y-0.5 hover:shadow-md"
+                className="group inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-on-background px-6 py-3 text-sm font-bold text-on-primary transition-all hover:-translate-y-0.5 hover:bg-accent hover:shadow-ambient-soft"
               >
                 AI 활용 혁신 보고서 보기
                 <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -78,10 +79,11 @@ export default function AxLeadershipSection() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.1}>
-          <article className="overflow-hidden rounded-2xl border border-outline-variant/40 bg-surface-container-low p-8 md:p-10 lg:p-12">
+          <article className="overflow-hidden rounded-2xl border border-outline-variant/60 bg-surface-container-low p-8 transition-all duration-300 hover:border-accent-line hover:shadow-ambient-warm md:p-10 lg:p-12">
             <div className="grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-14">
               <div>
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-outline-variant bg-white px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-on-surface-variant">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-accent-line bg-accent-tint px-3 py-1 font-mono-feature text-[11px] font-semibold uppercase tracking-overline text-accent">
+                  <span aria-hidden="true" className="h-1 w-1 rounded-full bg-accent" />
                   EHR Harness Plugin
                 </span>
                 <h3 className="mt-5 text-2xl font-extrabold tracking-tight text-on-background md:text-3xl">
@@ -101,12 +103,12 @@ export default function AxLeadershipSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="EHR Harness Plugin GitHub 저장소를 새 탭에서 열기"
-                    className="group inline-flex items-center gap-2 rounded-full bg-on-background px-6 py-3 text-sm font-bold text-on-primary transition-all hover:-translate-y-0.5 hover:shadow-md"
+                    className="group inline-flex items-center gap-2 rounded-full bg-on-background px-6 py-3 text-sm font-bold text-on-primary transition-all hover:-translate-y-0.5 hover:bg-accent hover:shadow-ambient-soft"
                   >
                     GitHub 저장소 보기
                     <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
-                  <span className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-white px-4 py-2.5 text-xs font-semibold text-on-surface-variant">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-outline-variant bg-white px-4 py-2.5 font-mono-feature text-xs font-semibold text-on-surface-variant">
                     Claude Code · Codex · Gemini CLI 호환
                   </span>
                 </div>
@@ -121,9 +123,9 @@ export default function AxLeadershipSection() {
                       delay={0.15 + index * 0.06}
                       className="h-full"
                     >
-                      <div className="flex h-full flex-col rounded-xl border border-outline-variant/40 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-outline-variant hover:shadow-md">
+                      <div className="group flex h-full flex-col rounded-xl border border-outline-variant/60 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-accent-line hover:shadow-ambient-warm">
                         <Icon
-                          className="mb-3 h-4 w-4 text-on-surface-variant"
+                          className="mb-3 h-4 w-4 text-on-surface-variant transition-colors group-hover:text-accent"
                           aria-hidden="true"
                         />
                         <p className="text-sm font-bold tracking-tight text-on-background">
