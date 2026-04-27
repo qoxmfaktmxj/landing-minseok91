@@ -9,7 +9,7 @@ export default function ProjectsSection() {
         <ScrollReveal>
           <div className="mb-12">
             <span className="font-mono-feature text-[11px] font-semibold uppercase tracking-overline text-accent">
-              // PORTFOLIO
+              {"// PORTFOLIO"}
             </span>
             <h2 className="mt-3 text-4xl font-extrabold leading-section tracking-section text-on-background">
               개인 프로젝트 소개

@@ -8,7 +8,7 @@ export default function ImpactSection() {
         <ScrollReveal>
           <div className="mb-16">
             <span className="font-mono-feature text-[11px] font-semibold uppercase tracking-overline text-accent">
-              // CORE FOCUS
+              {"// CORE FOCUS"}
             </span>
             <h2 className="mt-3 text-3xl font-extrabold leading-section tracking-section text-on-background md:text-4xl">
               깊은 도메인 지식과 최신 <span className="text-accent">AI 트렌드</span>를 함께 활용합니다.

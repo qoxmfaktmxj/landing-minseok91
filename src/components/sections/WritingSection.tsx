@@ -25,7 +25,7 @@ export default function WritingSection() {
       <div className="mx-auto max-w-7xl px-6 text-center">
         <ScrollReveal>
           <span className="font-mono-feature text-[11px] font-semibold uppercase tracking-overline text-accent">
-            // CONTACT
+            {"// CONTACT"}
           </span>
           <h2 className="mb-4 mt-3 text-4xl font-extrabold leading-section tracking-section text-on-background md:text-5xl">
             함께 일할 사람을 찾고 <span className="text-accent">계신가요?</span>

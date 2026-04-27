@@ -34,7 +34,7 @@ export default function AxLeadershipSection() {
         <ScrollReveal>
           <div className="mb-12">
             <span className="font-mono-feature text-[11px] font-semibold uppercase tracking-overline text-accent">
-              // AX LEADERSHIP
+              {"// AX LEADERSHIP"}
             </span>
             <h2 className="mt-3 text-3xl font-extrabold leading-section tracking-section text-on-background md:text-4xl">
               통제된 <span className="text-accent">AI 자동화 체계</span>를 먼저 설계하고, 조직에 확산합니다.
