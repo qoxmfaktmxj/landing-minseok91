@@ -1252,7 +1252,7 @@ git commit -m "feat: add print intro overlay and ink stamp custom cursor"
 - Delete: `src/components/layout/Navbar.tsx`, `src/components/layout/Footer.tsx`
 - Delete: `src/components/ui/ProjectCard.tsx`, `ScrollReveal.tsx`, `SectionFrame.tsx`, `SectionHeader.tsx`, `TechTag.tsx`
 
-- [ ] **Step 1: `src/app/page.tsx` 전면 교체**
+- [x] **Step 1: `src/app/page.tsx` 전면 교체**
 
 ```tsx
 import Masthead from "@/components/newspaper/Masthead";
@@ -1284,7 +1284,7 @@ export default function Home() {
 }
 ```
 
-- [ ] **Step 2: 구 컴포넌트 삭제**
+- [x] **Step 2: 구 컴포넌트 삭제**
 
 ```bash
 git rm -r src/components/sections
@@ -1298,7 +1298,7 @@ git rm src/components/ui/ProjectCard.tsx src/components/ui/ScrollReveal.tsx src/
 grep -rn "lib/utils" src/ || git rm src/lib/utils.ts
 ```
 
-- [ ] **Step 3: 전체 게이트 — lint + build**
+- [x] **Step 3: 전체 게이트 — lint + build**
 
 ```bash
 npm run lint
@@ -1307,7 +1307,7 @@ npm run build
 
 Expected: 둘 다 에러 0. 실패 시 임포트 누락/옛 토큰 잔존 여부 확인 (`grep -rn "surface\|on-surface\|accent-" src/`).
 
-- [ ] **Step 4: 커밋**
+- [x] **Step 4: 커밋**
 
 ```bash
 git add -A
