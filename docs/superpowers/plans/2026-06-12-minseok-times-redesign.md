@@ -38,13 +38,13 @@ git checkout -b redesign/minseok-times
 - Modify: `tailwind.config.ts` (전면 교체)
 - Modify: `src/app/layout.tsx` (폰트·메타데이터 교체)
 
-- [ ] **Step 1: lenis 설치**
+- [x] **Step 1: lenis 설치**
 
 ```bash
 npm install lenis
 ```
 
-- [ ] **Step 2: `src/app/globals.css` 전면 교체**
+- [x] **Step 2: `src/app/globals.css` 전면 교체**
 
 ```css
 @tailwind base;
@@ -139,7 +139,7 @@ a {
 }
 ```
 
-- [ ] **Step 3: `tailwind.config.ts` 전면 교체**
+- [x] **Step 3: `tailwind.config.ts` 전면 교체**
 
 ```ts
 import type { Config } from "tailwindcss";
@@ -186,7 +186,7 @@ const config: Config = {
 export default config;
 ```
 
-- [ ] **Step 4: `src/app/layout.tsx` 전면 교체**
+- [x] **Step 4: `src/app/layout.tsx` 전면 교체**
 
 Manrope 제거, Noto Serif KR 추가, 메타데이터 신문 컨셉으로 교체. SmoothScrollProvider/InkCursor는 이후 태스크에서 추가하므로 여기서는 임포트하지 않는다.
 
@@ -268,7 +268,7 @@ export default function RootLayout({
 }
 ```
 
-- [ ] **Step 5: 빌드 게이트** — 기존 섹션들이 옛 Tailwind 토큰(`surface`, `accent` 등)을 참조하므로 이 시점에는 빌드가 깨질 수 있다. 확인만 하고 넘어간다:
+- [x] **Step 5: 빌드 게이트** — 기존 섹션들이 옛 Tailwind 토큰(`surface`, `accent` 등)을 참조하므로 이 시점에는 빌드가 깨질 수 있다. 확인만 하고 넘어간다:
 
 ```bash
 npm run lint
@@ -276,7 +276,7 @@ npm run lint
 
 lint는 통과해야 함 (토큰은 클래스 문자열이라 lint 무관). `npm run build`는 Task 7 이후부터 게이트로 사용.
 
-- [ ] **Step 6: 커밋**
+- [x] **Step 6: 커밋**
 
 ```bash
 git add package.json package-lock.json src/app/globals.css tailwind.config.ts src/app/layout.tsx

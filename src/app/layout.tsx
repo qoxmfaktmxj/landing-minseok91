@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { Noto_Serif_KR } from "next/font/google";
 import localFont from "next/font/local";
 import MotionProvider from "@/components/providers/MotionProvider";
 import "./globals.css";
 
-const manrope = Manrope({
+const notoSerifKr = Noto_Serif_KR({
   subsets: ["latin"],
-  variable: "--font-manrope",
+  weight: ["700", "900"],
+  variable: "--font-noto-serif-kr",
   display: "swap",
 });
 
@@ -19,32 +20,32 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.minseok91.cloud"),
-  title: "민석 | AI 엔터프라이즈 빌더",
+  title: "The Minseok Times — HR × AI × AX",
   description:
-    "9년차 엔터프라이즈 시스템 개발자입니다. HR 등 사내 시스템 문맥을 이해하고 AI를 활용해 점진적 현대화, 공통 프레임워크 구축, 운영 효율화까지 연결합니다.",
+    "HR 시스템을 9년간 만들어온 개발자가 AI를 동료로 끌어들였다. 조직의 AX 전환을 단독 보도하는 단 한 부의 신문.",
   keywords: [
-    "민석 포트폴리오",
-    "엔터프라이즈 빌더",
-    "사내 시스템 개선",
-    "레거시 현대화",
+    "김민석",
+    "AX 엔지니어",
+    "HR 시스템 개발",
     "AI 활용 개발",
+    "조직 AX 전환",
   ],
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "민석 | AI 엔터프라이즈 빌더",
+    title: "The Minseok Times — HR × AI × AX",
     description:
-      "사내 시스템 개선, 레거시 현대화, 공통 프레임워크 구축, 운영 효율화를 현실적인 방식으로 연결하는 개발자",
+      "조직의 AX 전환, 한 사람에서 시작된다. 9년차 HR 도메인 개발자의 단독 보도.",
     url: "/",
     type: "website",
     locale: "ko_KR",
   },
   twitter: {
     card: "summary_large_image",
-    title: "민석 | AI 엔터프라이즈 빌더",
+    title: "The Minseok Times — HR × AI × AX",
     description:
-      "HR, ERP, 사내 시스템 문맥을 이해하고 AI를 실무형 개선으로 연결하는 9년차 엔지니어 포트폴리오.",
+      "조직의 AX 전환, 한 사람에서 시작된다. 9년차 HR 도메인 개발자의 단독 보도.",
   },
   icons: {
     icon: "/icon.svg",
@@ -58,7 +59,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`${manrope.variable} ${geistMono.variable}`}>
+    <html lang="ko" className={`${notoSerifKr.variable} ${geistMono.variable}`}>
       <head>
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
         <link

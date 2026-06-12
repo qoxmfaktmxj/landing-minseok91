@@ -3,33 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --primary: #0a0a0a;
-  --primary-dim: #333333;
-  --primary-container: #f0f0f0;
-  --on-primary: #ffffff;
-  --on-primary-container: #0a0a0a;
-  --surface: #ffffff;
-  --surface-container-lowest: #ffffff;
-  --surface-container-low: #fafafa;
-  --surface-container: #f5f5f5;
-  --surface-container-high: #eeeeee;
-  --surface-container-highest: #e5e5e5;
-  --on-surface: #0a0a0a;
-  --on-surface-variant: #525252;
-  --on-background: #0a0a0a;
-  --tertiary: #737373;
-  --tertiary-container: #f0f0f0;
-  --on-tertiary-container: #333333;
-  --secondary: #525252;
-  --secondary-container: #f0f0f0;
-  --on-secondary-container: #333333;
-  --outline: #a3a3a3;
-  --outline-variant: #e5e5e5;
-  --accent: #00875e;
-  --accent-hover: #006e4c;
-  --accent-soft: #00d992;
-  --accent-tint: rgba(0, 135, 94, 0.08);
-  --accent-line: rgba(0, 135, 94, 0.34);
+  --paper: #f3f1ea;
+  --paper-white: #ffffff;
+  --ink: #1b2440;
+  --ink-soft: #4a5470;
+  --ink-faint: #5a6280;
+  --vermilion: #ff4f30;
+  --vermilion-soft: #ff8a70;
+  --marker: rgba(255, 79, 48, 0.18);
 }
 
 html {
@@ -37,8 +18,8 @@ html {
 }
 
 body {
-  background: var(--surface);
-  color: var(--on-surface);
+  background: var(--paper);
+  color: var(--ink);
   font-family:
     "Pretendard Variable",
     "Pretendard",
@@ -48,16 +29,6 @@ body {
     sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-}
-
-h1,
-h2,
-h3 {
-  font-family:
-    var(--font-manrope),
-    "Pretendard Variable",
-    "Pretendard",
-    sans-serif;
 }
 
 * {
@@ -74,18 +45,46 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--vermilion);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 ::selection {
-  background: rgba(0, 165, 116, 0.18);
-  color: #0a0a0a;
+  background: var(--ink);
+  color: var(--paper);
 }
 
-.font-mono-feature {
-  font-family: var(--font-geist-mono), "SFMono-Regular", Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  font-feature-settings: "calt", "rlig";
+/* 신문 괘선 유틸리티 */
+.rule-double {
+  border-top: 3px solid var(--ink);
+  box-shadow: 0 5px 0 -4px var(--ink);
+}
+
+/* 형광펜 마커 */
+.marker-highlight {
+  box-shadow: inset 0 -0.35em 0 var(--marker);
+}
+
+/* 무한 마퀴 */
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track {
+  animation: ticker-scroll 28s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .ticker-track {
+    animation: none;
+  }
 }
