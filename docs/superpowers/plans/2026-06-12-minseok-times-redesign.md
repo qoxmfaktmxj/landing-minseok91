@@ -979,7 +979,7 @@ git commit -m "feat: add dark feature story section with cursor-following live p
 - Create: `src/components/newspaper/ClassifiedSection.tsx`
 - Create: `src/components/newspaper/ColophonFooter.tsx`
 
-- [ ] **Step 1: `src/components/newspaper/ClassifiedSection.tsx` 생성**
+- [x] **Step 1: `src/components/newspaper/ClassifiedSection.tsx` 생성**
 
 ```tsx
 "use client";
@@ -1053,7 +1053,7 @@ export default function ClassifiedSection() {
 }
 ```
 
-- [ ] **Step 2: `src/components/newspaper/ColophonFooter.tsx` 생성** (서버 컴포넌트)
+- [x] **Step 2: `src/components/newspaper/ColophonFooter.tsx` 생성** (서버 컴포넌트)
 
 ```tsx
 import { colophon } from "@/data/siteContent";
@@ -1089,7 +1089,7 @@ export default function ColophonFooter() {
 }
 ```
 
-- [ ] **Step 3: 커밋**
+- [x] **Step 3: 커밋**
 
 ```bash
 git add src/components/newspaper/ClassifiedSection.tsx src/components/newspaper/ColophonFooter.tsx
