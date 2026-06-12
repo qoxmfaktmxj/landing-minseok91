@@ -22,7 +22,7 @@
 
 ### Task 0: 브랜치 생성
 
-- [ ] **Step 1: 작업 브랜치 생성**
+- [x] **Step 1: 작업 브랜치 생성**
 
 ```bash
 git checkout -b redesign/minseok-times
@@ -38,13 +38,13 @@ git checkout -b redesign/minseok-times
 - Modify: `tailwind.config.ts` (전면 교체)
 - Modify: `src/app/layout.tsx` (폰트·메타데이터 교체)
 
-- [ ] **Step 1: lenis 설치**
+- [x] **Step 1: lenis 설치**
 
 ```bash
 npm install lenis
 ```
 
-- [ ] **Step 2: `src/app/globals.css` 전면 교체**
+- [x] **Step 2: `src/app/globals.css` 전면 교체**
 
 ```css
 @tailwind base;
@@ -139,7 +139,7 @@ a {
 }
 ```
 
-- [ ] **Step 3: `tailwind.config.ts` 전면 교체**
+- [x] **Step 3: `tailwind.config.ts` 전면 교체**
 
 ```ts
 import type { Config } from "tailwindcss";
@@ -186,7 +186,7 @@ const config: Config = {
 export default config;
 ```
 
-- [ ] **Step 4: `src/app/layout.tsx` 전면 교체**
+- [x] **Step 4: `src/app/layout.tsx` 전면 교체**
 
 Manrope 제거, Noto Serif KR 추가, 메타데이터 신문 컨셉으로 교체. SmoothScrollProvider/InkCursor는 이후 태스크에서 추가하므로 여기서는 임포트하지 않는다.
 
@@ -268,7 +268,7 @@ export default function RootLayout({
 }
 ```
 
-- [ ] **Step 5: 빌드 게이트** — 기존 섹션들이 옛 Tailwind 토큰(`surface`, `accent` 등)을 참조하므로 이 시점에는 빌드가 깨질 수 있다. 확인만 하고 넘어간다:
+- [x] **Step 5: 빌드 게이트** — 기존 섹션들이 옛 Tailwind 토큰(`surface`, `accent` 등)을 참조하므로 이 시점에는 빌드가 깨질 수 있다. 확인만 하고 넘어간다:
 
 ```bash
 npm run lint
@@ -276,7 +276,7 @@ npm run lint
 
 lint는 통과해야 함 (토큰은 클래스 문자열이라 lint 무관). `npm run build`는 Task 7 이후부터 게이트로 사용.
 
-- [ ] **Step 6: 커밋**
+- [x] **Step 6: 커밋**
 
 ```bash
 git add package.json package-lock.json src/app/globals.css tailwind.config.ts src/app/layout.tsx
@@ -291,7 +291,7 @@ git commit -m "feat: newspaper design tokens, fonts, and metadata for The Minseo
 - Modify: `src/data/siteContent.ts` (전면 교체)
 - Delete: `src/data/projects.ts` (siteContent로 통합)
 
-- [ ] **Step 1: `src/data/siteContent.ts` 전면 교체**
+- [x] **Step 1: `src/data/siteContent.ts` 전면 교체**
 
 ```ts
 export const masthead = {
@@ -452,7 +452,7 @@ export const colophon = {
 };
 ```
 
-- [ ] **Step 2: `src/data/projects.ts` 삭제**
+- [x] **Step 2: `src/data/projects.ts` 삭제**
 
 ```bash
 rm src/data/projects.ts
@@ -460,7 +460,7 @@ rm src/data/projects.ts
 
 (이 파일을 임포트하는 옛 컴포넌트는 Task 9에서 함께 삭제된다. 이 시점 빌드 실패는 무시.)
 
-- [ ] **Step 3: 커밋**
+- [x] **Step 3: 커밋**
 
 ```bash
 git add src/data/siteContent.ts
@@ -476,7 +476,7 @@ git commit -m "feat: rewrite site content as newspaper copy schema"
 - Create: `src/components/providers/SmoothScrollProvider.tsx`
 - Modify: `src/app/layout.tsx` (프로바이더 적용)
 
-- [ ] **Step 1: `src/components/providers/SmoothScrollProvider.tsx` 생성**
+- [x] **Step 1: `src/components/providers/SmoothScrollProvider.tsx` 생성**
 
 ```tsx
 "use client";
@@ -510,7 +510,7 @@ export default function SmoothScrollProvider({
 }
 ```
 
-- [ ] **Step 2: `src/app/layout.tsx`의 body 래핑 수정**
+- [x] **Step 2: `src/app/layout.tsx`의 body 래핑 수정**
 
 ```tsx
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
@@ -526,7 +526,7 @@ body 내부를 다음으로 교체:
       </body>
 ```
 
-- [ ] **Step 3: 커밋**
+- [x] **Step 3: 커밋**
 
 ```bash
 git add src/components/providers/SmoothScrollProvider.tsx src/app/layout.tsx
@@ -541,7 +541,7 @@ git commit -m "feat: add lenis smooth scroll provider"
 - Create: `src/components/newspaper/Masthead.tsx`
 - Create: `src/components/newspaper/BreakingTicker.tsx`
 
-- [ ] **Step 1: `src/components/newspaper/Masthead.tsx` 생성** (서버 컴포넌트, 정적)
+- [x] **Step 1: `src/components/newspaper/Masthead.tsx` 생성** (서버 컴포넌트, 정적)
 
 ```tsx
 import { masthead } from "@/data/siteContent";
@@ -569,7 +569,7 @@ export default function Masthead() {
 }
 ```
 
-- [ ] **Step 2: `src/components/newspaper/BreakingTicker.tsx` 생성**
+- [x] **Step 2: `src/components/newspaper/BreakingTicker.tsx` 생성**
 
 콘텐츠를 2벌 복제해 `translateX(-50%)` 루프 (CSS keyframes는 Task 1의 `.ticker-track`).
 
@@ -602,7 +602,7 @@ export default function BreakingTicker() {
 }
 ```
 
-- [ ] **Step 3: 커밋**
+- [x] **Step 3: 커밋**
 
 ```bash
 git add src/components/newspaper/Masthead.tsx src/components/newspaper/BreakingTicker.tsx
@@ -616,7 +616,7 @@ git commit -m "feat: add masthead and breaking news ticker"
 **Files:**
 - Create: `src/components/newspaper/FrontPageHeadline.tsx`
 
-- [ ] **Step 1: `src/components/newspaper/FrontPageHeadline.tsx` 생성**
+- [x] **Step 1: `src/components/newspaper/FrontPageHeadline.tsx` 생성**
 
 글자 단위 stagger 등장 (스탬프 느낌). 텍스트는 항상 DOM에 존재하고 opacity/transform만 애니메이션.
 
@@ -696,7 +696,7 @@ export default function FrontPageHeadline() {
 }
 ```
 
-- [ ] **Step 2: 커밋**
+- [x] **Step 2: 커밋**
 
 ```bash
 git add src/components/newspaper/FrontPageHeadline.tsx
@@ -711,7 +711,7 @@ git commit -m "feat: add front page headline with per-character stamp animation"
 - Create: `src/components/newspaper/CountUp.tsx`
 - Create: `src/components/newspaper/ThreeColumns.tsx`
 
-- [ ] **Step 1: `src/components/newspaper/CountUp.tsx` 생성**
+- [x] **Step 1: `src/components/newspaper/CountUp.tsx` 생성**
 
 ```tsx
 "use client";
@@ -759,7 +759,7 @@ export default function CountUp({
 }
 ```
 
-- [ ] **Step 2: `src/components/newspaper/ThreeColumns.tsx` 생성**
+- [x] **Step 2: `src/components/newspaper/ThreeColumns.tsx` 생성**
 
 칼럼별 패럴랙스(스크롤 속도 차)는 `useScroll` + `useTransform`으로 y 오프셋만 다르게 준다.
 
@@ -834,7 +834,7 @@ export default function ThreeColumns() {
 }
 ```
 
-- [ ] **Step 3: 커밋**
+- [x] **Step 3: 커밋**
 
 ```bash
 git add src/components/newspaper/CountUp.tsx src/components/newspaper/ThreeColumns.tsx
@@ -848,7 +848,7 @@ git commit -m "feat: add three-column article section with parallax and count-up
 **Files:**
 - Create: `src/components/newspaper/FeatureStory.tsx`
 
-- [ ] **Step 1: `src/components/newspaper/FeatureStory.tsx` 생성**
+- [x] **Step 1: `src/components/newspaper/FeatureStory.tsx` 생성**
 
 다크(잉크) 배경 반전 섹션. 카드 호버 시 커서를 따라다니는 "LIVE" 프리뷰 칩 (`useMotionValue` + `useSpring`). 모바일(coarse pointer)에서는 칩 미표시, 카드 전체가 링크.
 
@@ -964,7 +964,7 @@ export default function FeatureStory() {
 }
 ```
 
-- [ ] **Step 2: 커밋**
+- [x] **Step 2: 커밋**
 
 ```bash
 git add src/components/newspaper/FeatureStory.tsx
@@ -979,7 +979,7 @@ git commit -m "feat: add dark feature story section with cursor-following live p
 - Create: `src/components/newspaper/ClassifiedSection.tsx`
 - Create: `src/components/newspaper/ColophonFooter.tsx`
 
-- [ ] **Step 1: `src/components/newspaper/ClassifiedSection.tsx` 생성**
+- [x] **Step 1: `src/components/newspaper/ClassifiedSection.tsx` 생성**
 
 ```tsx
 "use client";
@@ -1053,7 +1053,7 @@ export default function ClassifiedSection() {
 }
 ```
 
-- [ ] **Step 2: `src/components/newspaper/ColophonFooter.tsx` 생성** (서버 컴포넌트)
+- [x] **Step 2: `src/components/newspaper/ColophonFooter.tsx` 생성** (서버 컴포넌트)
 
 ```tsx
 import { colophon } from "@/data/siteContent";
@@ -1089,7 +1089,7 @@ export default function ColophonFooter() {
 }
 ```
 
-- [ ] **Step 3: 커밋**
+- [x] **Step 3: 커밋**
 
 ```bash
 git add src/components/newspaper/ClassifiedSection.tsx src/components/newspaper/ColophonFooter.tsx
@@ -1104,7 +1104,7 @@ git commit -m "feat: add classified job-ad CTA, lab ads, and colophon footer"
 - Create: `src/components/newspaper/PrintIntro.tsx`
 - Create: `src/components/newspaper/InkCursor.tsx`
 
-- [ ] **Step 1: `src/components/newspaper/PrintIntro.tsx` 생성**
+- [x] **Step 1: `src/components/newspaper/PrintIntro.tsx` 생성**
 
 세션당 1회(sessionStorage), 총 1.8초, 클릭으로 스킵. 콘텐츠를 가리는 오버레이 방식이지만 LCP 텍스트는 DOM에 이미 존재.
 
@@ -1169,7 +1169,7 @@ export default function PrintIntro() {
 }
 ```
 
-- [ ] **Step 2: `src/components/newspaper/InkCursor.tsx` 생성**
+- [x] **Step 2: `src/components/newspaper/InkCursor.tsx` 생성**
 
 `pointer: fine` + 모션 허용 환경에서만 렌더. `data-cursor` 속성 가진 요소 호버 시 도장 라벨로 확대.
 
@@ -1235,7 +1235,7 @@ export default function InkCursor() {
 }
 ```
 
-- [ ] **Step 3: 커밋**
+- [x] **Step 3: 커밋**
 
 ```bash
 git add src/components/newspaper/PrintIntro.tsx src/components/newspaper/InkCursor.tsx
@@ -1252,7 +1252,7 @@ git commit -m "feat: add print intro overlay and ink stamp custom cursor"
 - Delete: `src/components/layout/Navbar.tsx`, `src/components/layout/Footer.tsx`
 - Delete: `src/components/ui/ProjectCard.tsx`, `ScrollReveal.tsx`, `SectionFrame.tsx`, `SectionHeader.tsx`, `TechTag.tsx`
 
-- [ ] **Step 1: `src/app/page.tsx` 전면 교체**
+- [x] **Step 1: `src/app/page.tsx` 전면 교체**
 
 ```tsx
 import Masthead from "@/components/newspaper/Masthead";
@@ -1284,7 +1284,7 @@ export default function Home() {
 }
 ```
 
-- [ ] **Step 2: 구 컴포넌트 삭제**
+- [x] **Step 2: 구 컴포넌트 삭제**
 
 ```bash
 git rm -r src/components/sections
@@ -1298,7 +1298,7 @@ git rm src/components/ui/ProjectCard.tsx src/components/ui/ScrollReveal.tsx src/
 grep -rn "lib/utils" src/ || git rm src/lib/utils.ts
 ```
 
-- [ ] **Step 3: 전체 게이트 — lint + build**
+- [x] **Step 3: 전체 게이트 — lint + build**
 
 ```bash
 npm run lint
@@ -1307,7 +1307,7 @@ npm run build
 
 Expected: 둘 다 에러 0. 실패 시 임포트 누락/옛 토큰 잔존 여부 확인 (`grep -rn "surface\|on-surface\|accent-" src/`).
 
-- [ ] **Step 4: 커밋**
+- [x] **Step 4: 커밋**
 
 ```bash
 git add -A
@@ -1318,7 +1318,7 @@ git commit -m "feat: assemble The Minseok Times page and remove legacy sections"
 
 ### Task 11: 시각 QA + 마무리
 
-- [ ] **Step 1: 개발 서버 기동 후 3개 뷰포트 확인**
+- [x] **Step 1: 개발 서버 기동 후 3개 뷰포트 확인**
 
 ```bash
 npm run dev
@@ -1329,16 +1329,16 @@ http://localhost:3010 에서:
 - 768px (태블릿): 3칼럼 그리드 전환 확인
 - 1440px (데스크톱): 커스텀 커서, 호버 프리뷰 칩, 패럴랙스 동작
 
-- [ ] **Step 2: reduced-motion 검증**
+- [x] **Step 2: reduced-motion 검증**
 
 브라우저 DevTools → Rendering → "Emulate CSS prefers-reduced-motion: reduce" 설정 후:
 - 인트로 미표시, 티커 정지, 커서 미표시, 카운트업 즉시 최종값, 콘텐츠는 전부 보임
 
-- [ ] **Step 3: 링크 전수 확인**
+- [x] **Step 3: 링크 전수 확인**
 
 클릭 대상 7개: hr.minseok91.cloud / withhold.minseok91.cloud / grid.minseok91.cloud / rec.minseok91.cloud / shop.minseok91.cloud / github.com/qoxmfaktmxj / qoxmfaktmxj.github.io + mailto 2곳.
 
-- [ ] **Step 4: 발견된 문제 수정 후 최종 커밋**
+- [x] **Step 4: 발견된 문제 수정 후 최종 커밋**
 
 ```bash
 git add -A
@@ -1347,6 +1347,6 @@ git commit -m "fix: visual QA adjustments for newspaper layout"
 
 (수정 사항 없으면 이 커밋은 생략)
 
-- [ ] **Step 5: 결과 보고**
+- [x] **Step 5: 결과 보고**
 
 변경 요약, 스크린샷(가능하면 3개 뷰포트), 남은 이슈를 보고하고 merge 여부는 사용자에게 맡긴다. main에 직접 push 금지.
