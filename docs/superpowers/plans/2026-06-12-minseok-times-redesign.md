@@ -1104,7 +1104,7 @@ git commit -m "feat: add classified job-ad CTA, lab ads, and colophon footer"
 - Create: `src/components/newspaper/PrintIntro.tsx`
 - Create: `src/components/newspaper/InkCursor.tsx`
 
-- [ ] **Step 1: `src/components/newspaper/PrintIntro.tsx` 생성**
+- [x] **Step 1: `src/components/newspaper/PrintIntro.tsx` 생성**
 
 세션당 1회(sessionStorage), 총 1.8초, 클릭으로 스킵. 콘텐츠를 가리는 오버레이 방식이지만 LCP 텍스트는 DOM에 이미 존재.
 
@@ -1169,7 +1169,7 @@ export default function PrintIntro() {
 }
 ```
 
-- [ ] **Step 2: `src/components/newspaper/InkCursor.tsx` 생성**
+- [x] **Step 2: `src/components/newspaper/InkCursor.tsx` 생성**
 
 `pointer: fine` + 모션 허용 환경에서만 렌더. `data-cursor` 속성 가진 요소 호버 시 도장 라벨로 확대.
 
@@ -1235,7 +1235,7 @@ export default function InkCursor() {
 }
 ```
 
-- [ ] **Step 3: 커밋**
+- [x] **Step 3: 커밋**
 
 ```bash
 git add src/components/newspaper/PrintIntro.tsx src/components/newspaper/InkCursor.tsx
