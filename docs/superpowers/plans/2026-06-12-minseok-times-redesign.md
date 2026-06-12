@@ -848,7 +848,7 @@ git commit -m "feat: add three-column article section with parallax and count-up
 **Files:**
 - Create: `src/components/newspaper/FeatureStory.tsx`
 
-- [ ] **Step 1: `src/components/newspaper/FeatureStory.tsx` 생성**
+- [x] **Step 1: `src/components/newspaper/FeatureStory.tsx` 생성**
 
 다크(잉크) 배경 반전 섹션. 카드 호버 시 커서를 따라다니는 "LIVE" 프리뷰 칩 (`useMotionValue` + `useSpring`). 모바일(coarse pointer)에서는 칩 미표시, 카드 전체가 링크.
 
@@ -964,7 +964,7 @@ export default function FeatureStory() {
 }
 ```
 
-- [ ] **Step 2: 커밋**
+- [x] **Step 2: 커밋**
 
 ```bash
 git add src/components/newspaper/FeatureStory.tsx
