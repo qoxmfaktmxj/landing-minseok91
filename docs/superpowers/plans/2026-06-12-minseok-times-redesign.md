@@ -711,7 +711,7 @@ git commit -m "feat: add front page headline with per-character stamp animation"
 - Create: `src/components/newspaper/CountUp.tsx`
 - Create: `src/components/newspaper/ThreeColumns.tsx`
 
-- [ ] **Step 1: `src/components/newspaper/CountUp.tsx` 생성**
+- [x] **Step 1: `src/components/newspaper/CountUp.tsx` 생성**
 
 ```tsx
 "use client";
@@ -759,7 +759,7 @@ export default function CountUp({
 }
 ```
 
-- [ ] **Step 2: `src/components/newspaper/ThreeColumns.tsx` 생성**
+- [x] **Step 2: `src/components/newspaper/ThreeColumns.tsx` 생성**
 
 칼럼별 패럴랙스(스크롤 속도 차)는 `useScroll` + `useTransform`으로 y 오프셋만 다르게 준다.
 
@@ -834,7 +834,7 @@ export default function ThreeColumns() {
 }
 ```
 
-- [ ] **Step 3: 커밋**
+- [x] **Step 3: 커밋**
 
 ```bash
 git add src/components/newspaper/CountUp.tsx src/components/newspaper/ThreeColumns.tsx
