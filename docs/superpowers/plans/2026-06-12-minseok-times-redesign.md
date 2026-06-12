@@ -541,7 +541,7 @@ git commit -m "feat: add lenis smooth scroll provider"
 - Create: `src/components/newspaper/Masthead.tsx`
 - Create: `src/components/newspaper/BreakingTicker.tsx`
 
-- [ ] **Step 1: `src/components/newspaper/Masthead.tsx` 생성** (서버 컴포넌트, 정적)
+- [x] **Step 1: `src/components/newspaper/Masthead.tsx` 생성** (서버 컴포넌트, 정적)
 
 ```tsx
 import { masthead } from "@/data/siteContent";
@@ -569,7 +569,7 @@ export default function Masthead() {
 }
 ```
 
-- [ ] **Step 2: `src/components/newspaper/BreakingTicker.tsx` 생성**
+- [x] **Step 2: `src/components/newspaper/BreakingTicker.tsx` 생성**
 
 콘텐츠를 2벌 복제해 `translateX(-50%)` 루프 (CSS keyframes는 Task 1의 `.ticker-track`).
 
@@ -602,7 +602,7 @@ export default function BreakingTicker() {
 }
 ```
 
-- [ ] **Step 3: 커밋**
+- [x] **Step 3: 커밋**
 
 ```bash
 git add src/components/newspaper/Masthead.tsx src/components/newspaper/BreakingTicker.tsx
