@@ -616,7 +616,7 @@ git commit -m "feat: add masthead and breaking news ticker"
 **Files:**
 - Create: `src/components/newspaper/FrontPageHeadline.tsx`
 
-- [ ] **Step 1: `src/components/newspaper/FrontPageHeadline.tsx` 생성**
+- [x] **Step 1: `src/components/newspaper/FrontPageHeadline.tsx` 생성**
 
 글자 단위 stagger 등장 (스탬프 느낌). 텍스트는 항상 DOM에 존재하고 opacity/transform만 애니메이션.
 
@@ -696,7 +696,7 @@ export default function FrontPageHeadline() {
 }
 ```
 
-- [ ] **Step 2: 커밋**
+- [x] **Step 2: 커밋**
 
 ```bash
 git add src/components/newspaper/FrontPageHeadline.tsx
