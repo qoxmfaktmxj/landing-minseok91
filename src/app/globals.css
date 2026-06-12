@@ -87,4 +87,8 @@ a {
   .ticker-track {
     animation: none;
   }
+  [data-reduced-still] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }

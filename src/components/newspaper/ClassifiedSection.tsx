@@ -30,7 +30,7 @@ export default function ClassifiedSection() {
           </p>
           <a
             href={classified.urgentAd.ctaHref}
-            className="inline-block rounded-full bg-vermilion px-8 py-3 text-sm font-extrabold text-paper-white transition-transform hover:scale-105 active:scale-95"
+            className="inline-block rounded-full bg-vermilion px-8 py-3 text-sm font-extrabold text-paper-white motion-safe:transition-transform motion-safe:hover:scale-105 motion-safe:active:scale-95"
             data-cursor="contact"
           >
             {classified.urgentAd.ctaLabel}

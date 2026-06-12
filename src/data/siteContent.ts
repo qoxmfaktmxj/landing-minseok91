@@ -70,6 +70,8 @@ export interface FeatureStoryItem {
   result: string;
   url: string;
   urlLabel: string;
+  previewImage: string;
+  previewAlt: string;
   tech: string[];
   accessNote?: string;
 }
@@ -87,6 +89,8 @@ export const featureStories: FeatureStoryItem[] = [
       "로그인해서 바로 만져볼 수 있는 라이브 인사시스템. 조직·인사 데이터 관리의 핵심 흐름이 가볍게 돌아간다.",
     url: "https://hr.minseok91.cloud/",
     urlLabel: "hr.minseok91.cloud",
+    previewImage: "/images/hr-thumb-new.png",
+    previewAlt: "VIBE HR 라이브 인사시스템 화면 미리보기",
     tech: ["Next.js", "React", "PostgreSQL", "Prisma", "shadcn/ui"],
     accessNote: "로그인: admin / admin",
   },
@@ -102,6 +106,8 @@ export const featureStories: FeatureStoryItem[] = [
       "HR/페이롤 도메인 지식이 코드 구조로 증명되는 출처 중심 실무 레퍼런스.",
     url: "https://withhold.minseok91.cloud/",
     urlLabel: "withhold.minseok91.cloud",
+    previewImage: "/images/withhold-thumb.png",
+    previewAlt: "원천징수 레퍼런스 라이브 화면 미리보기",
     tech: ["Next.js", "TypeScript", "Tailwind v4", "MDX", "zod"],
   },
 ];

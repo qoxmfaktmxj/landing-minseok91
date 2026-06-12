@@ -1,18 +1,36 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 const STORAGE_KEY = "minseok-times-intro-seen";
 
+function hasSeenIntro() {
+  try {
+    return sessionStorage.getItem(STORAGE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function markIntroSeen() {
+  try {
+    sessionStorage.setItem(STORAGE_KEY, "1");
+  } catch {
+    // Storage can be unavailable in restricted browser modes; the intro still runs.
+  }
+}
+
 export default function PrintIntro() {
   const [show, setShow] = useState(false);
+  const skipButtonRef = useRef<HTMLButtonElement>(null);
   const reduced = useReducedMotion();
+  const skipIntro = useCallback(() => setShow(false), []);
 
   useEffect(() => {
     if (reduced) return;
-    if (sessionStorage.getItem(STORAGE_KEY)) return;
-    sessionStorage.setItem(STORAGE_KEY, "1");
+    if (hasSeenIntro()) return;
+    markIntroSeen();
     const showTimer = setTimeout(() => setShow(true), 0);
     const hideTimer = setTimeout(() => setShow(false), 1800);
     return () => {
@@ -21,15 +39,46 @@ export default function PrintIntro() {
     };
   }, [reduced]);
 
+  useEffect(() => {
+    if (!show) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const focusTimer = setTimeout(() => skipButtonRef.current?.focus(), 0);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        skipIntro();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      clearTimeout(focusTimer);
+      window.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [show, skipIntro]);
+
   return (
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed inset-0 z-[100] flex cursor-pointer items-center justify-center bg-paper"
+          className="fixed inset-0 z-[100] flex cursor-pointer items-center justify-center overscroll-none bg-paper"
           exit={{ opacity: 0, transition: { duration: 0.4 } }}
-          onClick={() => setShow(false)}
-          role="presentation"
+          onClick={skipIntro}
+          role="dialog"
+          aria-label="The Minseok Times 인쇄 인트로"
+          aria-modal="true"
         >
+          <button
+            ref={skipButtonRef}
+            type="button"
+            className="absolute right-5 top-5 border border-ink bg-paper px-3 py-2 font-mono text-[10px] font-bold tracking-[0.18em] text-ink transition-colors hover:bg-ink hover:text-paper motion-reduce:transition-none"
+            onClick={(event) => {
+              event.stopPropagation();
+              skipIntro();
+            }}
+          >
+            SKIP
+          </button>
           <div className="text-center">
             <motion.p
               className="font-serif text-4xl font-black tracking-tight text-ink md:text-6xl"

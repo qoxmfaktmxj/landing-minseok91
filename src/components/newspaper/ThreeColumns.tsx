@@ -1,12 +1,7 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { useEffect, useRef, useSyncExternalStore } from "react";
+import { motion, useMotionValue, useReducedMotion } from "framer-motion";
 import { profileColumn, pullQuote, stats } from "@/data/siteContent";
 import CountUp from "./CountUp";
 
@@ -22,17 +17,68 @@ function useMediaQuery(query: string) {
   );
 }
 
+function useSectionParallax(
+  sectionRef: React.RefObject<HTMLElement | null>,
+  enabled: boolean,
+  from: number,
+  to: number,
+) {
+  const y = useMotionValue(0);
+
+  useEffect(() => {
+    if (!enabled) {
+      y.set(0);
+      return;
+    }
+
+    let frameId = 0;
+    const update = () => {
+      frameId = 0;
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const rect = section.getBoundingClientRect();
+      const total = window.innerHeight + rect.height;
+      const rawProgress = (window.innerHeight - rect.top) / total;
+      const progress = Math.min(1, Math.max(0, rawProgress));
+      y.set(from + (to - from) * progress);
+    };
+
+    const scheduleUpdate = () => {
+      if (frameId) return;
+      frameId = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+
+    return () => {
+      if (frameId) {
+        cancelAnimationFrame(frameId);
+      }
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+    };
+  }, [enabled, from, sectionRef, to, y]);
+
+  return y;
+}
+
 export default function ThreeColumns() {
+  const sectionRef = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const { scrollYProgress } = useScroll();
-  const y1 = useTransform(scrollYProgress, [0, 1], [24, -24]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [48, -48]);
-  const y3 = useTransform(scrollYProgress, [0, 1], [12, -12]);
   const shouldParallax = isDesktop && !reduced;
+  const y1 = useSectionParallax(sectionRef, shouldParallax, 24, -24);
+  const y2 = useSectionParallax(sectionRef, shouldParallax, 48, -48);
+  const y3 = useSectionParallax(sectionRef, shouldParallax, 12, -12);
 
   return (
-    <section className="relative border-b border-ink px-5 md:px-10">
+    <section
+      ref={sectionRef}
+      className="relative border-b border-ink px-5 md:px-10"
+    >
       <div className="mx-auto grid max-w-container grid-cols-1 md:grid-cols-3">
         <motion.article
           style={{ y: shouldParallax ? y1 : 0 }}
