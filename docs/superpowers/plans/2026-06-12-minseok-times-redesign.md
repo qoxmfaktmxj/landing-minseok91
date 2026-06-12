@@ -291,7 +291,7 @@ git commit -m "feat: newspaper design tokens, fonts, and metadata for The Minseo
 - Modify: `src/data/siteContent.ts` (전면 교체)
 - Delete: `src/data/projects.ts` (siteContent로 통합)
 
-- [ ] **Step 1: `src/data/siteContent.ts` 전면 교체**
+- [x] **Step 1: `src/data/siteContent.ts` 전면 교체**
 
 ```ts
 export const masthead = {
@@ -452,7 +452,7 @@ export const colophon = {
 };
 ```
 
-- [ ] **Step 2: `src/data/projects.ts` 삭제**
+- [x] **Step 2: `src/data/projects.ts` 삭제**
 
 ```bash
 rm src/data/projects.ts
@@ -460,7 +460,7 @@ rm src/data/projects.ts
 
 (이 파일을 임포트하는 옛 컴포넌트는 Task 9에서 함께 삭제된다. 이 시점 빌드 실패는 무시.)
 
-- [ ] **Step 3: 커밋**
+- [x] **Step 3: 커밋**
 
 ```bash
 git add src/data/siteContent.ts
