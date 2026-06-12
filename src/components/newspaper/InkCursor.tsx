@@ -33,8 +33,8 @@ export default function InkCursor() {
         activated = true;
         setEnabled(true);
       }
-      mx.set(e.clientX);
-      my.set(e.clientY);
+      mx.set(e.clientX - 26);
+      my.set(e.clientY - 26);
       const target = (e.target as HTMLElement).closest<HTMLElement>(
         "[data-cursor]",
       );
@@ -48,11 +48,10 @@ export default function InkCursor() {
 
   return (
     <motion.div
-      className="pointer-events-none fixed left-0 top-0 z-[90] flex items-center justify-center rounded-full bg-vermilion font-mono text-[9px] font-bold text-paper-white"
-      style={{ x: sx, y: sy, translateX: "-50%", translateY: "-50%" }}
+      className="pointer-events-none fixed left-0 top-0 z-[90] flex h-[52px] w-[52px] items-center justify-center rounded-full bg-vermilion font-mono text-[9px] font-bold text-paper-white"
+      style={{ x: sx, y: sy }}
       animate={{
-        width: label ? 52 : 10,
-        height: label ? 52 : 10,
+        scale: label ? 1 : 0.2,
         opacity: 1,
       }}
       transition={{ type: "spring", stiffness: 400, damping: 28 }}

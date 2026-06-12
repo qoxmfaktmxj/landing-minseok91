@@ -1318,7 +1318,7 @@ git commit -m "feat: assemble The Minseok Times page and remove legacy sections"
 
 ### Task 11: 시각 QA + 마무리
 
-- [ ] **Step 1: 개발 서버 기동 후 3개 뷰포트 확인**
+- [x] **Step 1: 개발 서버 기동 후 3개 뷰포트 확인**
 
 ```bash
 npm run dev
@@ -1329,16 +1329,16 @@ http://localhost:3010 에서:
 - 768px (태블릿): 3칼럼 그리드 전환 확인
 - 1440px (데스크톱): 커스텀 커서, 호버 프리뷰 칩, 패럴랙스 동작
 
-- [ ] **Step 2: reduced-motion 검증**
+- [x] **Step 2: reduced-motion 검증**
 
 브라우저 DevTools → Rendering → "Emulate CSS prefers-reduced-motion: reduce" 설정 후:
 - 인트로 미표시, 티커 정지, 커서 미표시, 카운트업 즉시 최종값, 콘텐츠는 전부 보임
 
-- [ ] **Step 3: 링크 전수 확인**
+- [x] **Step 3: 링크 전수 확인**
 
 클릭 대상 7개: hr.minseok91.cloud / withhold.minseok91.cloud / grid.minseok91.cloud / rec.minseok91.cloud / shop.minseok91.cloud / github.com/qoxmfaktmxj / qoxmfaktmxj.github.io + mailto 2곳.
 
-- [ ] **Step 4: 발견된 문제 수정 후 최종 커밋**
+- [x] **Step 4: 발견된 문제 수정 후 최종 커밋**
 
 ```bash
 git add -A
@@ -1347,6 +1347,6 @@ git commit -m "fix: visual QA adjustments for newspaper layout"
 
 (수정 사항 없으면 이 커밋은 생략)
 
-- [ ] **Step 5: 결과 보고**
+- [x] **Step 5: 결과 보고**
 
 변경 요약, 스크린샷(가능하면 3개 뷰포트), 남은 이슈를 보고하고 merge 여부는 사용자에게 맡긴다. main에 직접 push 금지.

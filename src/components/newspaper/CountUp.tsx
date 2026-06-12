@@ -21,11 +21,12 @@ export default function CountUp({
   const reduced = useReducedMotion();
 
   useEffect(() => {
-    if (to === null || !inView || !ref.current) return;
+    if (to === null || !ref.current) return;
     if (reduced) {
       ref.current.textContent = display;
       return;
     }
+    if (!inView) return;
     const suffix = display.replace(String(to), "");
     const controls = animate(value, to, {
       duration: 1.2,

@@ -9,7 +9,7 @@ export default function Masthead() {
           <span className="hidden md:inline">{masthead.statusLine}</span>
           <span>{masthead.priceLine}</span>
         </div>
-        <h1 className="my-5 text-center font-serif text-[13vw] font-black leading-none tracking-tight text-ink md:my-8 md:text-8xl">
+        <h1 className="my-5 whitespace-nowrap text-center font-serif text-[9vw] font-black leading-none tracking-tight text-ink md:my-8 md:text-[8vw] lg:text-8xl">
           The <span className="text-vermilion">Minseok</span> Times
         </h1>
         <div className="rule-double flex items-center justify-between py-2 font-mono text-[10px] tracking-[0.15em] text-ink-soft md:text-xs">

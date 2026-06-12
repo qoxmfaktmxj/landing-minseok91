@@ -13,7 +13,7 @@ export default function ClassifiedSection() {
 
         <motion.div
           className="mx-auto max-w-2xl -rotate-1 border-2 border-dashed border-vermilion bg-paper-white p-8 text-center md:p-12"
-          initial={{ opacity: 0, y: 24, rotate: -1 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0, rotate: -1 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5 }}
@@ -45,7 +45,7 @@ export default function ClassifiedSection() {
               target="_blank"
               rel="noopener noreferrer"
               className="border border-ink bg-paper-white p-5 transition-colors hover:bg-paper"
-              initial={{ opacity: 0, y: 16 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.4, delay: i * 0.08 }}

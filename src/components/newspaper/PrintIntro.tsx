@@ -40,9 +40,9 @@ export default function PrintIntro() {
               The <span className="text-vermilion">Minseok</span> Times
             </motion.p>
             <motion.div
-              className="mx-auto mt-4 h-0.5 bg-ink"
-              initial={{ width: 0 }}
-              animate={{ width: "100%" }}
+              className="mx-auto mt-4 h-0.5 w-full origin-left bg-ink"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
               transition={{ delay: 0.4, duration: 0.5 }}
             />
             <motion.p
