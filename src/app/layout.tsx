@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Serif_KR } from "next/font/google";
 import localFont from "next/font/local";
 import MotionProvider from "@/components/providers/MotionProvider";
+import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import "./globals.css";
 
 const notoSerifKr = Noto_Serif_KR({
@@ -68,7 +69,9 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <MotionProvider>{children}</MotionProvider>
+        <MotionProvider>
+          <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        </MotionProvider>
       </body>
     </html>
   );

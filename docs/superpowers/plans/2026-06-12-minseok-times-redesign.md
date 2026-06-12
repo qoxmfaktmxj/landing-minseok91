@@ -476,7 +476,7 @@ git commit -m "feat: rewrite site content as newspaper copy schema"
 - Create: `src/components/providers/SmoothScrollProvider.tsx`
 - Modify: `src/app/layout.tsx` (프로바이더 적용)
 
-- [ ] **Step 1: `src/components/providers/SmoothScrollProvider.tsx` 생성**
+- [x] **Step 1: `src/components/providers/SmoothScrollProvider.tsx` 생성**
 
 ```tsx
 "use client";
@@ -510,7 +510,7 @@ export default function SmoothScrollProvider({
 }
 ```
 
-- [ ] **Step 2: `src/app/layout.tsx`의 body 래핑 수정**
+- [x] **Step 2: `src/app/layout.tsx`의 body 래핑 수정**
 
 ```tsx
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
@@ -526,7 +526,7 @@ body 내부를 다음으로 교체:
       </body>
 ```
 
-- [ ] **Step 3: 커밋**
+- [x] **Step 3: 커밋**
 
 ```bash
 git add src/components/providers/SmoothScrollProvider.tsx src/app/layout.tsx
