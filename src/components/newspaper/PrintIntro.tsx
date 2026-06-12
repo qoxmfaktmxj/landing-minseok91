@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 const STORAGE_KEY = "minseok-times-intro-seen";
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 function hasSeenIntro() {
   try {
@@ -23,7 +25,9 @@ function markIntroSeen() {
 
 export default function PrintIntro() {
   const [show, setShow] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const skipButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
   const reduced = useReducedMotion();
   const skipIntro = useCallback(() => setShow(false), []);
 
@@ -42,11 +46,47 @@ export default function PrintIntro() {
   useEffect(() => {
     if (!show) return;
     const previousOverflow = document.body.style.overflow;
+    previousFocusRef.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
     document.body.style.overflow = "hidden";
     const focusTimer = setTimeout(() => skipButtonRef.current?.focus(), 0);
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         skipIntro();
+        return;
+      }
+      if (event.key !== "Tab") {
+        return;
+      }
+
+      const focusableElements = Array.from(
+        dialogRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR) ??
+          [],
+      ).filter((element) => element.offsetParent !== null);
+
+      if (focusableElements.length === 0) {
+        event.preventDefault();
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      const activeElement = document.activeElement;
+
+      if (
+        !(activeElement instanceof HTMLElement) ||
+        !dialogRef.current?.contains(activeElement)
+      ) {
+        event.preventDefault();
+        firstElement.focus();
+      } else if (event.shiftKey && activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
       }
     };
     window.addEventListener("keydown", onKeyDown);
@@ -54,6 +94,12 @@ export default function PrintIntro() {
       clearTimeout(focusTimer);
       window.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = previousOverflow;
+      if (
+        previousFocusRef.current &&
+        document.contains(previousFocusRef.current)
+      ) {
+        previousFocusRef.current.focus();
+      }
     };
   }, [show, skipIntro]);
 
@@ -61,12 +107,14 @@ export default function PrintIntro() {
     <AnimatePresence>
       {show && (
         <motion.div
+          ref={dialogRef}
           className="fixed inset-0 z-[100] flex cursor-pointer items-center justify-center overscroll-none bg-paper"
           exit={{ opacity: 0, transition: { duration: 0.4 } }}
           onClick={skipIntro}
           role="dialog"
           aria-label="The Minseok Times 인쇄 인트로"
           aria-modal="true"
+          tabIndex={-1}
         >
           <button
             ref={skipButtonRef}

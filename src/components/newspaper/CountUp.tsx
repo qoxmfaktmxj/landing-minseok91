@@ -22,12 +22,10 @@ export default function CountUp({
 
   useEffect(() => {
     if (to === null || !ref.current) return;
-    if (reduced) {
-      ref.current.textContent = display;
-      return;
-    }
-    if (!inView) return;
+    if (reduced || !inView) return;
     const suffix = display.replace(String(to), "");
+    value.set(0);
+    ref.current.textContent = `0${suffix}`;
     const controls = animate(value, to, {
       duration: 1.2,
       ease: "easeOut",
@@ -40,5 +38,5 @@ export default function CountUp({
     return () => controls.stop();
   }, [inView, to, display, value, reduced]);
 
-  return <span ref={ref}>{to === null ? display : `0`}</span>;
+  return <span ref={ref}>{display}</span>;
 }
