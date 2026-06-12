@@ -156,6 +156,18 @@ export const portfolioProjects: PortfolioProject[] = [
     linkLabel: "사이트 열기",
     evidence: "STORE FRONT",
   },
+  {
+    id: "withhold-tax",
+    title: "원천징수 레퍼런스",
+    category: "Tax Reference / Static Web",
+    summary:
+      "법령 조문·시행일·검증상태가 모든 핵심 사실에 박힌 출처 중심 원천징수 실무 레퍼런스",
+    tech: ["Next.js", "TypeScript", "Tailwind v4", "MDX", "zod"],
+
+    href: "https://withhold.minseok91.cloud/",
+    linkLabel: "사이트 열기",
+    evidence: "TAX REF",
+  },
 ];
 
 export const writingItems = [
