@@ -22,7 +22,7 @@
 
 ### Task 0: 브랜치 생성
 
-- [ ] **Step 1: 작업 브랜치 생성**
+- [x] **Step 1: 작업 브랜치 생성**
 
 ```bash
 git checkout -b redesign/minseok-times
