@@ -23,8 +23,8 @@ function StoryCard({ story }: { story: FeatureStoryItem }) {
   const previewBadge = story.docMode ? "README" : "LIVE PREVIEW";
   const deskLabel = story.docMode ? "DOCUMENT DESK" : "SCREENSHOT DESK";
   const deskCopy = story.docMode
-    ? "실제 배포된 문서의 첫 인상을 신문 지면 안에서 먼저 확인한다. 커서를 올리면 같은 프리뷰가 손끝을 따라온다."
-    : "실제 라이브 화면의 첫 인상을 신문 지면 안에서 먼저 확인한다. 커서를 올리면 같은 프리뷰가 손끝을 따라온다.";
+    ? "지면에서 미리 보고, 카드를 누르면 전체 문서가 새 탭에서 열린다."
+    : "지면에서 미리 보고, 카드를 누르면 실제 서비스가 새 탭에서 열린다.";
   const ctaVerb = story.docMode ? "READ DOC" : "OPEN LIVE";
 
   const onMouseMove = (e: React.MouseEvent) => {

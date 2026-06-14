@@ -118,7 +118,7 @@ export const classified = {
   sectionTitle: "CLASSIFIED — 광고면",
   urgentAd: {
     badge: "긴급구인 · URGENT",
-    title: "백엔드 개발자 구함 — 단, 1명뿐",
+    title: "백엔드 개발자 — 재고 1개",
     body: "HR 도메인에 강한 9년차 백엔드 개발자. 지금은 AI 네이티브로 개발하며, 조직의 AI 전환(AX)까지 이끈다. 재고 소진 임박.",
     ctaLabel: "지금 연락하기 →",
     ctaHref: "mailto:qoxmfaktmxj@naver.com",
