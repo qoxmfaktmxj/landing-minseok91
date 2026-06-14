@@ -105,7 +105,7 @@ export const featureStories: FeatureStoryItem[] = [
     approach:
       "모든 핵심 사실에 출처(조문)·시행일·검증상태를 스키마(zod)로 강제했다. 출처 없는 문장은 빌드가 거부한다.",
     result:
-      "HR/페이롤 도메인 지식이 코드 구조로 증명되는 출처 중심 실무 레퍼런스.",
+      "HR 도메인 지식을 한층 끌어올려 주는, 출처 중심의 실무 레퍼런스.",
     url: "https://withhold.minseok91.cloud/",
     urlLabel: "withhold.minseok91.cloud",
     previewImage: "/images/withhold-thumb.png",
