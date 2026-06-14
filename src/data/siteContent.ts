@@ -99,7 +99,7 @@ export const featureStories: FeatureStoryItem[] = [
   {
     id: "withhold-tax",
     kicker: "연속 기획 — HR 도메인의 깊이",
-    title: "원천징수 레퍼런스 — 모든 사실에 법령 조문이 박혀 있다",
+    title: "법령으로 검증되는 원천징수 실무 레퍼런스",
     problem:
       "원천징수 실무는 법령 조문·시행일·개정 이력이 흩어져 있어 '이 값이 지금 맞는지' 검증하기 어렵다.",
     approach:

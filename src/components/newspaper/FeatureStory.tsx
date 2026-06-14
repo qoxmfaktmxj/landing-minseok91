@@ -21,10 +21,6 @@ function StoryCard({ story }: { story: FeatureStoryItem }) {
   const sy = useSpring(my, { stiffness: 300, damping: 30 });
 
   const previewBadge = story.docMode ? "README" : "LIVE PREVIEW";
-  const deskLabel = story.docMode ? "DOCUMENT DESK" : "SCREENSHOT DESK";
-  const deskCopy = story.docMode
-    ? "지면에서 미리 보고, 카드를 누르면 전체 문서가 새 탭에서 열린다."
-    : "지면에서 미리 보고, 카드를 누르면 실제 서비스가 새 탭에서 열린다.";
   const ctaVerb = story.docMode ? "READ DOC" : "OPEN LIVE";
 
   const onMouseMove = (e: React.MouseEvent) => {
@@ -52,8 +48,8 @@ function StoryCard({ story }: { story: FeatureStoryItem }) {
       <h3 className="mb-6 text-2xl font-black leading-tight tracking-tight text-paper md:text-4xl">
         {story.title}
       </h3>
-      <div className="mb-6 grid grid-cols-1 gap-5 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="relative aspect-[16/10] overflow-hidden border border-paper/20 bg-paper/5">
+      <div className="mb-6">
+        <div className="relative aspect-[16/10] overflow-hidden border border-paper/20 bg-paper/5 lg:max-w-[62%]">
           <Image
             src={story.previewImage}
             alt={story.previewAlt}
@@ -64,14 +60,6 @@ function StoryCard({ story }: { story: FeatureStoryItem }) {
           <span className="absolute left-3 top-3 bg-vermilion px-2 py-1 font-mono text-[9px] font-bold tracking-[0.2em] text-paper-white">
             {previewBadge}
           </span>
-        </div>
-        <div className="flex min-h-28 flex-col justify-between border border-paper/15 bg-paper/5 p-4">
-          <span className="font-mono text-[10px] tracking-[0.25em] text-paper/50">
-            {deskLabel}
-          </span>
-          <p className="mt-3 text-sm leading-relaxed text-paper/70">
-            {deskCopy}
-          </p>
         </div>
       </div>
       <div className="mb-6 grid grid-cols-1 gap-5 md:grid-cols-3">
