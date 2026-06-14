@@ -1,4 +1,5 @@
 import { tickerItems } from "@/data/siteContent";
+import NewspaperMark from "./NewspaperMark";
 
 export default function BreakingTicker() {
   return (
@@ -16,7 +17,7 @@ export default function BreakingTicker() {
                     {item.label}
                   </strong>
                   {item.text}
-                  <span className="ml-6 text-ink-faint">✦</span>
+                  <NewspaperMark className="ml-6 h-3 w-3 translate-y-[2px] text-ink-faint" />
                 </span>
               ))}
             </div>

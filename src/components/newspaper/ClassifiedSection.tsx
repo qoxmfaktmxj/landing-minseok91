@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { classified, labAds } from "@/data/siteContent";
+import NewspaperMark from "./NewspaperMark";
 
 export default function ClassifiedSection() {
   return (
@@ -52,7 +53,7 @@ export default function ClassifiedSection() {
               data-cursor="open"
             >
               <span className="mb-1 block font-mono text-[10px] tracking-[0.2em] text-vermilion">
-                LAB ✦
+                LAB <NewspaperMark className="ml-1 h-3 w-3 translate-y-[2px]" />
               </span>
               <span className="block text-base font-extrabold text-ink">
                 {ad.name}
