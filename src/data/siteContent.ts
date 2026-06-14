@@ -1,7 +1,7 @@
 export const masthead = {
   cityLine: "SEOUL, KOREA",
-  statusLine: "오늘의 커밋: 47 ✦ 빌드: PASSING",
-  priceLine: "FREE · 무가지",
+  statusLine: "BUILD: PASSING ✦ DEPLOY: LIVE",
+  priceLine: "무료 · FREE COPY",
   volume: "VOL. 9 — NO. 2026",
   tagline: "HR × AI × AX TRANSFORMATION",
   established: "EST. 2017",
@@ -15,15 +15,15 @@ export interface TickerItem {
 export const tickerItems: TickerItem[] = [
   {
     label: "BREAKING",
-    text: "9년차 HR 도메인 개발자, 조직 전체를 AI로 일하게 만드는 중",
+    text: "9년차 HR 도메인 개발자, AI를 활용해 팀 전체의 생산성을 끌어올린다",
   },
   {
     label: "속보",
-    text: "레거시 인사시스템, 운영 중단 없이 현대화 완료",
+    text: "레거시 인사시스템에 자체 구축한 하네스 엔지니어링 적용 — AI가 코드베이스를 읽고 답하기 시작",
   },
   {
     label: "단독",
-    text: "AI를 코드 생성기가 아닌 설계 파트너로 쓰는 개발자 포착",
+    text: "같은 AI, 다른 결과 — 생산성을 곱하는 개발자",
   },
 ];
 
@@ -34,20 +34,20 @@ export interface HeadlineSegment {
 
 export const frontPage = {
   headline: [
-    [{ text: "조직의 " }, { text: "AX 전환", marker: true }, { text: "," }],
-    [{ text: "한 사람에서 시작된다" }],
+    [{ text: "AI를 제대로 쓰는 법", marker: true }, { text: "," }],
+    [{ text: "결과로 증명하다" }],
   ] as HeadlineSegment[][],
-  lede: "HR 시스템을 9년간 만들어온 개발자가 AI를 도구가 아닌 동료로 끌어들였다. 기획부터 설계, 구현, 운영까지 — 일하는 방식 전체가 바뀌고 있다.",
+  lede: "개발자는 이제 AI를 도구가 아닌 동료로 끌어들여야 한다. 기획부터 설계, 구현, 운영 자동화까지 — 일하는 방식 전체가 바뀌고 있다.",
   byline: "BY KIM MINSEOK — AX ENGINEER · 본지 단독",
 };
 
 export const profileColumn = {
   kicker: "PROFILE — 인물",
-  title: "“AI는 코드 생성기가 아니라 설계 파트너”",
-  body: "사람, 조직, 권한, 공통코드가 얽힌 엔터프라이즈 HR 도메인을 실무 문맥으로 이해한다. 새 도구는 빠르게 익히되, 실제 문제를 푸는지 먼저 검증한다. AI를 탐색·설계 보조·문서화 가속 장치로 쓰는 것이 그의 방식이다.",
+  title: "도메인 전문성 × AI = 몇 배의 생산성",
+  body: "HR 도메인에 강점을 가진 9년차 백엔드 개발자. 지금은 AI 네이티브로 개발하며 조직의 AI 전환(AX)을 이끈다. 사내 AI TFT를 맡아 직접 만든 하네스 엔지니어링을 팀에 배포했고, 노후 사내 시스템을 사내 LLM 위키로 통합하는 중이다. 도구를 쫓기보다 실제 문제를 푸는지 먼저 검증하는 것이 그의 방식이다.",
 };
 
-export const pullQuote = "빅뱅 교체보다,\n멈추지 않는\n점진적 현대화.";
+export const pullQuote = "AI에게 먼저,\n코드베이스를\n읽는 눈을 준다.";
 
 export interface StatItem {
   value: number | null;
@@ -74,25 +74,27 @@ export interface FeatureStoryItem {
   previewAlt: string;
   tech: string[];
   accessNote?: string;
+  docMode?: boolean;
 }
 
 export const featureStories: FeatureStoryItem[] = [
   {
-    id: "vibe-hr",
+    id: "ehr-harness",
     kicker: "특집 — FEATURE STORY",
-    title: "경량 인사시스템 'VIBE HR', 최신 스택으로 다시 태어나다",
+    title: "레거시 인사시스템에 ‘AI 코딩 하네스’를 입히다",
     problem:
-      "무겁고 노후한 인사시스템은 작은 변경에도 큰 비용이 든다. 현업은 기다리다 지치고, 개발자는 레거시에 갇힌다.",
+      "Oracle 프로시저로 뒤엉킨 레거시 인사시스템(EHR)은 구조가 방대해 AI 코딩 에이전트가 맥락을 잡지 못한다. 엉뚱한 답과 코드가 나오는 이유다.",
     approach:
-      "Next.js + Prisma 경량 스택으로 핵심 인사 도메인을 재구성했다. AI 활용 개발로 설계부터 문서화까지 한 흐름으로 연결해 MVP 속도를 끌어올렸다.",
+      "“하네스 만들어줘” 한 마디로 EHR 프로젝트를 심층 분석해, 프로젝트에 맞춤화된 하네스(규칙·지식·도구 패키지)를 자동 생성하는 Claude Code 플러그인을 직접 설계하고 구축했다.",
     result:
-      "로그인해서 바로 만져볼 수 있는 라이브 인사시스템. 조직·인사 데이터 관리의 핵심 흐름이 가볍게 돌아간다.",
-    url: "https://hr.minseok91.cloud/",
-    urlLabel: "hr.minseok91.cloud",
-    previewImage: "/images/hr-thumb-new.png",
-    previewAlt: "VIBE HR 라이브 인사시스템 화면 미리보기",
-    tech: ["Next.js", "React", "PostgreSQL", "Prisma", "shadcn/ui"],
-    accessNote: "로그인: admin / admin",
+      "팀에 배포해 동료 약 20명이 사용 중. AI가 레거시 코드베이스를 이해하고, 답하고, 맞춤 코드까지 생성하는 환경이 완성됐다.",
+    url: "/README_HARNESS.html",
+    urlLabel: "README_HARNESS",
+    previewImage: "/images/harness-thumb.png",
+    previewAlt: "EHR Harness Plugin README 화면 미리보기",
+    tech: ["Claude Code Plugin", "Oracle / Tibero", "MyBatis", "superpowers"],
+    accessNote: "사내 배포 · 팀원 약 20명 사용",
+    docMode: true,
   },
   {
     id: "withhold-tax",
@@ -116,8 +118,8 @@ export const classified = {
   sectionTitle: "CLASSIFIED — 광고면",
   urgentAd: {
     badge: "긴급구인 · URGENT",
-    title: "AX 엔지니어 구함 — 단, 1명뿐",
-    body: "HR 도메인 9년 + AI 네이티브 개발. 귀사의 AI 전환을 이끌 사람. 재고 소진 임박.",
+    title: "백엔드 개발자 구함 — 단, 1명뿐",
+    body: "HR 도메인에 강한 9년차 백엔드 개발자. 지금은 AI 네이티브로 개발하며, 조직의 AI 전환(AX)까지 이끈다. 재고 소진 임박.",
     ctaLabel: "지금 연락하기 →",
     ctaHref: "mailto:qoxmfaktmxj@naver.com",
   },
@@ -131,6 +133,12 @@ export interface LabAd {
 }
 
 export const labAds: LabAd[] = [
+  {
+    id: "vibe-hr",
+    name: "VIBE HR",
+    description: "경량 인사시스템 라이브 데모 (admin / admin)",
+    href: "https://hr.minseok91.cloud/",
+  },
   {
     id: "vibe-grid",
     name: "VibeGrid",

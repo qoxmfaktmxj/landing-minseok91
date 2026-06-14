@@ -20,6 +20,13 @@ function StoryCard({ story }: { story: FeatureStoryItem }) {
   const sx = useSpring(mx, { stiffness: 300, damping: 30 });
   const sy = useSpring(my, { stiffness: 300, damping: 30 });
 
+  const previewBadge = story.docMode ? "README" : "LIVE PREVIEW";
+  const deskLabel = story.docMode ? "DOCUMENT DESK" : "SCREENSHOT DESK";
+  const deskCopy = story.docMode
+    ? "실제 배포된 문서의 첫 인상을 신문 지면 안에서 먼저 확인한다. 커서를 올리면 같은 프리뷰가 손끝을 따라온다."
+    : "실제 라이브 화면의 첫 인상을 신문 지면 안에서 먼저 확인한다. 커서를 올리면 같은 프리뷰가 손끝을 따라온다.";
+  const ctaVerb = story.docMode ? "READ DOC" : "OPEN LIVE";
+
   const onMouseMove = (e: React.MouseEvent) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
@@ -55,16 +62,15 @@ function StoryCard({ story }: { story: FeatureStoryItem }) {
             className="object-cover opacity-90 grayscale transition duration-500 group-hover:scale-[1.03] group-hover:opacity-100 group-hover:grayscale-0 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
           />
           <span className="absolute left-3 top-3 bg-vermilion px-2 py-1 font-mono text-[9px] font-bold tracking-[0.2em] text-paper-white">
-            LIVE PREVIEW
+            {previewBadge}
           </span>
         </div>
         <div className="flex min-h-28 flex-col justify-between border border-paper/15 bg-paper/5 p-4">
           <span className="font-mono text-[10px] tracking-[0.25em] text-paper/50">
-            SCREENSHOT DESK
+            {deskLabel}
           </span>
           <p className="mt-3 text-sm leading-relaxed text-paper/70">
-            실제 라이브 화면의 첫 인상을 신문 지면 안에서 먼저 확인한다.
-            커서를 올리면 같은 프리뷰가 손끝을 따라온다.
+            {deskCopy}
           </p>
         </div>
       </div>
@@ -98,7 +104,7 @@ function StoryCard({ story }: { story: FeatureStoryItem }) {
         )}
       </div>
       <span className="mt-6 block font-mono text-xs tracking-widest text-vermilion-soft">
-        OPEN LIVE — {story.urlLabel} ↗
+        {ctaVerb} — {story.urlLabel} ↗
       </span>
 
       {!reduced && hovered && (
@@ -118,7 +124,7 @@ function StoryCard({ story }: { story: FeatureStoryItem }) {
             />
           </span>
           <span className="mt-2 block font-mono text-[10px] font-bold tracking-widest text-ink">
-            OPEN LIVE — {story.urlLabel} ↗
+            {ctaVerb} — {story.urlLabel} ↗
           </span>
         </motion.span>
       )}
