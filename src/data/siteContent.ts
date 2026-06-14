@@ -34,10 +34,10 @@ export interface HeadlineSegment {
 
 export const frontPage = {
   headline: [
-    [{ text: "AI를 제대로 쓰는 법", marker: true }, { text: "," }],
-    [{ text: "결과로 증명하다" }],
+    [{ text: "AI를 제대로 쓴다는 것" }],
+    [{ text: "— " }, { text: "결과가", marker: true }, { text: " 증명한다" }],
   ] as HeadlineSegment[][],
-  lede: "개발자는 이제 AI를 도구가 아닌 동료로 끌어들여야 한다. 기획부터 설계, 구현, 운영 자동화까지 — 일하는 방식 전체가 바뀌고 있다.",
+  lede: "사내 AI TFT를 이끌고 하네스를 팀에 배포했다. 레거시 인사시스템까지 AI가 이해하게 만든, 결과로 증명하는 개발자.",
   byline: "BY KIM MINSEOK — AX ENGINEER · 본지 단독",
 };
 
