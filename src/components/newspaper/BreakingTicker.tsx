@@ -11,13 +11,13 @@ export default function BreakingTicker() {
               {tickerItems.map((item) => (
                 <span
                   key={`${dup}-${item.label}-${item.text}`}
-                  className="mx-6 font-mono text-[11px] tracking-[0.2em] md:text-xs"
+                  className="mx-6 inline-flex items-center font-mono text-[11px] tracking-[0.2em] md:text-xs"
                 >
                   <strong className="mr-2 font-bold text-vermilion-soft">
                     {item.label}
                   </strong>
                   {item.text}
-                  <NewspaperMark className="ml-6 h-3 w-3 translate-y-[2px] text-ink-faint" />
+                  <NewspaperMark className="ml-6 h-3 w-3 text-ink-faint" />
                 </span>
               ))}
             </div>
