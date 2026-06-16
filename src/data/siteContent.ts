@@ -157,6 +157,12 @@ export const labAds: LabAd[] = [
     description: "인테리어 커머스 프로토타입",
     href: "https://shop.minseok91.cloud/",
   },
+  {
+    id: "worldcup",
+    name: "World Cup",
+    description: "2002부터 2026까지 역대 월드컵 현황을 한눈에",
+    href: "https://worldcup.minseok91.cloud/",
+  },
 ];
 
 export const colophon = {
