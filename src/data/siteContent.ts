@@ -23,7 +23,7 @@ export const tickerItems: TickerItem[] = [
   },
   {
     label: "단독",
-    text: "같은 AI, 다른 결과 — 생산성을 곱하는 개발자",
+    text: "같은 AI, 다른 결과 — AI를 제대로 활용하는 개발자",
   },
 ];
 
@@ -34,20 +34,20 @@ export interface HeadlineSegment {
 
 export const frontPage = {
   headline: [
-    [{ text: "AI를 제대로 쓴다는 것" }],
+    [{ text: "AI를 제대로 이해하고 쓴다는 것" }],
     [{ text: "— " }, { text: "결과가", marker: true }, { text: " 증명한다" }],
   ] as HeadlineSegment[][],
-  lede: "사내 AI TFT를 이끌고 하네스를 팀에 배포했다. 레거시 인사시스템까지 AI가 이해하게 만든, 결과로 증명하는 개발자.",
-  byline: "BY KIM MINSEOK — AX ENGINEER · 본지 단독",
+  lede: "사내 AI TFT를 이끌고 레거시 인사시스템 전용 하네스를 팀에 배포했다. AI가 시스템을 이해하게 만든, 결과로 증명하는 개발자.",
+  byline: "BY KIM MINSEOK — BACKEND DEVELOPER · 본지 단독",
 };
 
 export const profileColumn = {
   kicker: "PROFILE — 인물",
   title: "도메인 전문성 × AI = 몇 배의 생산성",
-  body: "HR 도메인에 강점을 가진 9년차 백엔드 개발자. 지금은 AI 네이티브로 개발하며 조직의 AI 전환(AX)을 이끈다. 사내 AI TFT를 맡아 직접 만든 하네스 엔지니어링을 팀에 배포했고, 노후 사내 시스템을 사내 LLM 위키로 통합하는 중이다. 도구를 쫓기보다 실제 문제를 푸는지 먼저 검증하는 것이 그의 방식이다.",
+  body: "HR 도메인에 강점을 가진 9년차 백엔드 개발자. 팀의 AI 전환을 위해 사내 AI TFT를 맡아 직접 만든 하네스를 팀에 배포했고, 노후 사내 시스템을 고도화하며, 사내 인사시스템 지식의 암묵지 활용을 위해 사내 LLM 위키를 개발하고 있습니다.",
 };
 
-export const pullQuote = "AI에게 먼저,\n코드베이스를\n읽는 눈을 준다.";
+export const pullQuote = "먼저 AI가 ,\n잘 일할 수 있는 환경을\n설계 합니다.";
 
 export interface StatItem {
   value: number | null;
@@ -56,7 +56,7 @@ export interface StatItem {
 }
 
 export const stats: StatItem[] = [
-  { value: 9, display: "9+", label: "YEARS IN HR" },
+  { value: 9, display: "9+", label: "YEARS IN IT" },
   { value: 5, display: "5", label: "LIVE PRODUCTS" },
   { value: null, display: "1st", label: "AX LEADER" },
 ];
@@ -83,7 +83,7 @@ export const featureStories: FeatureStoryItem[] = [
     kicker: "특집 — FEATURE STORY",
     title: "레거시 인사시스템에 ‘AI 코딩 하네스’를 입히다",
     problem:
-      "Oracle 프로시저로 뒤엉킨 레거시 인사시스템(EHR)은 구조가 방대해 AI 코딩 에이전트가 맥락을 잡지 못한다. 엉뚱한 답과 코드가 나오는 이유다.",
+      "Oracle 프로시저로 뒤엉킨 레거시 인사시스템(EHR)은 구조가 방대해 AI 코딩 에이전트가 맥락을 잡지 못한다. 잘못된 코드와 답변이 나오는 이유다.",
     approach:
       "“하네스 만들어줘” 한 마디로 EHR 프로젝트를 심층 분석해, 프로젝트에 맞춤화된 하네스(규칙·지식·도구 패키지)를 자동 생성하는 Claude Code 플러그인을 직접 설계하고 구축했다.",
     result:
@@ -119,7 +119,7 @@ export const classified = {
   urgentAd: {
     badge: "긴급구인 · URGENT",
     title: "백엔드 개발자 — 재고 1개",
-    body: "HR 도메인에 강한 9년차 백엔드 개발자. 지금은 AI 네이티브로 개발하며, 조직의 AI 전환(AX)까지 이끈다. 재고 소진 임박.",
+    body: "HR 도메인에 강한 9년차 백엔드 개발자. 팀의 AI 전환(AX)을 이끌며 팀의 생산성을 높입니다. 재고 소진 임박.",
     ctaLabel: "지금 연락하기 →",
     ctaHref: "mailto:qoxmfaktmxj@naver.com",
   },
@@ -148,7 +148,7 @@ export const labAds: LabAd[] = [
   {
     id: "hire-flow",
     name: "HireFlow",
-    description: "최신 채용 트렌드를 반영한 채용시스템 실험",
+    description: "최신 채용 트렌드를 반영한 채용시스템",
     href: "https://rec.minseok91.cloud/",
   },
   {
