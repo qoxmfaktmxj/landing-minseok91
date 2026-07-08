@@ -136,7 +136,7 @@ your-ehr5-project/
 
 ```bash
 # 1. 마켓플레이스 등록 (GitLab full git URL — GitHub shorthand 미지원)
-/plugin marketplace add http://hr-gitlab.isusystem.com/kms/ehr-harness-plugin.git
+/plugin marketplace add <사내 GitLab 저장소>
 
 # 2. 플러그인 설치
 /plugin install ehr-harness@ehr-harness
@@ -159,7 +159,7 @@ your-ehr5-project/
 
 ```bash
 # 1. 플러그인 레포 클론
-git clone http://hr-gitlab.isusystem.com/kms/ehr-harness-plugin.git ~/Desktop/dev/ehr-harness-plugin
+git clone <사내 GitLab 저장소> ~/Desktop/dev/ehr-harness-plugin
 
 # 2. 로컬 마켓플레이스로 등록
 /plugin marketplace add ~/Desktop/dev/ehr-harness-plugin

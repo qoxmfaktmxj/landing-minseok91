@@ -201,7 +201,7 @@
         <div class="lbl">AFTER — 하네스 적용</div>
         <div class="q">같은 요청</div>
         <ul>
-          <li>기존 <b>vacationApp을 복제 베이스</b>로 선택 — 그린필드 금지</li>
+          <li>기존 <b>휴가 신청 화면을 복제 베이스</b>로 선택 — 그린필드 금지</li>
           <li>권한 법칙 판정 → 표준 매퍼·IBSheet JSP 생성</li>
           <li>셀프체크 14항목 통과 후 전달</li>
           <li>DB 접속·commit은 <b>훅이 원천 차단</b> — 커밋은 사람이</li>
@@ -216,8 +216,8 @@
   <section>
     <div class="sec-head"><span class="no">02</span><h2>설치와 사용</h2><span class="aside">설치 2줄 · 생성 한 마디</span></div>
     <div class="sec-rule"></div>
-    <pre class="cmd"><span class="c"># 설치 (Claude Code 안에서, 최초 1회)</span>
-/plugin marketplace add http://hr-gitlab.isusystem.com/kms/ehr-harness-plugin.git
+    <pre class="cmd"><span class="c"># 설치 (Claude Code 안에서, 최초 1회 — 사내 마켓플레이스 등록)</span>
+/plugin marketplace add &lt;사내 GitLab 저장소&gt;
 /plugin install ehr-harness@ehr-harness
 
 <span class="c"># 하네스 생성 (본인 EHR 프로젝트에서)</span>
@@ -227,7 +227,7 @@
 
 <span class="c"># 일상 사용 — 자연어면 됨</span>
 휴가 신청 화면 비슷하게 교육 신청 화면 만들어줘
-P_CPN_CAL_PAY_MAIN 호출 체인 추적해줘
+급여계산 프로시저 호출 체인 추적해줘
 이 수정이 어디 영향 가는지 분석해줘      <span class="c">← Go / HOLD / STOP 판정</span>
 하네스 점검해줘                          <span class="c">← drift 자동 감지·보정 (audit)</span></pre>
   </section>
@@ -324,7 +324,7 @@ P_CPN_CAL_PAY_MAIN 호출 체인 추적해줘
 
   <footer class="doc-footer">
     <span>EHR HARNESS PLUGIN · v1.14.0 · HR서비스팀 표준 방법론</span>
-    <span><a href="http://hr-gitlab.isusystem.com/kms/ehr-harness-plugin">사내 GitLab ↗</a> &nbsp;·&nbsp; <a href="/">minseok91.com</a></span>
+    <span>사내 GitLab 배포 (비공개) &nbsp;·&nbsp; <a href="/">minseok91.com</a></span>
   </footer>
 
 </div>
