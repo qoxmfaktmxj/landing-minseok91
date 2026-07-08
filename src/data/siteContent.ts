@@ -85,9 +85,9 @@ export const featureStories: FeatureStoryItem[] = [
     problem:
       "Oracle 프로시저로 뒤엉킨 레거시 인사시스템(EHR)은 구조가 방대해 AI 코딩 에이전트가 맥락을 잡지 못한다. 잘못된 코드와 답변이 나오는 이유다.",
     approach:
-      "“하네스 만들어줘” 한 마디로 EHR 프로젝트를 심층 분석해, 프로젝트에 맞춤화된 하네스(규칙·지식·도구 패키지)를 자동 생성하는 Claude Code 플러그인을 직접 설계하고 구축했다.",
+      "“하네스 만들어줘” 한 마디로 EHR 프로젝트를 심층 분석해, 프로젝트에 맞춤화된 하네스(규칙·지식·도구 패키지) 약 40개 파일을 자동 생성하는 Claude Code 플러그인을 직접 설계하고 구축했다. EHR4·EHR5·클라우드 MSA 3개 프로파일과 연말정산 전용 플러그인까지 확장.",
     result:
-      "팀에 배포해 동료 약 20명이 사용 중. AI가 레거시 코드베이스를 이해하고, 답하고, 맞춤 코드까지 생성하는 환경이 완성됐다.",
+      "팀에 배포해 동료 약 20명이 사용 중, 팀 표준 개발 방법론으로 확정. 현재 v1.14 — DB 무접속 보안 정책(접속 CLI 18종 차단)과 자동 점검(audit), 쓸수록 지식이 쌓이는 학습 사이클까지 갖췄다.",
     url: "/README_HARNESS.html",
     urlLabel: "README_HARNESS",
     previewImage: "/images/harness-thumb.png",
