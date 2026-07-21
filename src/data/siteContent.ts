@@ -97,20 +97,21 @@ export const featureStories: FeatureStoryItem[] = [
     docMode: true,
   },
   {
-    id: "withhold-tax",
-    kicker: "연속 기획 — HR 도메인의 깊이",
-    title: "법령으로 검증되는 원천징수 실무 레퍼런스",
+    id: "jarvis",
+    kicker: "연속 기획 — AI 지식 플랫폼",
+    title: "흩어진 사내 지식을 근거와 함께 답하는 Jarvis",
     problem:
-      "원천징수 실무는 법령 조문·시행일·개정 이력이 흩어져 있어 '이 값이 지금 맞는지' 검증하기 힘듭니다.",
+      "사내 업무·인사·개발 지식은 여러 시스템과 문서에 흩어져 있고, 일반적인 AI 답변은 어떤 근거에서 나온 것인지 확인하기 어렵습니다.",
     approach:
-      "모든 핵심 사실에 출처(조문)·시행일·검증상태를 스키마(zod)로 강제했습니다. 출처 없는 문장은 빌드가 되지 않습니다.",
+      "사내 업무 시스템과 Git 기반 위키를 하나로 묶고, LLM이 관련 문서를 검색하고 직접 읽은 뒤 근거를 인용하도록 tool-use agent를 설계했습니다. CLI Proxy를 통해 구독형 LLM을 연결하고 문서 이력과 검토 흐름까지 함께 관리합니다.",
     result:
-      "HR 도메인 지식을 한층 끌어올려 주는, 출처 중심의 실무 레퍼런스입니다.",
-    url: "https://withhold.minseok91.cloud/",
-    urlLabel: "withhold.minseok91.cloud",
-    previewImage: "/images/withhold-thumb.png",
-    previewAlt: "원천징수 레퍼런스 라이브 화면 미리보기",
-    tech: ["Next.js", "TypeScript", "Tailwind v4", "MDX", "zod"],
+      "검색·업무·위키·AI 질문을 한곳에서 처리하면서도 답변의 출처와 변경 이력을 추적할 수 있는 엔터프라이즈 지식 플랫폼을 구축했습니다.",
+    url: "https://jarvis.minseok91.cloud/",
+    urlLabel: "jarvis.minseok91.cloud",
+    previewImage: "/images/jarvis-thumb.png",
+    previewAlt: "Jarvis 사내 업무 및 지식 플랫폼 대시보드 화면",
+    tech: ["Next.js", "PostgreSQL", "Git Wiki", "LLM Agent"],
+    accessNote: "라이브 서비스 · 로그인이 필요할 수 있습니다",
   },
 ];
 
