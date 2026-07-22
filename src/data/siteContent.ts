@@ -98,18 +98,18 @@ export const featureStories: FeatureStoryItem[] = [
   },
   {
     id: "jarvis",
-    kicker: "연속 기획 — AI 지식 플랫폼",
-    title: "흩어진 사내 지식을 근거와 함께 답하는 Jarvis",
+    kicker: "연속 기획 — HR 근거 기반 AI",
+    title: "HR 지식을 공식 근거와 함께 답하는 Jarvis",
     problem:
-      "사내 업무·인사·개발 지식은 여러 시스템과 문서에 흩어져 있고, 일반적인 AI 답변은 어떤 근거에서 나온 것인지 확인하기 어렵습니다.",
+      "식대 비과세 한도, 퇴직소득 원천징수처럼 HR·세무 규정은 기준일마다 한도와 세율이 달라지지만, 일반적인 AI 답변은 어떤 규정과 기준일에 근거한 것인지 확인하기 어렵습니다.",
     approach:
-      "사내 업무 시스템과 Git 기반 위키를 하나로 묶고, LLM이 관련 문서를 검색하고 직접 읽은 뒤 근거를 인용하도록 tool-use agent를 설계했습니다. CLI Proxy를 통해 구독형 LLM을 연결하고 문서 이력과 검토 흐름까지 함께 관리합니다.",
+      "HR 규정과 공식 문서를 Git 기반 위키로 정리하고, LLM이 관련 근거를 직접 검색·인용하며 기준일(effective date)까지 함께 제시하도록 tool-use agent를 설계했습니다. CLI Proxy를 통해 구독형 LLM을 연결하고 문서 이력과 검토 흐름까지 함께 관리합니다.",
     result:
-      "검색·업무·위키·AI 질문을 한곳에서 처리하면서도 답변의 출처와 변경 이력을 추적할 수 있는 엔터프라이즈 지식 플랫폼을 구축했습니다.",
+      "HR 실무 질문을 공식 근거·기준일과 함께 확인하고 답변의 출처와 변경 이력까지 추적할 수 있는 HR 컴플라이언스 지식 플랫폼을 구축했습니다.",
     url: "https://jarvis.minseok91.cloud/",
     urlLabel: "jarvis.minseok91.cloud",
     previewImage: "/images/jarvis-thumb.png",
-    previewAlt: "Jarvis 사내 업무 및 지식 플랫폼 대시보드 화면",
+    previewAlt: "Jarvis HR Evidence Wiki 컴플라이언스 대시보드 화면",
     tech: ["Next.js", "PostgreSQL", "Git Wiki", "LLM Agent"],
     accessNote: "라이브 서비스 · 로그인이 필요할 수 있습니다",
   },
