@@ -1,8 +1,8 @@
 export const masthead = {
   cityLine: "SEOUL, KOREA",
   statusLine: "BUILD: PASSING ✦ DEPLOY: LIVE",
-  priceLine: "무료 · FREE COPY",
-  volume: "VOL. 9 — NO. 2026",
+  priceLine: "무료 / FREE COPY",
+  volume: "VOL. 9 / NO. 2026",
   tagline: "HR × AI × AX TRANSFORMATION",
   established: "EST. 2017",
 };
@@ -15,15 +15,15 @@ export interface TickerItem {
 export const tickerItems: TickerItem[] = [
   {
     label: "BREAKING",
-    text: "9년차 HR 도메인 개발자, AI를 활용해 팀 전체의 생산성을 끌어올린다",
+    text: "개발 9년 차, HR 경력 4년 이상. 업무 이해를 바탕으로 AI를 적용합니다.",
   },
   {
     label: "속보",
-    text: "레거시 인사시스템에 자체 구축한 하네스 엔지니어링 적용 — AI가 코드베이스를 읽고 답하기 시작",
+    text: "사내 AI TFT 완료, 성과를 바탕으로 Claude Code 전사 도입 결정",
   },
   {
     label: "단독",
-    text: "같은 AI, 다른 결과 — AI를 제대로 활용하는 개발자",
+    text: "2개 팀 30명 이상이 활용하는 EHR Harness Plugin, 소속 팀 공식 개발방법론으로 채택",
   },
 ];
 
@@ -37,14 +37,14 @@ export const frontPage = {
     [{ text: "AI를 제대로 이해하고 쓴다는 것" }],
     [{ text: "결과가", marker: true }, { text: " 증명한다" }],
   ] as HeadlineSegment[][],
-  lede: "사내 AI TFT를 이끌고 레거시 인사시스템 전용 하네스를 팀에 배포했습니다. AI가 시스템을 이해하게 만든, 결과로 증명하는 개발자입니다.",
-  byline: "BY KIM MINSEOK — BACKEND DEVELOPER · 본지 단독",
+  lede: "사내 AI TFT를 리더로서 마무리했으며, 그 성과를 바탕으로 Claude Code 전사 도입이 결정됐습니다. HR 업무 이해를 바탕으로 AI 도구와 업무시스템을 직접 만들고 사용자 교육까지 수행합니다.",
+  byline: "BY KIM MINSEOK / BACKEND DEVELOPER / 본지 단독",
 };
 
 export const profileColumn = {
-  kicker: "PROFILE — 인물",
-  title: "도메인 전문성 × AI = 몇 배의 생산성",
-  body: "HR 도메인에 강점을 가진 9년차 백엔드 개발자입니다. 팀의 AI 전환을 위해 사내 AI TFT를 맡아 직접 만든 하네스를 팀에 배포했고, 노후 사내 시스템을 고도화하며, 사내 인사시스템 지식의 암묵지 활용을 위해 사내 LLM 위키를 개발하고 있습니다.",
+  kicker: "PROFILE / 인물",
+  title: "업무를 이해하고 AI로 개선하는 개발자",
+  body: "업무시스템 개발 9년 차로, 2022년부터 HR 시스템의 구축과 운영을 담당했습니다. 현재 인사시스템 유지보수 파트를 이끌며 고객 요구사항 협의와 팀원 교육을 맡고 있습니다. 사내 업무시스템과 LLM Wiki를 하나의 사이트로 통합했고, 현재 Oracle 데이터 이관과 타 시스템 연계를 진행하고 있습니다.",
 };
 
 export const pullQuote = "먼저 AI가\n잘 일할 수 있는 환경을\n설계합니다.";
@@ -56,9 +56,9 @@ export interface StatItem {
 }
 
 export const stats: StatItem[] = [
-  { value: 9, display: "9+", label: "YEARS IN IT" },
-  { value: 5, display: "5", label: "LIVE PRODUCTS" },
-  { value: null, display: "1st", label: "AX LEADER" },
+  { value: 9, display: "9th", label: "YEAR IN IT" },
+  { value: 30, display: "30+", label: "HARNESS USERS" },
+  { value: 4, display: "4", label: "AI TRAININGS" },
 ];
 
 export interface FeatureStoryItem {
@@ -80,47 +80,47 @@ export interface FeatureStoryItem {
 export const featureStories: FeatureStoryItem[] = [
   {
     id: "ehr-harness",
-    kicker: "특집 — FEATURE STORY",
+    kicker: "특집 / FEATURE STORY",
     title: "레거시 인사시스템에 ‘AI 코딩 하네스’를 입히다",
     problem:
       "Oracle 프로시저로 뒤엉킨 레거시 인사시스템(EHR)은 구조가 방대해 AI 코딩 에이전트가 맥락을 잡지 못합니다. 잘못된 코드와 답변이 나오는 이유입니다.",
     approach:
-      "“하네스 만들어줘” 한 마디로 EHR 프로젝트를 심층 분석해, 프로젝트에 맞춤화된 하네스(규칙·지식·도구 패키지) 약 40개 파일을 자동 생성하는 Claude Code 플러그인을 직접 설계하고 구축했습니다. EHR4·EHR5·클라우드 MSA 3개 프로파일과 연말정산 전용 플러그인까지 확장했습니다.",
+      "고객사별 인사 규정과 권한, 결재 구조를 AI가 참고하도록 업무 맥락과 코드 분석 기준, 검증 절차를 제공하는 EHR Harness Plugin을 단독으로 설계하고 개발했습니다. 프로젝트별 규칙과 코드 탐색, 변경 영향 검토를 표준화했습니다.",
     result:
-      "팀에 배포해 동료 약 20명이 사용 중이며, 팀 표준 개발 방법론으로 확정됐습니다. 현재 v1.14 기준 DB 무접속 보안 정책(접속 CLI 18종 차단)과 자동 점검(audit), 쓸수록 지식이 쌓이는 학습 사이클까지 갖췄습니다.",
+      "2개 팀 30명 이상에게 배포되어 활용됐고, 소속 팀의 공식 개발방법론으로 채택됐습니다. 이후에도 사용자 피드백을 반영해 버전 업데이트를 진행하고 있습니다. 사내 AI 교육은 4회 수행했으며, AI TFT 성과를 바탕으로 Claude Code 전사 도입이 결정됐습니다.",
     url: "/README_HARNESS.html",
     urlLabel: "README_HARNESS",
-    previewImage: "/images/harness-thumb.png",
+    previewImage: "/images/harness-thumb-2026-09.png",
     previewAlt: "EHR Harness Plugin README 화면 미리보기",
     tech: ["Claude Code Plugin", "Oracle / Tibero", "MyBatis", "superpowers"],
-    accessNote: "사내 배포 · 팀원 약 20명 사용",
+    accessNote: "2개 팀 30명 이상 배포 및 활용, 소속 팀 공식 개발방법론 채택",
     docMode: true,
   },
   {
     id: "jarvis",
-    kicker: "연속 기획 — HR 근거 기반 AI",
+    kicker: "연속 기획 / HR 근거 기반 AI",
     title: "HR 지식을 공식 근거와 함께 답하는 Jarvis",
     problem:
-      "식대 비과세 한도, 퇴직소득 원천징수처럼 HR·세무 규정은 기준일마다 한도와 세율이 달라지지만, 일반적인 AI 답변은 어떤 규정과 기준일에 근거한 것인지 확인하기 어렵습니다.",
+      "식대 비과세 한도, 퇴직소득 원천징수처럼 HR과 세무 규정은 기준일마다 한도와 세율이 달라지지만, 일반적인 AI 답변은 어떤 규정과 기준일에 근거한 것인지 확인하기 어렵습니다.",
     approach:
-      "HR 규정과 공식 문서를 Git 기반 위키로 정리하고, LLM이 관련 근거를 직접 검색·인용하며 기준일(effective date)까지 함께 제시하도록 tool-use agent를 설계했습니다. CLI Proxy를 통해 구독형 LLM을 연결하고 문서 이력과 검토 흐름까지 함께 관리합니다.",
+      "HR 규정과 공식 문서를 Git 기반 위키로 정리하고, LLM이 관련 근거를 직접 검색하고 인용하며 기준일(effective date)까지 함께 제시하도록 tool-use agent를 설계했습니다. CLI Proxy를 통해 구독형 LLM을 연결하고 문서 이력과 검토 흐름까지 함께 관리합니다.",
     result:
-      "HR 실무 질문을 공식 근거·기준일과 함께 확인하고 답변의 출처와 변경 이력까지 추적할 수 있는 HR 컴플라이언스 지식 플랫폼을 구축했습니다.",
+      "HR 실무 질문을 공식 근거와 기준일에 따라 확인하고 답변의 출처와 변경 이력까지 추적할 수 있는 HR 컴플라이언스 지식 플랫폼을 구축했습니다.",
     url: "https://jarvis.minseok91.cloud/",
     urlLabel: "jarvis.minseok91.cloud",
     previewImage: "/images/jarvis-thumb.png",
     previewAlt: "Jarvis HR Evidence Wiki 컴플라이언스 대시보드 화면",
     tech: ["Next.js", "PostgreSQL", "Git Wiki", "LLM Agent"],
-    accessNote: "라이브 서비스 · 로그인이 필요할 수 있습니다",
+    accessNote: "공개 데모, 로그인이 필요할 수 있습니다",
   },
 ];
 
 export const classified = {
   sectionTitle: "CLASSIFIED",
   urgentAd: {
-    badge: "긴급구인 · URGENT",
-    title: "백엔드 개발자 — 재고 1개",
-    body: "HR 도메인에 강한 9년차 백엔드 개발자. 팀의 AI 전환(AX)을 이끌며 팀의 생산성을 높입니다. 재고 소진 임박.",
+    badge: "긴급구인 / URGENT",
+    title: "백엔드 개발자, 재고 1개",
+    body: "개발 9년 차, HR 경력 4년 이상. 업무시스템 개발과 운영, AI 도구 적용과 사용자 교육을 경험했습니다. 재고 소진 임박.",
     ctaLabel: "지금 연락하기 →",
     ctaHref: "mailto:qoxmfaktmxj@naver.com",
   },
@@ -167,7 +167,7 @@ export const labAds: LabAd[] = [
 ];
 
 export const colophon = {
-  publisher: "발행인 겸 편집장 · 김민석",
+  publisher: "발행인 겸 편집장 / 김민석",
   links: [
     { label: "GitHub", href: "https://github.com/qoxmfaktmxj" },
     { label: "Tech Blog", href: "https://qoxmfaktmxj.github.io" },

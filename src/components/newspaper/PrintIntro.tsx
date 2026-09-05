@@ -148,7 +148,7 @@ export default function PrintIntro() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
             >
-              NOW PRINTING — VOL.9
+              NOW PRINTING / VOL.9
             </motion.p>
           </div>
         </motion.div>
