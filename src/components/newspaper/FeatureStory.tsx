@@ -92,7 +92,7 @@ function StoryCard({ story }: { story: FeatureStoryItem }) {
         )}
       </div>
       <span className="mt-6 block font-mono text-xs tracking-widest text-vermilion-soft">
-        {ctaVerb} — {story.urlLabel} ↗
+        {ctaVerb} / {story.urlLabel} ↗
       </span>
 
       {!reduced && hovered && (
@@ -112,7 +112,7 @@ function StoryCard({ story }: { story: FeatureStoryItem }) {
             />
           </span>
           <span className="mt-2 block font-mono text-[10px] font-bold tracking-widest text-ink">
-            {ctaVerb} — {story.urlLabel} ↗
+            {ctaVerb} / {story.urlLabel} ↗
           </span>
         </motion.span>
       )}
@@ -125,7 +125,7 @@ export default function FeatureStory() {
     <section className="bg-ink px-5 py-14 md:px-10 md:py-20">
       <div className="mx-auto max-w-container">
         <div className="mb-10 border-b border-paper/30 pb-2 text-center font-mono text-[11px] font-bold tracking-wide3 text-paper/70">
-          FEATURE — 특집
+          FEATURE / 특집
         </div>
         <div className="grid grid-cols-1 gap-6 md:gap-8">
           {featureStories.map((story) => (
