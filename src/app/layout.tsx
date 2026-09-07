@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { Noto_Serif_KR } from "next/font/google";
 import localFont from "next/font/local";
 import MotionProvider from "@/components/providers/MotionProvider";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import "./globals.css";
 
-const notoSerifKr = Noto_Serif_KR({
-  subsets: ["latin"],
-  weight: ["700", "900"],
-  variable: "--font-noto-serif-kr",
+const geist = localFont({
+  src: "./fonts/GeistVF.woff",
+  variable: "--font-geist",
+  weight: "100 900",
   display: "swap",
 });
 
@@ -21,9 +20,9 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.minseok91.cloud"),
-  title: "The Minseok Times | HR × AI × AX",
+  title: "김민석 | 백엔드 개발자",
   description:
-    "개발 9년 차, HR 경력 4년 이상. HR 시스템 구축과 운영, EHR Harness Plugin의 2개 팀 30명 이상 배포 및 활용, AI TFT 완료와 Claude Code 전사 도입 결정까지 담은 김민석의 포트폴리오.",
+    "AI로 필요한 서비스를 만들고 있습니다. 팀에서 함께 쓸 AI 도구도 직접 만듭니다. 백엔드 개발자 김민석의 포트폴리오.",
   keywords: [
     "김민석",
     "AX 엔지니어",
@@ -35,18 +34,18 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "The Minseok Times | HR × AI × AX",
+    title: "김민석 | 백엔드 개발자",
     description:
-      "개발 9년 차, HR 경력 4년 이상. 사내 AI TFT를 마무리했으며, 그 성과로 Claude Code 전사 도입이 결정됐습니다.",
+      "AI로 필요한 서비스를 만들고 있습니다. 팀에서 함께 쓸 AI 도구도 직접 만듭니다.",
     url: "/",
     type: "website",
     locale: "ko_KR",
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Minseok Times | HR × AI × AX",
+    title: "김민석 | 백엔드 개발자",
     description:
-      "개발 9년 차, HR 경력 4년 이상. 사내 AI TFT를 마무리했으며, 그 성과로 Claude Code 전사 도입이 결정됐습니다.",
+      "AI로 필요한 서비스를 만들고 있습니다. 팀에서 함께 쓸 AI 도구도 직접 만듭니다.",
   },
   icons: {
     icon: "/icon.svg",
@@ -60,7 +59,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`${notoSerifKr.variable} ${geistMono.variable}`}>
+    <html lang="ko" className={`${geist.variable} ${geistMono.variable}`}>
       <head>
         <link rel="preconnect" href="https://cdn.jsdelivr.net" />
         <link
@@ -69,6 +68,25 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
+        <script
+          type="application/json"
+          id="design-contract"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              thesis:
+                "Systems in Motion: real backend work introduced through an interactive arctic landscape.",
+              world:
+                "Graphite, silver, cobalt. Geist display, Korean project narratives, open image-led composition.",
+              story:
+                "Meet Kim Minseok, understand HR and AI work, read two real cases, explore five experiments, make contact.",
+              firstViewport:
+                "KIM MINSEOK and the user-approved Korean introduction about building services with AI and AI tools for the team; immediate project and contact links over a spatial snow scene with an interactive igloo.",
+              form: "User-approved arctic scene with spatial camera movement, local ice-block response and continuous snow.",
+              finish:
+                "unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance",
+            }),
+          }}
+        />
         <MotionProvider>
           <SmoothScrollProvider>{children}</SmoothScrollProvider>
         </MotionProvider>
