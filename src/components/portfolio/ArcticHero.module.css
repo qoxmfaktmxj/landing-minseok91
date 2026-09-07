@@ -1,0 +1,313 @@
+.hero {
+  position: relative;
+  margin-top: -88px;
+  background: #aab4c2;
+  color: #182331;
+  --focus: #2448d7;
+}
+
+.stage {
+  position: relative;
+  isolation: isolate;
+  height: 100svh;
+  min-height: 650px;
+  overflow: hidden;
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: #adb7c4 url("/images/arctic-hero.webp") center / cover no-repeat;
+}
+
+.scene canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0;
+}
+
+.scene canvas[data-ready="true"] {
+  opacity: 1;
+}
+
+.stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgb(205 215 228 / 18%), transparent 38%, transparent 76%, rgb(19 30 44 / 30%));
+}
+
+.copy {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 310px;
+  padding: 118px 44px 0;
+  color: #f4f7fc;
+  text-shadow: 0 1px 8px rgb(36 46 65 / 35%);
+}
+
+.hero .title {
+  font-size: clamp(28px, 3vw, 44px);
+  grid-row: 1 / 3;
+  align-self: start;
+  font-weight: 530;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  animation: none;
+}
+
+.hero .title span {
+  color: inherit;
+}
+
+.statement {
+  color: #2f3b4d;
+  text-shadow: none;
+  margin-top: 0;
+  font-size: 14px;
+  text-align: right;
+  font-weight: 500;
+  line-height: 1.65;
+}
+
+.identity {
+  margin-top: 13px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #2f3b4d;
+  text-shadow: none;
+  text-align: right;
+}
+
+.identity span {
+  margin-inline: 10px;
+  color: #48596f;
+}
+
+.actions {
+  position: absolute;
+  bottom: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  white-space: nowrap;
+}
+
+.primary {
+  background: #f0f4f9;
+  color: #182331;
+}
+
+.hero .contact {
+  color: #f0f4f9;
+  border-color: #d7e0ec;
+  text-shadow: 0 1px 5px rgb(13 25 43 / 75%);
+}
+
+.hero .contact:hover {
+  color: #fff;
+}
+
+.caption {
+  position: absolute;
+  bottom: 81px;
+  left: clamp(24px, 4vw, 72px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #f0f4f9;
+  text-shadow: 0 1px 5px rgb(13 25 43 / 75%);
+  font-size: 12px;
+}
+
+.indicator {
+  width: 5px;
+  height: 5px;
+  background: #d8e6ff;
+}
+
+.toggle {
+  position: absolute;
+  right: clamp(24px, 4vw, 72px);
+  bottom: 67px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 12px;
+  background: rgb(20 31 47 / 58%);
+  border: 1px solid rgb(225 236 250 / 45%);
+  color: #f0f4f9;
+  font-size: 12px;
+  visibility: hidden;
+}
+
+.stage:has(canvas[data-ready="true"]) .toggle {
+  visibility: visible;
+}
+
+.toggle:hover {
+  background: #26384d;
+}
+
+.actions a:focus-visible,
+.toggle:focus-visible {
+  outline-color: #eef4ff;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 48px;
+  padding: 12px clamp(24px, 4vw, 72px);
+  gap: 20px;
+  color: #f0f4f9;
+  text-shadow: 0 1px 5px rgb(13 25 43 / 75%);
+  background: transparent;
+  border-top: 0;
+}
+
+.bottom p {
+  font-family: var(--font-geist), sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.065em;
+}
+
+.bottom p span {
+  margin-inline: 16px;
+  color: #a4b3c7;
+}
+
+.bottom a {
+  display: inline-flex;
+  align-items: center;
+  gap: 30px;
+  font-size: 12px;
+  min-height: 44px;
+}
+
+@media (max-width: 1099px) {
+  .caption {
+    bottom: 109px;
+  }
+
+  .toggle {
+    bottom: 95px;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero { margin-top: -105px; }
+  .stage {
+    height: 100svh;
+    min-height: 580px;
+  }
+
+  .scene {
+    background-size: auto calc(100% - 100px);
+    background-position: center bottom;
+  }
+
+  .scene:not(:has(canvas[data-ready="true"]))::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #adb7c4 100px, transparent 250px);
+  }
+
+  .stage::after {
+    background: linear-gradient(180deg, transparent 76%, rgb(19 30 44 / 32%));
+  }
+
+  .copy {
+    padding: 127px 20px 0;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .hero .title {
+    font-size: 28px;
+    grid-row: auto;
+    letter-spacing: -0.055em;
+  }
+
+  .statement {
+    margin-top: 12px;
+    font-size: 12px;
+    text-align: left;
+    line-height: 1.7;
+  }
+
+  .identity {
+    margin-top: 8px;
+    font-size: 12px;
+    text-align: left;
+  }
+
+  .actions {
+    bottom: 92px;
+    gap: 17px;
+  }
+
+  .primary {
+    padding: 15px 17px;
+    gap: 22px;
+    min-height: 50px;
+  }
+
+  .hero .contact {
+    min-height: 50px;
+    font-size: 13px;
+    gap: 12px;
+  }
+
+  .caption {
+    bottom: 57px;
+    left: 20px;
+    font-size: 12px;
+  }
+
+  .toggle {
+    right: 20px;
+    bottom: 42px;
+    padding-inline: 9px;
+    font-size: 12px;
+  }
+
+  .bottom {
+    min-height: 42px;
+    padding: 13px 20px;
+    justify-content: center;
+  }
+
+  .bottom p {
+    font-size: 10px;
+    letter-spacing: 0.03em;
+  }
+
+  .bottom p span {
+    margin-inline: 7px;
+  }
+
+  .bottom a {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggle {
+    display: none;
+  }
+}

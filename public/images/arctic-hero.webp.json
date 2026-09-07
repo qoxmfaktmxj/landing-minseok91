@@ -1,0 +1,8 @@
+{
+  "asset": "arctic-hero.webp",
+  "generated_by": "Codex built-in image generation",
+  "reference_url": "https://www.awwwards.com/sites/igloo-inc",
+  "reference_role": "Visual composition and material reference, not a shipped source asset",
+  "prompt": "Create a high-resolution widescreen 16:9 BACKGROUND ART asset for a developer portfolio hero, closely guided by the supplied arctic website screenshot. Produce a fresh premium realistic CGI scene matching its centered, calm camera and ice/snow material language: a sculptural dome pavilion made of chunky gently rounded frosted ice blocks, a small arched entrance facing slightly right, soft cold light glowing through narrow seams. The pavilion sits centrally in the lower-middle of a broad snow-covered valley. Layered snowy mountains recede into dense silver-gray atmospheric fog, pale diffuse sky, finely textured snow and frost, quiet monochrome graphite/silver/very subtle ice-blue palette. Keep the upper quarter relatively open with misty mountains/sky for readable portfolio typography added separately. Pavilion should be clearly visible and impressive, not tiny, with its form fully within the frame; no random floating brand letters. Rich depth, filmic light, restrained highlights, high-end 3D atmosphere. ONLY the background scene: NO text, website UI, logos, brand names, copyrights, labels, cursor, borders, overlay frames or watermarks. No artificial neon or unrelated geometric decorations. One clean wide landscape image, maximum detail.",
+  "sha256": "d846c8bae9a1aeae7bc88ab2d2290a839beccfd7bcaf5cdf97f076d8d0105a1e"
+}

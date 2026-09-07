@@ -1,0 +1,82 @@
+{
+  "license_source": "https://polyhaven.com/license",
+  "geometry": "Independently authored70-piece igloo with six dome courses plus displaced terrain, based on coarse reference measurements; no original mesh vertex buffers or application bundle",
+  "runtime_external_requests": false,
+  "verified_on": "2026-09-06",
+  "textures": [
+    {
+      "source_md5": "29a64deefbcee9ba90ae473f233b45df",
+      "license": "CC0-1.0",
+      "source_page": "https://polyhaven.com/a/rough_plaster_03",
+      "bytes": 1881978,
+      "transformation": "JPEG to WebP encoding, 2048px resolution retained",
+      "file": "rough_plaster_03-diffuse.webp",
+      "author": "Rob Tuytel",
+      "source_url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rough_plaster_03/rough_plaster_03_diff_2k.jpg",
+      "sha256": "6ba0891eaf3a902787066677c4976c65fead761edd863cdcdf7e3191d1881dea"
+    },
+    {
+      "source_md5": "32fe95388ffc11747b8ac448119fd1ae",
+      "license": "CC0-1.0",
+      "source_page": "https://polyhaven.com/a/rough_plaster_03",
+      "bytes": 1649816,
+      "transformation": "JPEG to WebP encoding, 2048px resolution retained",
+      "file": "rough_plaster_03-nor_gl.webp",
+      "author": "Rob Tuytel",
+      "source_url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/rough_plaster_03/rough_plaster_03_nor_gl_2k.jpg",
+      "sha256": "8d4b99ad0b452c3613de108c826a5e35be4b27fbc2ed4a4a604459ecc7c8e0dd"
+    },
+    {
+      "source_md5": "f493fa9b31911f8a30ecd1d41cbc6f3d",
+      "license": "CC0-1.0",
+      "source_page": "https://polyhaven.com/a/aerial_rocks_02",
+      "bytes": 1653878,
+      "transformation": "JPEG to WebP encoding, 2048px resolution retained",
+      "file": "aerial_rocks_02-diffuse.webp",
+      "author": "Rob Tuytel",
+      "source_url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/aerial_rocks_02/aerial_rocks_02_diff_2k.jpg",
+      "sha256": "02277f5cba925088f89dd1b12a282c3d3ca922bae7c58bc1d78308e0350db5b2"
+    },
+    {
+      "source_md5": "7c405cfd3308a2672c99b44e102c328e",
+      "license": "CC0-1.0",
+      "source_page": "https://polyhaven.com/a/aerial_rocks_02",
+      "bytes": 2084724,
+      "transformation": "JPEG to WebP encoding, 2048px resolution retained",
+      "file": "aerial_rocks_02-nor_gl.webp",
+      "author": "Rob Tuytel",
+      "source_url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/aerial_rocks_02/aerial_rocks_02_nor_gl_2k.jpg",
+      "sha256": "20d160edb1ef7c87d4c15c25a738e7aeb7092e2bf2596cb5d9fd9e885f3d02a5"
+    },
+    {
+      "source_md5": "5541e5601951b071691238ddc70632c0",
+      "license": "CC0-1.0",
+      "source_page": "https://polyhaven.com/a/snow_02",
+      "bytes": 694596,
+      "transformation": "JPEG to WebP encoding, 2048px resolution retained",
+      "file": "snow_02-diffuse.webp",
+      "author": "Rob Tuytel",
+      "source_url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/snow_02/snow_02_diff_2k.jpg",
+      "sha256": "9bce18a9c0e26effffdf04c996789f1f395845c1a4668ee41203ed30d0618a66"
+    }
+  ],
+  "generated_materials": [
+    {
+      "prompt_record": "surface-plate-six.webp.json",
+      "generated_by": "Codex built-in image generation",
+      "file": "surface-plate-six.webp",
+      "style_reference": "https://www.igloo.inc/",
+      "source_geometry": "Independently authored six-course mesh and camera, iteration14 raw geometry",
+      "usage": "Initial-pose projection coordinates baked into actual mesh vertices; directional grade and displacement-driven frost lighting; not a background quad",
+      "sha256": "3ca85cab8bd57ef8e77a95fab006ac63a9807f73881b4471714cf53147ea9aa7"
+    },
+    {
+      "file": "terrain-light-ridges.webp",
+      "prompt_record": "terrain-light-ridges.webp.json",
+      "generated_by": "Codex built-in image generation",
+      "source_geometry": "Independently authored terrain36-wide.png with low overlapping middle ridges, fixed52-degree projector,2240x1568",
+      "usage": "Continuous fixed-world material on actual meshes, procedural material outside projector, live shadows",
+      "sha256": "b34e27bde145ad86cfc2f4e62da2803afb08405dbf040579cfdb487628a41bdc"
+    }
+  ]
+}

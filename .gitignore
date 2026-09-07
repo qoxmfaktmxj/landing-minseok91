@@ -40,3 +40,10 @@ next-env.d.ts
 
 # design/planning docs (not part of the landing site)
 /docs/
+
+# Local browser verification artifacts
+/.playwright-mcp/
+/.impeccable/review/
+/.impeccable/critique/evidence/
+/test-results/
+/playwright-report/

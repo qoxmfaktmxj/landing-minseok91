@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "path": "public/images/harness-thumb-cinematic.png",
+      "origin": {
+        "type": "browser-screenshot",
+        "source": "public/README_HARNESS.html",
+        "viewport": {
+          "width": 1600,
+          "height": 1000
+        },
+        "deviceScaleFactor": 1,
+        "capturedAt": "2026-09-06T09:32:59.301Z",
+        "documentSha256": "4494352b0fdcd445cf51e67636065316399addd0d89e0494e804109d093338b4",
+        "stylesheetSha256": "288743bb1212206bbcadff71bfdb77b2527dec973c8d8381e4ef5dd3252aeaac"
+      },
+      "sha256": "e2e06ffede2823e0279f0944e00f752bd6cf49e986a59add31275ad646cf3e60",
+      "usage": "Actual updated harness document, captured after fonts loaded for the portfolio preview"
+    },
+    {
+      "path": "public/images/jarvis-thumb.png",
+      "origin": {
+        "type": "existing-repository-asset",
+        "commit": "2dfee2dbf51e6337890c456ef3a1bd6b44471d71",
+        "path": "public/images/jarvis-thumb.png"
+      },
+      "sha256": "05a7a9085d8728463ad6dfe9abd6d1bd74466ccf4610bbb207e54fa55be7cdbe",
+      "usage": "Existing project screenshot reused without modifying its pixels"
+    },
+    {
+      "path": "public/images/hr-thumb-new.png",
+      "origin": {
+        "type": "existing-repository-asset",
+        "commit": "2dfee2dbf51e6337890c456ef3a1bd6b44471d71",
+        "path": "public/images/hr-thumb-new.png"
+      },
+      "sha256": "6d1cbc998ac6e287bdfcee4636deb77f8535dc0013ac1d6aa9927b521ebc38f0",
+      "usage": "Existing project screenshot reused without modifying its pixels"
+    },
+    {
+      "path": "public/images/grid-thumb-new.png",
+      "origin": {
+        "type": "existing-repository-asset",
+        "commit": "2dfee2dbf51e6337890c456ef3a1bd6b44471d71",
+        "path": "public/images/grid-thumb-new.png"
+      },
+      "sha256": "ec35d9949a3a8cacb80ff4c36063ac2432ffaea0661b2895ee675f77a2d61ddf",
+      "usage": "Existing project screenshot reused without modifying its pixels"
+    },
+    {
+      "path": "public/images/rec-thumb-new.png",
+      "origin": {
+        "type": "existing-repository-asset",
+        "commit": "2dfee2dbf51e6337890c456ef3a1bd6b44471d71",
+        "path": "public/images/rec-thumb-new.png"
+      },
+      "sha256": "bef8be772bc0ed2e8f05b0de252294671be9c359d0e52c3d8c635b3532dc0f78",
+      "usage": "Existing project screenshot reused without modifying its pixels"
+    },
+    {
+      "path": "public/images/shop-thumb-new.png",
+      "origin": {
+        "type": "existing-repository-asset",
+        "commit": "2dfee2dbf51e6337890c456ef3a1bd6b44471d71",
+        "path": "public/images/shop-thumb-new.png"
+      },
+      "sha256": "b01a71224b4a6178e8344ca45d9c7e72858805cfe1a1d54b43c01d94673c9d31",
+      "usage": "Existing project screenshot reused without modifying its pixels"
+    }
+  ]
+}

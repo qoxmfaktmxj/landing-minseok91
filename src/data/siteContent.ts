@@ -34,8 +34,8 @@ export interface HeadlineSegment {
 
 export const frontPage = {
   headline: [
-    [{ text: "AI를 제대로 이해하고 쓴다는 것" }],
-    [{ text: "결과가", marker: true }, { text: " 증명한다" }],
+    [{ text: "AI로 필요한 서비스를 만들고 있습니다." }],
+    [{ text: "팀에서 함께 쓸 AI 도구도 직접 만듭니다." }],
   ] as HeadlineSegment[][],
   lede: "사내 AI TFT를 리더로서 마무리했으며, 그 성과를 바탕으로 Claude Code 전사 도입이 결정됐습니다. HR 업무 이해를 바탕으로 AI 도구와 업무시스템을 직접 만들고 사용자 교육까지 수행합니다.",
   byline: "BY KIM MINSEOK / BACKEND DEVELOPER / 본지 단독",
@@ -90,7 +90,7 @@ export const featureStories: FeatureStoryItem[] = [
       "2개 팀 30명 이상에게 배포되어 활용됐고, 소속 팀의 공식 개발방법론으로 채택됐습니다. 이후에도 사용자 피드백을 반영해 버전 업데이트를 진행하고 있습니다. 사내 AI 교육은 4회 수행했으며, AI TFT 성과를 바탕으로 Claude Code 전사 도입이 결정됐습니다.",
     url: "/README_HARNESS.html",
     urlLabel: "README_HARNESS",
-    previewImage: "/images/harness-thumb-2026-09.png",
+    previewImage: "/images/harness-thumb-cinematic.png",
     previewAlt: "EHR Harness Plugin README 화면 미리보기",
     tech: ["Claude Code Plugin", "Oracle / Tibero", "MyBatis", "superpowers"],
     accessNote: "2개 팀 30명 이상 배포 및 활용, 소속 팀 공식 개발방법론 채택",

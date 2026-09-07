@@ -1,0 +1,31 @@
+{
+  "asset": "terrain-light-ridges.webp",
+  "source_kind": "independently generated terrain material",
+  "generated_by": "Codex built-in image generation",
+  "prompt": "Use case: lighting-weather. Image 1 is the EDIT TARGET and the exact geometry/framing authority: an independently authored empty 3D arctic landscape with new low diagonal ridges in the middle distance. Image 2 is ONLY the material, lighting and color reference from our earlier terrain material. Produce one registered snow material plate with the exact camera, aspect ratio, terrain contours and mountain silhouettes of Image 1. Especially retain its raised low overlapping middle-distance ridges on both sides and the shallow central saddle; do not flatten or erase them to match Image 2. Preserve the unchanged foreground ridge and far mountain positions. Give all slopes the photographic wind-scoured snow, granular icy rock, small sastrugi and pale crest lighting of Image 2. Match Image 2's restrained slate-blue/lavender-gray palette, soft upper-right illumination, near-surface brightness and shadow contrast so it can replace that material without global exposure changes. The new middle ridges must have readable natural snow texture and gently shaded faces, with thin atmospheric mist in the valleys between them. No horizontal fog cutoff. The central ground remains empty: the real-time igloo will be added separately. Keep it photographic and natural, no plastic folds, dry mud cracks, painted strokes or regular polygon facets. No added buildings, igloo, blocks, trees, people, floating particles, falling snow, UI, text, border, branding or vignette. Change surface materials/light only; never replace the geometry or camera of Image 1. Return a single full-frame landscape texture.",
+  "geometry_reference": ".omx/fidelity-90/landing/terrain36-wide.png",
+  "material_reference": "terrain-light.webp (earlier independently generated material)",
+  "original": "exec-feb50872-4bdb-4bc9-986e-c8ac93904e06.png",
+  "projector": {
+    "position": [
+      -13.49,
+      2.65,
+      14.43
+    ],
+    "target": [
+      0,
+      1.23686,
+      0
+    ],
+    "vertical_fov_degrees": 52,
+    "aspect": "10/7",
+    "zoom": 1,
+    "width": 2240,
+    "height": 1568
+  },
+  "transformation": "Resized and WebP encoded to registered 2240x1568 material dimensions",
+  "usage": "Continuous world-space material projection on actual terrain meshes, including overlapping low middle ridges; live shadows and spatial camera parallax retained",
+  "created": "2026-09-07",
+  "original_location": "Local Codex generation archive",
+  "sha256": "b34e27bde145ad86cfc2f4e62da2803afb08405dbf040579cfdb487628a41bdc"
+}
