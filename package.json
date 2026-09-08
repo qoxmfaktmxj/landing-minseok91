@@ -8,6 +8,7 @@
     "start": "next start -p 3010",
     "lint": "eslint src",
     "test:e2e": "npm run build && playwright test",
+    "test:performance": "node scripts/measure-arctic.mjs",
     "build:readme": "node scripts/build-readme.mjs"
   },
   "dependencies": {

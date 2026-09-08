@@ -137,6 +137,8 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
     textures.forEach(texture => texture.dispose());
     throw error;
   }
+  let shaderFailed = false;
+  renderer.debug.onShaderError = () => { shaderFailed = true; };
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1.25 : 1.5));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -177,7 +179,7 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
   }
   const ice = new THREE.MeshStandardMaterial({ color: 0xd4deeb, map: frost, normalMap: bump, normalScale: new THREE.Vector2(.28, .28), roughness: .76, metalness: 0 });
   ice.onBeforeCompile = shader => {
-    shader.vertexShader = shader.vertexShader.replace("#include <common>", "#include <common>\nattribute vec2 frostUv; attribute float frostMotion; varying vec2 vFrostCoord; varying float vFrostMotion;").replace("#include <begin_vertex>", "#include <begin_vertex>\nvFrostCoord = frostUv; vFrostMotion = frostMotion;");
+    shader.vertexShader = shader.vertexShader.replace("#include <common>", "#include <common>\nattribute vec2 frostUv; attribute float frostBaseY; varying vec2 vFrostCoord; varying float vFrostMotion;").replace("#include <begin_vertex>", "#include <begin_vertex>\nvFrostCoord = frostUv; vFrostMotion = max(0., modelMatrix[3].y / frostBaseY - 1.);");
     shader.fragmentShader = shader.fragmentShader.replace("#include <common>", "#include <common>\nvarying vec2 vFrostCoord; varying float vFrostMotion;").replace("#include <map_fragment>", `#include <map_fragment>
       float frostGrain = texture2D(map, vMapUv * 2.0).r;
       float frostBorder = smoothstep(.37, .50, max(abs(vFrostCoord.x - .5), abs(vFrostCoord.y - .5)) + (frostGrain - .5) * .045);
@@ -330,7 +332,8 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
     }
     geometry.setAttribute("basePlateCoordinate", new THREE.BufferAttribute(coordinates, 4));
     geometry.setAttribute("baseHeight", new THREE.BufferAttribute(baseHeights, 1));
-    geometry.setAttribute("frostMotion", new THREE.BufferAttribute(new Float32Array(positions.count), 1).setUsage(THREE.DynamicDrawUsage));
+    // 초기 중심 높이와 모델 행렬에서 벌어짐을 구해 매 프레임 정점 전송을 피한다.
+    geometry.setAttribute("frostBaseY", new THREE.BufferAttribute(new Float32Array(positions.count).fill(center.y), 1));
     const materials = [ice, ice, ice, ice, ice, ice];
     if (innerFace === 5) for (let face = 0; face < 4; face++) materials[face] = sideIce;
     if (innerFace >= 0) materials[innerFace] = innerFace === 3 ? archInside : innerIce;
@@ -455,6 +458,14 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
     width = canvas.clientWidth; height = canvas.clientHeight;
     camera.aspect = width / height;
     camera.zoom = Math.min(1, camera.aspect * 1.25);
+    if (width >= 520 && height <= 500) {
+      const headerHeight = width < 768 ? 105 : 88;
+      camera.zoom *= Math.min(.88, (height - headerHeight - 96) / (height * .55));
+      camera.setViewOffset(width, height, -width * .18, -(headerHeight - 96) / 2, width, height);
+    } else if (width < 520 && height < 700) {
+      camera.zoom *= .8;
+      camera.setViewOffset(width, height, 0, -height * .06, width, height);
+    } else camera.clearViewOffset();
     camera.updateProjectionMatrix();
     renderer.setSize(width, height, false); composer.setSize(width, height);
     landscape.resize(canvas.width, canvas.height);
@@ -486,11 +497,6 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
       block.target = THREE.MathUtils.lerp(block.target, target, 1 - Math.exp(-delta * 3.7));
       block.amount = THREE.MathUtils.lerp(block.amount, block.target, 1 - Math.exp(-delta * 3.7));
       if (reduced) block.amount = block.target = 0;
-      const motion = block.mesh.geometry.getAttribute("frostMotion") as THREE.BufferAttribute;
-      if (Math.abs(motion.getX(0) - block.amount) > .00001) {
-        (motion.array as Float32Array).fill(block.amount);
-        motion.needsUpdate = true;
-      }
       block.mesh.position.copy(block.base).multiplyScalar(1 + block.amount);
       block.mesh.rotation.set(block.amount * Math.sin(block.id) * .5, block.amount * Math.cos(block.id * .9) * .5, block.amount * Math.sin(block.id * .7) * .4);
       if (local > .2) hover = true;
@@ -502,6 +508,7 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
     cavityLight.intensity = illumination * 22;
     spillLight.intensity = illumination * 1.5;
     composer.render();
+    if (shaderFailed) throw new Error("얼음 장면의 셰이더를 컴파일하지 못했습니다.");
     canvas.dataset.ready = "true";
     canvas.dataset.hover = String(hover);
     canvas.dataset.displacement = displacement.toFixed(3);

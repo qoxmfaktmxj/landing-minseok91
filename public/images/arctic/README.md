@@ -19,3 +19,5 @@ Runtime loads the five CC0 derivatives and the two generated material plates. In
 터치 중심 기기에서는 `mobile/`의 1024px 텍스처 5장을 사용하고, 생성된 재질 이미지 2장은 원본을 공유한다. 텍스처 총용량은 데스크톱 8,610,752바이트, 모바일 2,107,546바이트다. 모바일 파일은 위 CC0 원본의 축소본이며 `node scripts/build-arctic-mobile-textures.mjs`로 다시 생성할 수 있다. 색상 맵은 WebP 품질 82, 노멀 맵은 품질 90으로 저장한다.
 
 눈발은 별도 이미지 없이 GPU에서 움직인다. PC 1,200개, 모바일 600개의 입자에 거리별 크기, 투명도, 돌풍과 흔들림을 적용한다. PC는 후처리 렌더 타깃에 최대 2샘플 MSAA를 적용하고, 모바일은 기존 해상도와 그림자 제한을 유지한다.
+
+블록의 초기 중심 높이와 모델 행렬에서 벌어짐을 계산하므로 매 프레임 움직임 값을 정점 버퍼로 전송하지 않는다. GPU 복구 시에는 보관된 텍스처와 장면을 다시 사용하며, 셰이더 실패 시 정적 배경으로 전환한다. `npm run test:performance`는 PC와 모바일 에뮬레이션에서 각각 30초씩 3회 측정하고 `.impeccable/review/arctic-performance.json`에 프레임 시간과 버퍼 전송량을 기록한다. 실제 휴대폰 성능 측정과는 구분한다.

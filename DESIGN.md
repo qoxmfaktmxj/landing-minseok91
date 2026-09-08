@@ -15,7 +15,25 @@ colors:
   ink: "#1b2030"
   focus-on-dark: "#93acff"
   focus-on-silver: "#2448d7"
+  arctic-ground: "#aab4c2"
+  arctic-fallback: "#adb7c4"
+  arctic-ink: "#243248"
+  arctic-copy: "#2f3b4d"
+  arctic-light: "#f0f4f9"
+  arctic-mist: "#cdd7e4"
 typography:
+  hero-name:
+    fontFamily: "var(--font-geist), sans-serif"
+    fontSize: "clamp(28px, 3vw, 44px)"
+    fontWeight: 530
+    lineHeight: 1
+    letterSpacing: "-0.04em"
+  hero-secondary:
+    fontFamily: "Pretendard, Apple SD Gothic Neo, sans-serif"
+    fontSize: "12px"
+    fontWeight: 500
+    lineHeight: 1.7
+    letterSpacing: "normal"
   display:
     fontFamily: "var(--font-geist), sans-serif"
     fontSize: "clamp(62px, 7.2vw, 96px)"
@@ -74,11 +92,6 @@ components:
     backgroundColor: "transparent"
     textColor: "{colors.nav-text}"
     rounded: "{rounded.sharp}"
-  scene-toggle:
-    backgroundColor: "transparent"
-    textColor: "{colors.control-text}"
-    rounded: "{rounded.sharp}"
-    padding: "8px 12px"
   project-visual:
     backgroundColor: "{colors.project-cobalt}"
     textColor: "{colors.foreground}"
@@ -104,7 +117,7 @@ components:
 
 첫 화면은 은빛 눈 계곡과 빛나는 얼음 건축물을 화면 전체에 펼친다. 이름은 위쪽 왼편, 소개는 위쪽 오른편에 두고, 프로젝트와 연락 행동은 풍경 아래에 둔다. 이후 구간은 기존 흑연, 은빛, 코발트와 실제 프로젝트 화면을 유지한다.
 
-화면은 넓고 개방적이며 본문보다 결과물을 먼저 보게 한다. 움직임은 시스템의 반응성을 설명하고, 사용자가 모션 감소를 선택하거나 그래픽을 멈추면 모든 내용과 링크는 그대로 유지된다.
+화면은 넓고 개방적이며 본문보다 결과물을 먼저 보게 한다. 움직임은 시스템의 반응성을 설명하고, 사용자가 운영체제에서 모션 감소를 선택하면 모든 내용과 링크를 유지한 채 정적인 장면을 표시한다. 별도 모션 정지 버튼은 제공하지 않는 제품 정책이다.
 
 **Key Characteristics:**
 
@@ -212,15 +225,17 @@ components:
 
 ### Motion Scene
 
-지형과 70개의 얼음 블록을 실제 메시로 구성한다. 여섯 단의 돔 아래 세 단은 거의 수직으로 서고, 앞쪽에는 깊이가 있는 아치형 입구를 둔다. 카메라는 포인터를 부드럽게 따라 움직이며, 가까운 블록이 벌어지고 회전할 때 서리와 이음새의 빛도 함께 반응한다. 표면 이미지의 좌표는 각 블록의 초기 형상에 고정해 이동 중에도 재질이 블록에 붙어 있게 한다. 눈 입자 1,200개와 먼 지형의 안개로 깊이를 표현한다.
+지형과 70개의 얼음 블록을 실제 메시로 구성한다. 여섯 단의 돔 아래 세 단은 거의 수직으로 서고, 앞쪽에는 깊이가 있는 아치형 입구를 둔다. 카메라는 포인터를 부드럽게 따라 움직이며, 가까운 블록이 벌어지고 회전할 때 서리와 이음새의 빛도 함께 반응한다. 표면 이미지의 좌표는 각 블록의 초기 형상에 고정해 이동 중에도 재질이 블록에 붙어 있게 한다. PC 1,200개, 터치 기기 600개의 눈 입자와 먼 지형의 안개로 깊이를 표현한다.
 
 큰 산 앞에는 낮은 능선이 비스듬히 겹친다. 지형의 눈 재질은 고정된 월드 좌표에 연속해서 적용하며 카메라 시야에 따른 재질 절단을 사용하지 않는다. 눈 입자는 바람의 화면상 방향에 맞춰 기울고, 크기와 속도에 작은 차이를 둔다. 모바일 터치를 놓으면 시점과 블록을 원위치로 돌려 본문 탐색을 이어갈 수 있게 한다.
 
 동일한 원본 비교 기준표로 독립90점 판정을 받았다. 구도, 재질, 입력 반응, 지속적인 분위기와 타이포그래피를 평가한 결과이며 픽셀 일치율을 의미하지 않는다. `npm run test:e2e`는 production build 후 주요3D 동작과 모바일 사용성을 검증한다.
 
-WebGL이 준비된 뒤에만 일시 정지 제어를 표시한다. 모션 감소 환경에서는 정적인 장면을 표시하고 제어를 숨긴다. 정지, 탭 숨김, 화면 이탈 시 프레임 요청을 중단한다. 텍스처 로딩이 실패하거나 로딩 중 컴포넌트가 제거되면 GPU를 생성하지 않고 로드된 자원을 정리한다. WebGL을 사용할 수 없거나 컨텍스트가 손실되면 로컬 풍경 이미지가 남으며, JavaScript 없이도 본문과 링크를 이용할 수 있다.
+모션 감소 환경에서는 정적인 장면을 표시한다. 탭 숨김과 화면 이탈 시 프레임 요청을 중단한다. 텍스처 로딩이 실패하거나 로딩 중 컴포넌트가 제거되면 로드된 자원을 정리한다. WebGL 미지원, 셰이더 컴파일 실패, GPU 손실 시에는 로컬 풍경 이미지가 남으며 JavaScript 없이도 본문과 링크를 이용할 수 있다. GPU가 복구되면 Three.js의 자원 복구 뒤 기존 장면을 재개하고, 재개 중 실패하면 자원을 정리한 뒤 정적 배경을 유지한다.
 
-모바일의 일시 정지 제어는 첫 화면의 행동 링크 아래 오른쪽에 배치한다. 헤더, 풍경, 행동 링크와 제어가 첫 뷰포트 안에 들어오도록 높이를 조정한다.
+첫 화면의 색은 ArcticHero.module.css의 arctic 변수로 관리한다. 짙은 제목과 소개 문구 뒤에는 옅은 안개를 두고, 하단 행동 링크 뒤의 지면은 어둡게 처리해 밝은 글자를 읽기 쉽게 한다. 제목은 PC 최대 44px, 모바일 28px, 낮은 가로 화면 24px이며 짧은 소개는 PC 14px, 모바일 12px를 사용한다. 높이 500px 이하의 가로 화면에서는 소개를 왼쪽, 이글루를 오른쪽으로 배치하고 주요 링크를 첫 화면 안에 둔다. 작은 세로 화면은 이글루를 축소하고 아래로 이동해 소개와의 겹침을 피한다.
+
+터치 기기는 텍스처 약 2.1MB, 픽셀 비율 최대 1.25, 그림자 1024px를 사용한다. PC는 기존 텍스처와 최대 2샘플 MSAA를 사용한다. 블록의 벌어짐은 초기 중심 높이와 모델 행렬로 GPU에서 계산해 매 프레임 정점 버퍼를 갱신하지 않는다. 성능 수치는 기기와 브라우저 조건을 함께 기록한다.
 
 ## Do's and Don'ts
 

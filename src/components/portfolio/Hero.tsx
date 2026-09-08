@@ -1,17 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import { ArrowDown, Pause, Play } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { frontPage } from "@/data/siteContent";
 import HeroScene from "./HeroScene";
 import styles from "./ArcticHero.module.css";
 
 export default function Hero() {
-  const [paused, setPaused] = useState(false);
   return (
     <section className={`hero ${styles.hero}`} aria-labelledby="hero-heading">
       <div className={styles.stage}>
-        <HeroScene paused={paused} />
+        <HeroScene />
         <div className={styles.copy}>
           <h1 id="hero-heading" className={styles.title} aria-label="김민석">
             KIM <span>MINSEOK</span>
@@ -37,20 +35,6 @@ export default function Hero() {
           <span className={styles.indicator} />
           <span>복잡한 맥락을, 하나의 흐름으로.</span>
         </div>
-        <button
-          className={styles.toggle}
-          type="button"
-          onClick={() => setPaused(!paused)}
-          aria-label={paused ? "그래픽 재생" : "그래픽 일시 정지"}
-          aria-pressed={paused}
-        >
-          {paused ? (
-            <Play size={14} aria-hidden="true" />
-          ) : (
-            <Pause size={14} aria-hidden="true" />
-          )}
-          <span>{paused ? "재생" : "일시 정지"}</span>
-        </button>
       </div>
       <div className={styles.bottom}>
         <p>
