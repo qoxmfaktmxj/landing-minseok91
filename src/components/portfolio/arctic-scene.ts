@@ -113,30 +113,21 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
   if (signal.aborted) throw new DOMException("Scene initialization cancelled", "AbortError");
   const mobile = window.matchMedia("(pointer: coarse)").matches;
   const texturePath = mobile ? "/images/arctic/mobile" : "/images/arctic";
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true, powerPreference: "low-power" });
   const loader = new THREE.TextureLoader();
-  const textureResults = await Promise.allSettled([
-    loader.loadAsync(`${texturePath}/rough_plaster_03-diffuse.webp`),
-    loader.loadAsync(`${texturePath}/rough_plaster_03-nor_gl.webp`),
-    loader.loadAsync(`${texturePath}/aerial_rocks_02-diffuse.webp`),
-    loader.loadAsync(`${texturePath}/aerial_rocks_02-nor_gl.webp`),
-    loader.loadAsync(`${texturePath}/snow_02-diffuse.webp`),
-    loader.loadAsync("/images/arctic/surface-plate-six.webp"),
-    loader.loadAsync("/images/arctic/terrain-light-ridges.webp"),
-  ]);
-  const textures = textureResults.flatMap(result => result.status === "fulfilled" ? [result.value] : []);
-  if (signal.aborted || textures.length !== textureResults.length) {
-    textures.forEach(texture => texture.dispose());
-    if (signal.aborted) throw new DOMException("Scene initialization cancelled", "AbortError");
-    throw new Error("The arctic surface textures could not be loaded.");
-  }
+  const textures: THREE.Texture[] = [];
+  const texturesReady = Promise.allSettled([
+    `${texturePath}/rough_plaster_03-diffuse.webp`,
+    `${texturePath}/rough_plaster_03-nor_gl.webp`,
+    `${texturePath}/aerial_rocks_02-diffuse.webp`,
+    `${texturePath}/aerial_rocks_02-nor_gl.webp`,
+    `${texturePath}/snow_02-diffuse.webp`,
+    "/images/arctic/surface-plate-six.webp",
+    "/images/arctic/terrain-light-ridges.webp",
+  ].map(url => new Promise<void>((resolve, reject) => {
+    textures.push(loader.load(url, () => resolve(), undefined, reject));
+  }))).then(results => !signal.aborted && results.every(result => result.status === "fulfilled"));
   const [frost, bump, terrainMap, terrainBump, snowAlbedo, surfacePlate, terrainPlate] = textures;
-  let renderer: THREE.WebGLRenderer;
-  try {
-    renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true, powerPreference: "low-power" });
-  } catch (error) {
-    textures.forEach(texture => texture.dispose());
-    throw error;
-  }
   let shaderFailed = false;
   renderer.debug.onShaderError = () => { shaderFailed = true; };
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1.25 : 1.5));
@@ -515,9 +506,9 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
     renderer.setSize(width, height, false); composer.setSize(width, height);
     landscape.resize(canvas.width, canvas.height);
   };
-  const render = (time: number, delta: number, reduced: boolean) => {
+  const render = (time: number, delta: number, reduced: boolean, assetsReady: boolean) => {
     if (reduced) introFinished = true;
-    if (!introFinished) {
+    if (!introFinished && assetsReady) {
       introTime = Math.min(introDuration, introTime + delta);
       introFinished = introTime >= introDuration;
     }
@@ -525,12 +516,16 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
     const materialize = THREE.MathUtils.smoothstep(introProgress, 0, 1);
     reveal.value = materialize;
     const landscapeAlpha = THREE.MathUtils.smoothstep(introProgress, .12, .92);
+    terrain.visible = landscapeAlpha > 0;
     terrainMaterial.opacity = landscapeAlpha;
     if (terrainMaterial.transparent !== (landscapeAlpha < 1)) {
       terrainMaterial.transparent = landscapeAlpha < 1;
       terrainMaterial.needsUpdate = true;
     }
-    for (const mesh of landscape.meshes) (mesh.material as THREE.MeshStandardMaterial).opacity = landscapeAlpha;
+    for (const mesh of landscape.meshes) {
+      mesh.visible = landscapeAlpha > 0;
+      (mesh.material as THREE.MeshStandardMaterial).opacity = landscapeAlpha;
+    }
     introLines.visible = !introFinished;
     introMaterial.opacity = (1 - THREE.MathUtils.smoothstep(introProgress, .2, .9)) * .42;
     introLines.scale.setScalar(1 + (1 - materialize) * .18);
@@ -585,7 +580,8 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
     spillLight.intensity = illumination * 1.5;
     composer.render();
     if (shaderFailed) throw new Error("얼음 장면의 셰이더를 컴파일하지 못했습니다.");
-    canvas.dataset.ready = "true";
+    canvas.dataset.ready = assetsReady ? "true" : "loading";
+    canvas.dataset.preview = "true";
     canvas.dataset.hover = String(hover);
     canvas.dataset.displacement = displacement.toFixed(3);
     canvas.dataset.interaction = interaction.toFixed(3);
@@ -597,7 +593,7 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
   };
   resize();
   return {
-    resize, render,
+    resize, render, texturesReady,
     pointer(x: number, y: number) { pointer.set(x, y); },
     pointerLeave() { pointer.set(2, 2); },
     dispose() {

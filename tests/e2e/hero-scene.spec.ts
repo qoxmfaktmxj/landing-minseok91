@@ -145,19 +145,82 @@ test("셰이더 컴파일 실패는 준비 완료로 표시하지 않는다", as
   await expect(page.locator("#work")).toBeInViewport();
 });
 
-test("텍스처 지연 중 본문을 표시하고 다운로드 후 3D로 전환한다", async ({ page }) => {
+for (const mobile of [false, true]) {
+  test(`${mobile ? "모바일" : "PC"} 새로 진입해도 윤곽선에서 고정 대기한 뒤 등장한다`, async ({ browser, baseURL }) => {
+    const context = await browser.newContext({ baseURL, viewport: mobile ? { width: 390, height: 844 } : { width: 1440, height: 900 }, isMobile: mobile, hasTouch: mobile });
+    const page = await context.newPage();
+    const completedImages: string[] = [];
+    page.on("request", request => { if (request.url().includes("/images/arctic-hero.webp")) completedImages.push(request.url()); });
+    try {
+      for (let visit = 0; visit < 2; visit++) {
+        let release!: () => void;
+        let releaseScripts!: () => void;
+        const gate = new Promise<void>(resolve => { release = resolve; });
+        const scriptGate = new Promise<void>(resolve => { releaseScripts = resolve; });
+        await page.route("**/images/arctic/**", async route => { await gate; await route.continue(); });
+        await page.route("**/_next/static/chunks/*.js", async route => { await scriptGate; await route.continue(); });
+        try {
+          if (visit === 0) await page.goto("/", { waitUntil: "commit" });
+          else await page.reload({ waitUntil: "commit" });
+          const canvas = page.locator(".hero canvas");
+          await expect(page.getByRole("heading", { name: "김민석", level: 1 })).toBeVisible();
+          await expect(canvas).toHaveAttribute("data-preview", "false");
+          await expect(canvas.locator("..")).toHaveCSS("background-image", /arctic-loading/);
+          releaseScripts();
+          await expect(canvas).toHaveAttribute("data-preview", "true");
+          await expect(canvas).toHaveAttribute("data-ready", "loading");
+          await expect(canvas).toHaveCSS("opacity", "1");
+          await expect(canvas).toHaveAttribute("data-intro-progress", "0.000");
+          await expect(canvas.locator("..")).toHaveCSS("background-image", /arctic-loading/);
+          await expect(page.getByRole("heading", { name: "김민석", level: 1 })).toBeVisible();
+          await expect(page.locator('.hero a[href="#work"]')).toBeVisible();
+          const camera = await canvas.getAttribute("data-camera");
+          await expectStopped(page);
+          expect(await canvas.getAttribute("data-camera")).toBe(camera);
+          release();
+          await expect(canvas).toHaveAttribute("data-ready", "true");
+          await expect(canvas).toHaveAttribute("data-preview", "true");
+          await expect(canvas).toHaveAttribute("data-intro", "complete");
+          expect(completedImages).toEqual([]);
+        } finally {
+          release(); releaseScripts();
+          await page.unroute("**/images/arctic/**");
+          await page.unroute("**/_next/static/chunks/*.js");
+        }
+      }
+    } finally { await context.close(); }
+  });
+}
+
+test("모션 감소 환경은 다운로드 후 완성된 정적 장면을 표시한다", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
   let release!: () => void;
   const gate = new Promise<void>(resolve => { release = resolve; });
-  await page.route("**/snow_02-diffuse.webp", async route => { await gate; await route.continue(); });
+  await page.route("**/images/arctic/**", async route => { await gate; await route.continue(); });
   try {
     await page.goto("/", { waitUntil: "domcontentloaded" });
-    await expect(page.getByRole("heading", { name: "김민석", level: 1 })).toBeVisible();
     const canvas = page.locator(".hero canvas");
+    await expect(canvas).toHaveAttribute("data-ready", "loading");
     await expect(canvas).toHaveCSS("opacity", "0");
-    await expect(page.locator('.hero a[href="#work"]')).toBeVisible();
     release();
     await expect(canvas).toHaveAttribute("data-ready", "true");
+    await expect(canvas).toHaveAttribute("data-intro-progress", "1.000");
+    await expectStopped(page);
   } finally { release(); }
+});
+
+test("JavaScript가 없어도 정적 풍경과 프로젝트 링크를 사용할 수 있다", async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ baseURL, javaScriptEnabled: false });
+  try {
+    const page = await context.newPage();
+    await page.goto("/");
+    await expect(page.locator(".hero noscript div")).toHaveCSS("background-image", /arctic-hero/);
+    const link = page.locator('.hero a[href="#work"]');
+    await expect(link).toBeVisible();
+    const box = await link.boundingBox();
+    await page.mouse.click(box!.x + box!.width / 2, box!.y + box!.height / 2);
+    await expect(page).toHaveURL(/#work$/);
+  } finally { await context.close(); }
 });
 
 test("텍스처 한 장이 실패해도 배경과 링크를 유지한다", async ({ page }) => {

@@ -12,6 +12,8 @@ export default function HeroScene() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    canvas.dataset.ready = "loading";
+    canvas.dataset.preview = "false";
     const initialization = new AbortController();
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     let scene: ArcticScene | undefined;
@@ -23,22 +25,24 @@ export default function HeroScene() {
     let previous = 0;
     let touchRelease = 0;
     let touching = false;
+    let assetsReady = false;
     const fail = () => {
       cancelAnimationFrame(frame); frame = 0;
       window.clearTimeout(touchRelease);
       scene?.dispose(); scene = undefined;
       canvas.dataset.ready = "false";
+      canvas.dataset.preview = "false";
     };
     const draw = (delta: number) => {
       if (!scene) return false;
       try {
-        scene.render(time, delta, reduced.matches);
+        scene.render(time, delta, reduced.matches, assetsReady);
         return true;
       } catch { fail(); return false; }
     };
     const tick = (now: number) => {
       frame = 0;
-      if (!scene || !visible || lost || document.hidden || reduced.matches) return;
+      if (!scene || !assetsReady || !visible || lost || document.hidden || reduced.matches) return;
       const delta = previous ? Math.min((now - previous) / 1000, .06) : 1 / 60;
       previous = now;
       time += delta;
@@ -47,12 +51,13 @@ export default function HeroScene() {
     const sync = () => {
       cancelAnimationFrame(frame); frame = 0; previous = 0;
       if (!scene || !visible || lost || document.hidden) return;
+      if (reduced.matches && !assetsReady) return;
       if (reduced.matches) { time = 0; scene.pointerLeave(); }
-      if (draw(0) && !reduced.matches) frame = requestAnimationFrame(tick);
+      if (draw(0) && assetsReady && !reduced.matches) frame = requestAnimationFrame(tick);
     };
     const onPointer = (event: PointerEvent) => {
       if (!event.isPrimary) return;
-      if (!scene || !visible || lost || reduced.matches || document.hidden) return;
+      if (!scene || !assetsReady || !visible || lost || reduced.matches || document.hidden) return;
       window.clearTimeout(touchRelease);
       touching = false;
       if (!canvas.closest(".hero")?.contains(event.target as Node) || (event.target as Element).closest("a, button, input, select, textarea, [role='button']")) { scene.pointerLeave(); return; }
@@ -84,6 +89,7 @@ export default function HeroScene() {
       touching = false;
       scene?.pointerLeave();
       canvas.dataset.ready = "false";
+      canvas.dataset.preview = "false";
     };
     const restoredContext = () => { lost = false; sync(); };
     const observer = new IntersectionObserver(([entry]) => {
@@ -91,7 +97,7 @@ export default function HeroScene() {
       canvas.dataset.intersecting = String(visible);
       sync();
     });
-    observer.observe(canvas);
+    observer.observe(canvas.parentElement!);
     const resizeObserver = new ResizeObserver(() => { scene?.resize(); sync(); });
     resizeObserver.observe(canvas);
     window.addEventListener("pointerdown", onPointer, { passive: true });
@@ -107,6 +113,12 @@ export default function HeroScene() {
       scene = result;
       // Three.js의 GPU 자원 복구 처리 다음에 렌더링을 재개한다.
       canvas.addEventListener("webglcontextrestored", restoredContext);
+      result.texturesReady.then(loaded => {
+        if (disposed || scene !== result) return;
+        if (!loaded) { fail(); return; }
+        assetsReady = true;
+        sync();
+      }).catch(() => { if (!disposed && scene === result) fail(); });
       sync();
     }).catch(() => { if (!disposed) fail(); });
     return () => {
@@ -126,8 +138,9 @@ export default function HeroScene() {
       canvas.removeEventListener("webglcontextrestored", restoredContext);
       scene?.dispose();
       canvas.dataset.ready = "false";
+      canvas.dataset.preview = "false";
     };
   }, []);
 
-  return <div className={styles.scene} aria-hidden="true"><canvas ref={canvasRef} /></div>;
+  return <div className={styles.scene} aria-hidden="true"><noscript><div className={styles.staticFallback} /></noscript><canvas ref={canvasRef} data-ready="loading" data-preview="false" /></div>;
 }

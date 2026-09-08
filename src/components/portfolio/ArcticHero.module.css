@@ -27,7 +27,29 @@
   position: absolute;
   inset: 0;
   z-index: -2;
+  background: var(--arctic-fallback) url("/images/arctic-loading-desktop.webp") center / cover no-repeat;
+}
+
+@media (pointer: coarse), (max-aspect-ratio: 4/5) {
+  .scene { background-image: none; }
+}
+
+@media (pointer: coarse) and (max-aspect-ratio: 4/5) and (min-height: 700px) {
+  .scene { background-image: url("/images/arctic-loading-mobile.webp"); }
+}
+
+@media (min-width: 520px) and (max-height: 500px), (max-width: 519px) and (max-height: 699px) {
+  .scene { background-image: none; }
+}
+
+.scene:has(canvas[data-ready="false"]),
+.staticFallback {
   background: var(--arctic-fallback) url("/images/arctic-hero.webp") center / cover no-repeat;
+}
+
+.staticFallback {
+  position: absolute;
+  inset: 0;
 }
 
 .scene canvas {
@@ -35,9 +57,10 @@
   height: 100%;
   display: block;
   opacity: 0;
+  transition: opacity 180ms ease-out;
 }
 
-.scene canvas[data-ready="true"] {
+.scene canvas[data-preview="true"] {
   opacity: 1;
 }
 
@@ -239,12 +262,13 @@
     min-height: 580px;
   }
 
-  .scene {
+  .scene:has(canvas[data-ready="false"]),
+  .staticFallback {
     background-size: auto calc(100% - 100px);
     background-position: center bottom;
   }
 
-  .scene:not(:has(canvas[data-ready="true"]))::after {
+  .scene:has(canvas[data-ready="false"])::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -341,6 +365,11 @@
   .bottom a { display: none; }
   .bottom p { font-size: 10px; }
   .bottom p span { margin-inline: 7px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene { background: var(--arctic-fallback) url("/images/arctic-hero.webp") center / cover no-repeat; }
+  .scene canvas { transition: none; }
 }
 
 @media (min-width: 520px) and (max-width: 699px) and (max-height: 500px) {
