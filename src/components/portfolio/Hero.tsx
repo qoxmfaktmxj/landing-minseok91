@@ -12,7 +12,7 @@ export default function Hero() {
         <HeroScene />
         <div className={styles.copy}>
           <h1 id="hero-heading" className={styles.title} aria-label="김민석">
-            KIM <span>MINSEOK</span>
+            <span className={styles.name} data-text="KIM MINSEOK" aria-hidden="true">KIM MINSEOK</span>
           </h1>
           <div className={styles.statement}>
             {frontPage.headline.map((line, index) => (

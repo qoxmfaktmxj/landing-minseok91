@@ -6,6 +6,7 @@ test("터치 드래그 후 카메라가 복귀하고 주요 링크가 보인다"
   await page.goto("/");
   const canvas = page.locator(".hero canvas");
   await expect(canvas).toHaveAttribute("data-ready", "true");
+  await expect(canvas).toHaveAttribute("data-intro", "complete");
   const cdp = await context.newCDPSession(page);
   await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: 195, y: 420 }] });
   await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: 325, y: 420 }] });
@@ -21,6 +22,7 @@ test("모바일 스크롤이 그래픽 반응을 취소하고 가로 넘침이 �
   await page.goto("/");
   const canvas = page.locator(".hero canvas");
   await expect(canvas).toHaveAttribute("data-ready", "true");
+  await expect(canvas).toHaveAttribute("data-intro", "complete");
   const cdp = await context.newCDPSession(page);
   await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: 195, y: 420 }] });
   await expect(canvas).toHaveAttribute("data-hover", "true");

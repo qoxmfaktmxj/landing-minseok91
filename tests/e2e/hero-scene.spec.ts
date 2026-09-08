@@ -4,6 +4,7 @@ async function openScene(page: Page) {
   await page.goto("/");
   const canvas = page.locator(".hero canvas");
   await expect(canvas).toHaveAttribute("data-ready", "true");
+  await expect(canvas).toHaveAttribute("data-intro", "complete");
   return canvas;
 }
 
@@ -30,6 +31,49 @@ async function expectRenderedPixels(canvas: Locator) {
   })));
   expect(Math.max(...pixels) - Math.min(...pixels)).toBeGreaterThan(10);
 }
+
+test("등장 연출은 한 번 끝나고 콘텐츠를 가리지 않는다", async ({ page }) => {
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+  const canvas = page.locator(".hero canvas");
+  await expect(canvas).toHaveAttribute("data-ready", "true");
+  await expect(canvas).toHaveAttribute("data-intro", "running");
+  await expect(page.getByRole("heading", { name: "김민석", level: 1 })).toBeVisible();
+  await expect(page.locator('.hero a[href="#work"]')).toBeVisible();
+  await expect(canvas).toHaveAttribute("data-intro", "complete");
+  await expect(canvas).toHaveAttribute("data-intro-progress", "1.000");
+  await page.locator('.hero a[href="#work"]').click();
+  await expect(canvas).toHaveAttribute("data-intersecting", "false");
+  await page.getByRole("link", { name: "김민석, 처음으로", exact: true }).click();
+  await expect(canvas).toHaveAttribute("data-intersecting", "true");
+  await expect(canvas).toHaveAttribute("data-intro", "complete");
+});
+
+test("자동 움직임보다 호버가 더 강하고 손을 떼면 자동 움직임만 남는다", async ({ page }) => {
+  const canvas = await openScene(page);
+  await page.mouse.move(10, 10);
+  await expect(canvas).toHaveAttribute("data-hover", "false");
+  await expect.poll(async () => Number(await canvas.getAttribute("data-idle"))).toBeGreaterThan(.03);
+  await expect(canvas).toHaveAttribute("data-interaction", "0.000");
+  await page.mouse.move(720, 450);
+  await expect.poll(async () => Number(await canvas.getAttribute("data-interaction"))).toBeGreaterThan(.2);
+  expect(Number(await canvas.getAttribute("data-idle"))).toBeLessThan(.16);
+  await page.mouse.move(10, 10);
+  await expect.poll(async () => Number(await canvas.getAttribute("data-interaction"))).toBeLessThan(.02);
+  const idle = await canvas.getAttribute("data-idle");
+  await expect.poll(() => canvas.getAttribute("data-idle")).not.toBe(idle);
+});
+
+test("이름 호버는 짧게 흔들린 뒤 복귀하고 모션 감소에서는 실행하지 않는다", async ({ page }) => {
+  await page.goto("/");
+  const name = page.locator('.hero h1 [data-text="KIM MINSEOK"]');
+  await name.hover();
+  expect(await name.evaluate(el => getComputedStyle(el, "::before").animationName)).not.toBe("none");
+  await page.waitForTimeout(350);
+  expect(await name.evaluate(el => getComputedStyle(el, "::before").opacity)).toBe("0");
+  await expect(name).toHaveText("KIM MINSEOK");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  expect(await name.evaluate(el => getComputedStyle(el, "::before").animationName)).toBe("none");
+});
 
 test("정상 셰이더가 실제 픽셀을 출력하고 브라우저 오류가 없다", async ({ page }) => {
   const errors: string[] = [];
@@ -63,6 +107,7 @@ test("GPU를 두 번 복구해도 다운로드와 렌더링 루프가 중복되�
     const frozen = await expectStopped(page);
     await extension.evaluate(value => value.restoreContext());
     await expect(canvas).toHaveAttribute("data-ready", "true");
+    await expect(canvas).toHaveAttribute("data-intro", "complete");
     await expect.poll(() => canvas.getAttribute("data-frames")).not.toBe(frozen);
     await expectRenderedPixels(canvas);
     await extension.dispose();
@@ -171,7 +216,7 @@ test("카메라와 얼음 블록이 반응하고 키보드로 프로젝트를 �
   await expect.poll(async () => Number(await canvas.getAttribute("data-displacement"))).toBeGreaterThan(.1);
   await page.mouse.move(10, 10);
   await expect(canvas).toHaveAttribute("data-hover", "false");
-  await expect.poll(async () => Number(await canvas.getAttribute("data-displacement"))).toBeLessThan(.04);
+  await expect.poll(async () => Number(await canvas.getAttribute("data-interaction"))).toBeLessThan(.04);
   await expect(page.getByRole("button", { name: /그래픽/ })).toHaveCount(0);
   await page.locator('.hero a[href="#work"]').focus();
   await page.keyboard.press("Enter");
@@ -202,6 +247,8 @@ test("reduced motion keeps a static scene and usable links", async ({ page }) =>
   await page.emulateMedia({ reducedMotion: "reduce" });
   await openScene(page);
   await expectStopped(page);
+  await expect(page.locator(".hero canvas")).toHaveAttribute("data-idle", "0.000");
+  await expect(page.locator(".hero canvas")).toHaveAttribute("data-intro-progress", "1.000");
   await expect(page.getByRole("button", { name: "그래픽 일시 정지" })).toBeHidden();
   const heading = page.getByRole("heading", { name: "김민석", level: 1 });
   await expect(heading).toBeVisible();
@@ -250,7 +297,7 @@ test("mobile short tap opens blocks, settles and only downloads lightweight text
     await expect(canvas).toHaveAttribute("data-hover", "true");
     await expect.poll(async () => Number(await canvas.getAttribute("data-displacement")), { intervals: [50] }).toBeGreaterThan(.1);
     await expect(canvas).toHaveAttribute("data-hover", "false");
-    await expect.poll(async () => Number(await canvas.getAttribute("data-displacement"))).toBeLessThan(.04);
+    await expect.poll(async () => Number(await canvas.getAttribute("data-interaction"))).toBeLessThan(.04);
     await expect.poll(() => canvas.getAttribute("data-camera")).toBe("-13.490,2.650,14.430");
     const textures = await page.evaluate(() => performance.getEntriesByType("resource")
       .filter((entry): entry is PerformanceResourceTiming => entry instanceof PerformanceResourceTiming && entry.name.includes("/images/arctic/"))

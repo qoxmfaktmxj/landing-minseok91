@@ -38,6 +38,7 @@ try {
         userAgent: navigator.userAgent,
         textures: performance.getEntriesByType("resource").filter(entry => entry.name.includes("/images/arctic/")).map(entry => ({ url: entry.name, bytes: entry.encodedBodySize })),
       }));
+      await page.locator(".hero canvas[data-intro=complete]").waitFor({ state: "visible", timeout: 15_000 });
       const viewport = page.viewportSize();
       await page.mouse.move(viewport.width / 2, viewport.height / 2);
       await page.waitForTimeout(3000);
