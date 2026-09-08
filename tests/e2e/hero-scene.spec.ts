@@ -118,3 +118,46 @@ test("mobile touch release recenters without horizontal overflow", async ({ brow
     await expect(page.getByRole("button", { name: "그래픽 일시 정지" })).toBeInViewport();
   } finally { await context.close(); }
 });
+
+test("mobile short tap opens blocks, settles and only downloads lightweight textures", async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ baseURL, viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true });
+  try {
+    const page = await context.newPage();
+    const canvas = await openScene(page);
+    await page.touchscreen.tap(195, 420);
+    await expect(canvas).toHaveAttribute("data-hover", "true");
+    await expect.poll(async () => Number(await canvas.getAttribute("data-displacement")), { intervals: [50] }).toBeGreaterThan(.1);
+    await expect(canvas).toHaveAttribute("data-hover", "false");
+    await expect.poll(async () => Number(await canvas.getAttribute("data-displacement"))).toBeLessThan(.04);
+    await expect.poll(() => canvas.getAttribute("data-camera")).toBe("-13.490,2.650,14.430");
+    const textures = await page.evaluate(() => performance.getEntriesByType("resource")
+      .filter((entry): entry is PerformanceResourceTiming => entry instanceof PerformanceResourceTiming && entry.name.includes("/images/arctic/"))
+      .map(entry => ({ url: entry.name, bytes: entry.encodedBodySize })));
+    expect(textures).toHaveLength(7);
+    expect(textures.filter(texture => texture.url.includes("/mobile/"))).toHaveLength(5);
+    const bytes = textures.reduce((sum, texture) => sum + texture.bytes, 0);
+    expect(bytes).toBeGreaterThan(0);
+    expect(bytes).toBeLessThan(3_000_000);
+    await page.locator('.hero a[href="#work"]').tap();
+    await expect(canvas).toHaveAttribute("data-intersecting", "false");
+    await expect(page.locator("#work")).toBeInViewport();
+  } finally { await context.close(); }
+});
+
+test("mobile scroll cancels the interaction without horizontal overflow", async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ baseURL, viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  try {
+    const page = await context.newPage();
+    const canvas = await openScene(page);
+    const cdp = await context.newCDPSession(page);
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: 195, y: 420 }] });
+    await expect(canvas).toHaveAttribute("data-hover", "true");
+    for (const y of [400, 360, 300, 220]) {
+      await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: 195, y }] });
+    }
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(50);
+    await expect(canvas).toHaveAttribute("data-hover", "false");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  } finally { await context.close(); }
+});

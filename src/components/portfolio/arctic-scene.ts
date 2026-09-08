@@ -45,8 +45,8 @@ function roundedFrostBox() {
   const core = new THREE.Vector3();
   for (let i = 0; i < positions.count; i++) {
     point.fromBufferAttribute(positions, i);
-    core.copy(point).clampScalar(-.37, .37);
-    point.sub(core).normalize().multiplyScalar(.13).add(core);
+    core.copy(point).clampScalar(-.35, .35);
+    point.sub(core).normalize().multiplyScalar(.15).add(core);
     positions.setXYZ(i, point.x, point.y, point.z);
   }
   return geometry;
@@ -64,10 +64,10 @@ function blockGeometry(y0: number, y1: number, angle0: number, angle1: number) {
     const latitude = Math.max(0, (y - 1.40) / 2.33);
     const cosLatitude = Math.sqrt(Math.max(.008, 1 - latitude * latitude));
     const faceCenter = Math.max(0, 1 - 4 * positions.getX(i) ** 2) * Math.max(0, 1 - 4 * positions.getY(i) ** 2);
-    const bulge = faceCenter * Math.pow(positions.getZ(i) + .5, 3) * .11;
+    const bulge = faceCenter * Math.pow(positions.getZ(i) + .5, 3) * .14;
     const depth = (.5 - positions.getZ(i)) * .68 - bulge;
     const radius = (2.60 - depth) * cosLatitude;
-    const jitter = (noise(angle * 11, y * 13) - .5) * .055 + (noise(angle * 33, y * 27) - .5) * .018;
+    const jitter = (noise(angle * 11, y * 13) - .5) * .028 + (noise(angle * 33, y * 27) - .5) * .008;
     positions.setXYZ(i, (radius + jitter) * Math.sin(angle), y - depth * latitude, (radius + jitter) * Math.cos(angle) - .75);
   }
   geometry.setAttribute("frostUv", new THREE.BufferAttribute(frostUv, 2));
@@ -111,13 +111,15 @@ function openCavityEntrance(geometry: THREE.BufferGeometry) {
 
 export async function createArcticScene(canvas: HTMLCanvasElement, signal: AbortSignal) {
   if (signal.aborted) throw new DOMException("Scene initialization cancelled", "AbortError");
+  const mobile = window.matchMedia("(pointer: coarse)").matches;
+  const texturePath = mobile ? "/images/arctic/mobile" : "/images/arctic";
   const loader = new THREE.TextureLoader();
   const textureResults = await Promise.allSettled([
-    loader.loadAsync("/images/arctic/rough_plaster_03-diffuse.webp"),
-    loader.loadAsync("/images/arctic/rough_plaster_03-nor_gl.webp"),
-    loader.loadAsync("/images/arctic/aerial_rocks_02-diffuse.webp"),
-    loader.loadAsync("/images/arctic/aerial_rocks_02-nor_gl.webp"),
-    loader.loadAsync("/images/arctic/snow_02-diffuse.webp"),
+    loader.loadAsync(`${texturePath}/rough_plaster_03-diffuse.webp`),
+    loader.loadAsync(`${texturePath}/rough_plaster_03-nor_gl.webp`),
+    loader.loadAsync(`${texturePath}/aerial_rocks_02-diffuse.webp`),
+    loader.loadAsync(`${texturePath}/aerial_rocks_02-nor_gl.webp`),
+    loader.loadAsync(`${texturePath}/snow_02-diffuse.webp`),
     loader.loadAsync("/images/arctic/surface-plate-six.webp"),
     loader.loadAsync("/images/arctic/terrain-light-ridges.webp"),
   ]);
@@ -135,7 +137,7 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
     textures.forEach(texture => texture.dispose());
     throw error;
   }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1.25 : 1.5));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = .80;
@@ -150,10 +152,14 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
   camera.position.copy(baseCamera);
   camera.lookAt(lookTarget);
   scene.add(new THREE.HemisphereLight(0xdce5f4, 0x414d63, 1.2));
+  const snowFill = new THREE.DirectionalLight(0xdce9ff, .45);
+  snowFill.position.set(-8, 4, 12);
+  scene.add(snowFill);
   const sun = new THREE.DirectionalLight(0xf4f7ff, 1.7);
   sun.position.set(3, 10, -4);
   sun.castShadow = true;
-  sun.shadow.mapSize.set(2048, 2048);
+  const shadowSize = mobile ? 1024 : 2048;
+  sun.shadow.mapSize.set(shadowSize, shadowSize);
   sun.shadow.camera.left = sun.shadow.camera.bottom = -12;
   sun.shadow.camera.right = sun.shadow.camera.top = 12;
   sun.shadow.camera.far = 36;
@@ -167,20 +173,23 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
   for (const texture of [frost, bump]) {
     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
     texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
-    texture.repeat.set(1.5, 1.5);
+    texture.repeat.set(2.4, 2.4);
   }
-  const ice = new THREE.MeshStandardMaterial({ color: 0xbdc8dc, map: frost, normalMap: bump, normalScale: new THREE.Vector2(.50, .50), roughness: .94, metalness: 0 });
+  const ice = new THREE.MeshStandardMaterial({ color: 0xd4deeb, map: frost, normalMap: bump, normalScale: new THREE.Vector2(.28, .28), roughness: .76, metalness: 0 });
   ice.onBeforeCompile = shader => {
     shader.vertexShader = shader.vertexShader.replace("#include <common>", "#include <common>\nattribute vec2 frostUv; attribute float frostMotion; varying vec2 vFrostCoord; varying float vFrostMotion;").replace("#include <begin_vertex>", "#include <begin_vertex>\nvFrostCoord = frostUv; vFrostMotion = frostMotion;");
     shader.fragmentShader = shader.fragmentShader.replace("#include <common>", "#include <common>\nvarying vec2 vFrostCoord; varying float vFrostMotion;").replace("#include <map_fragment>", `#include <map_fragment>
       float frostGrain = texture2D(map, vMapUv * 2.0).r;
       float frostBorder = smoothstep(.37, .50, max(abs(vFrostCoord.x - .5), abs(vFrostCoord.y - .5)) + (frostGrain - .5) * .045);
       float frostAlbedo = clamp(dot(diffuseColor.rgb, vec3(.299, .587, .114)) * 3.1, .18, .68);
-      diffuseColor.rgb = mix(vec3(.93, 1.0, 1.12) * frostAlbedo, vec3(.58, .68, .80), frostBorder * .18);
+      diffuseColor.rgb = mix(vec3(.93, 1.0, 1.10) * frostAlbedo, vec3(.76, .84, .94), frostBorder * .22);
+    `);
+    shader.fragmentShader = shader.fragmentShader.replace("#include <roughnessmap_fragment>", `#include <roughnessmap_fragment>
+      roughnessFactor = mix(.58, .84, clamp(frostGrain * .8 + frostBorder * .4, 0., 1.));
     `);
     shader.fragmentShader = shader.fragmentShader.replace("#include <emissivemap_fragment>", `#include <emissivemap_fragment>
       float frostRim = pow(1.0 - max(0.0, dot(normalize(vNormal), normalize(vViewPosition))), 5.0);
-      totalEmissiveRadiance += vec3(.40, .47, .56) * (frostRim * .035 + pow(frostBorder, 3.0) * .025);
+      totalEmissiveRadiance += vec3(.63, .76, .94) * (frostRim * .09 + pow(frostBorder, 3.0) * .06);
     `);
   };
   const plateCamera = new THREE.PerspectiveCamera(30, 1586 / 992, .1, 1000);
@@ -197,14 +206,14 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
       inverseAcesInput: { value: new THREE.Matrix3().set(.59719,.35458,.04823,.076,.90834,.01566,.0284,.13383,.83777).invert() },
       inverseAcesOutput: { value: new THREE.Matrix3().set(1.60475,-.53108,-.07367,-.10208,1.10813,-.00605,-.00327,-.07276,1.07602).invert() },
     });
-    shader.vertexShader = `attribute vec4 basePlateCoordinate; attribute vec4 basePhotoData; varying vec4 vBasePlateCoordinate; varying vec4 vBasePhotoData;\n${shader.vertexShader}`;
-    shader.vertexShader = shader.vertexShader.replace("#include <begin_vertex>", "#include <begin_vertex>\nvBasePlateCoordinate = basePlateCoordinate; vBasePhotoData = basePhotoData;");
+    shader.vertexShader = `attribute vec4 basePlateCoordinate; attribute float baseHeight; varying vec4 vBasePlateCoordinate; varying float vBaseHeight;\n${shader.vertexShader}`;
+    shader.vertexShader = shader.vertexShader.replace("#include <begin_vertex>", "#include <begin_vertex>\nvBasePlateCoordinate = basePlateCoordinate; vBaseHeight = baseHeight;");
     shader.fragmentShader = `
       uniform sampler2D surfacePlate;
       uniform float plateExposure;
       uniform mat3 inverseAcesInput, inverseAcesOutput;
       varying vec4 vBasePlateCoordinate;
-      varying vec4 vBasePhotoData;
+      varying float vBaseHeight;
       vec3 plateRadiance(vec3 displayLinear) {
         vec3 v = clamp(inverseAcesOutput * displayLinear, 0., .985);
         vec3 a = v * .983729 - 1., b = v * .432951 - .0245786, c = v * .238081 + .000090537;
@@ -214,20 +223,22 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
       ${shader.fragmentShader}`;
     shader.fragmentShader = shader.fragmentShader.replace("#include <opaque_fragment>", `
       vec2 plateUv = vBasePlateCoordinate.xy / vBasePlateCoordinate.w * .5 + .5;
-      float baseHeight = vBasePhotoData.w;
-      float sunlight = smoothstep(.0, .72, dot(normalize(vBasePhotoData.xyz), normalize(vec3(.85, .25, .46))));
-      sunlight *= smoothstep(-.15, 1.8, baseHeight);
-      vec3 shadowGrade = mix(vec3(.12, .15, .21), vec3(.22, .25, .32), smoothstep(.10, .50, baseHeight));
-      shadowGrade *= 1.0 - .15 * smoothstep(1.8, 3.4, baseHeight);
-      vec3 quietGrade = mix(shadowGrade, vec3(.82, .87, .95), sunlight);
+      float baseHeight = vBaseHeight;
+      vec3 frostNormal = inverseTransformDirection(normal, viewMatrix);
+      float sunlight = smoothstep(-.10, .90, dot(frostNormal, normalize(vec3(.85, .65, .46))));
+      vec3 shadowGrade = mix(vec3(.085, .105, .145), vec3(.15, .18, .23), smoothstep(-.4, 1.1, baseHeight));
+      vec3 quietGrade = mix(shadowGrade, vec3(.53, .60, .70), sunlight);
       float opened = smoothstep(.012, .20, vFrostMotion);
-      vec3 openedGrade=mix(vec3(.28,.34,.48),vec3(.75,.82,.94),max(sunlight,smoothstep(1.5,3.2,baseHeight)));
-      vec3 photographedFrost = texture2D(surfacePlate, plateUv).rgb * mix(quietGrade, openedGrade, opened);
-      photographedFrost += vec3(.21,.17,.15)*sunlight*sunlight*(1.-opened);
-      outgoingLight = mix(outgoingLight, plateRadiance(photographedFrost), .90);
+      vec3 openedGrade = mix(vec3(.20, .25, .33), vec3(.60, .68, .79), sunlight);
+      float plateDetail = dot(texture2D(surfacePlate, plateUv).rgb, vec3(.299, .587, .114));
+      float plateBody = dot(texture2D(surfacePlate, plateUv, 3.).rgb, vec3(.299, .587, .114));
+      float frostDetail = clamp(plateDetail / max(.04, plateBody), .72, 1.28);
+      vec3 photographedFrost = mix(quietGrade, openedGrade, opened) * mix(1., frostDetail, .55);
+      outgoingLight = mix(outgoingLight, plateRadiance(photographedFrost), .64);
       float edgeDistance = .5 - max(abs(vFrostCoord.x - .5), abs(vFrostCoord.y - .5));
-      float seamGlow = 1.0 - smoothstep(.006, .035, edgeDistance);
-      outgoingLight += vec3(.48, .70, 1.0) * seamGlow * opened * .95;
+      float seamGlow = 1.0 - smoothstep(.012, .075, edgeDistance);
+      float edgeFrost = pow(1. - max(0., dot(normalize(vNormal), normalize(vViewPosition))), 3.);
+      outgoingLight += vec3(.66, .79, .96) * (seamGlow * (.07 + opened * .42) + edgeFrost * .12);
       #include <opaque_fragment>
     `);
   };
@@ -251,7 +262,8 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
       diffuseColor.rgb = snowSurface * mix(vec3(.38,.43,.56), vec3(1.10,1.13,1.18), smoothstep(-.12,.78,windFacing));
     `);
   };
-  const terrainGeometry = new THREE.PlaneGeometry(150, 150, 300, 300);
+  const terrainSegments = mobile ? 180 : 300;
+  const terrainGeometry = new THREE.PlaneGeometry(150, 150, terrainSegments, terrainSegments);
   terrainGeometry.rotateX(-Math.PI / 2);
   const vertices = terrainGeometry.attributes.position;
   for (let i = 0; i < vertices.count; i++) {
@@ -278,7 +290,7 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
     ice.onBeforeCompile(shader, renderer);
     shader.fragmentShader = shader.fragmentShader.replace("#include <emissivemap_fragment>", `#include <emissivemap_fragment>
       float sideFrostLight = dot(totalEmissiveRadiance, vec3(.299, .587, .114));
-      totalEmissiveRadiance = vec3(.80, .93, 1.12) * sideFrostLight * smoothstep(.02, .20, vFrostMotion) * 4.0;
+      totalEmissiveRadiance = vec3(.80, .93, 1.08) * sideFrostLight * (.06 + smoothstep(.02, .20, vFrostMotion) * 2.4);
     `);
   };
   sideIce.emissive.set(0xffffff);
@@ -287,7 +299,7 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
   innerIce.map = frost;
   innerIce.emissiveMap = frost;
   innerIce.onBeforeCompile = sideIce.onBeforeCompile;
-  const archInside = new THREE.MeshStandardMaterial({ color: 0x687b91, map: frost, normalMap: bump, normalScale: new THREE.Vector2(.35, .35), roughness: .97 });
+  const archInside = new THREE.MeshStandardMaterial({ color: 0x7a8da3, map: frost, normalMap: bump, normalScale: new THREE.Vector2(.24, .24), roughness: .84 });
   archInside.onBeforeCompile = shader => {
     shader.vertexShader = `varying float vTunnelHeight;\n${shader.vertexShader}`;
     shader.vertexShader = shader.vertexShader.replace("#include <begin_vertex>", "#include <begin_vertex>\nvTunnelHeight=(modelMatrix*vec4(transformed,1.)).y;");
@@ -306,21 +318,18 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
     // Bake the original world projection into the mesh. It moves with each block.
     const positions = geometry.attributes.position;
     const coordinates = new Float32Array(positions.count * 4);
-    const photoData = new Float32Array(positions.count * 4);
+    const baseHeights = new Float32Array(positions.count);
     const originalPoint = new THREE.Vector4();
-    const baseNormal = new THREE.Vector3();
     for (let i = 0; i < positions.count; i++) {
       const x = (positions.getX(i) + center.x) * igloo.scale.x;
       const y = (positions.getY(i) + center.y) * igloo.scale.y;
       const z = (positions.getZ(i) + center.z) * igloo.scale.z;
       originalPoint.set(x, y, z, 1).applyMatrix4(plateProjector);
       originalPoint.toArray(coordinates, i * 4);
-      if (innerFace === 5) baseNormal.set(x / 6.76, Math.max(0, y - 1.4) / 5.4289, (z + .75) / 6.76).normalize();
-      else baseNormal.fromBufferAttribute(geometry.attributes.normal, i).normalize();
-      photoData.set([baseNormal.x, baseNormal.y, baseNormal.z, y], i * 4);
+      baseHeights[i] = y;
     }
     geometry.setAttribute("basePlateCoordinate", new THREE.BufferAttribute(coordinates, 4));
-    geometry.setAttribute("basePhotoData", new THREE.BufferAttribute(photoData, 4));
+    geometry.setAttribute("baseHeight", new THREE.BufferAttribute(baseHeights, 1));
     geometry.setAttribute("frostMotion", new THREE.BufferAttribute(new Float32Array(positions.count), 1).setUsage(THREE.DynamicDrawUsage));
     const materials = [ice, ice, ice, ice, ice, ice];
     if (innerFace === 5) for (let face = 0; face < 4; face++) materials[face] = sideIce;
@@ -383,13 +392,13 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
   const interior = new THREE.Mesh(new THREE.PlaneGeometry(1.7, 1.65), new THREE.MeshBasicMaterial({ color: 0x53647a }));
   interior.position.set(0, .275, .99); igloo.add(interior);
 
-  const snowCount = 1200;
+  const snowCount = mobile ? 600 : 1200;
   const snowPositions = new Float32Array(snowCount * 3);
   const snowVariations = new Float32Array(snowCount);
   for (let i = 0; i < snowCount; i++) {
-    snowPositions[i * 3] = (hash(i, 13) - .5) * 50;
-    snowPositions[i * 3 + 1] = hash(i, 39) * 20;
-    snowPositions[i * 3 + 2] = (hash(i, 67) - .5) * 50;
+    snowPositions[i * 3] = (hash(i, 13) - .5) * 36;
+    snowPositions[i * 3 + 1] = hash(i, 39) * 14;
+    snowPositions[i * 3 + 2] = (hash(i, 67) - .5) * 36;
     snowVariations[i] = hash(i, 97);
   }
   const snowGeometry = new THREE.BufferGeometry();
@@ -399,24 +408,25 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
     uniforms: { uTime: { value: 0 }, uPixelRatio: { value: renderer.getPixelRatio() } },
     vertexShader: `uniform float uTime,uPixelRatio;attribute float variation;varying float vOpacity;varying vec2 vDirection;
       void main(){
-        float speed=.78+variation*.44;
-        vec3 velocity=vec3(.32,-.75,.19)*speed;
+        float speed=.68+variation*.65;
+        float gust=sin(uTime*.32)*1.8;
+        vec3 velocity=vec3(.82,-.90,.34)*speed;
         vec3 p=position;
-        p.x=mod(p.x+25.+uTime*velocity.x,50.)-25.;
-        p.z=mod(p.z+25.+uTime*velocity.z,50.)-25.;
-        p.y=mod(p.y+uTime*velocity.y+1000.,20.);
-        float phase=p.y*.45+uTime*.2+variation*6.283;
-        p.x+=sin(phase)*.22;
-        velocity.x+=cos(phase)*.22*(velocity.y*.45+.2);
+        p.x=mod(p.x+18.+uTime*velocity.x+gust,36.)-18.;
+        p.z=mod(p.z+18.+uTime*velocity.z,36.)-18.;
+        p.y=mod(p.y+uTime*velocity.y+1400.,14.);
+        float phase=p.y*.65+uTime*.45+variation*6.283;
+        p.x+=sin(phase)*.45;
+        velocity.x+=cos(uTime*.32)*.576+cos(phase)*.45*(velocity.y*.65+.45);
         vec4 mv=modelViewMatrix*vec4(p,1.),clip=projectionMatrix*mv;
         vec4 motion=projectionMatrix*vec4(mat3(modelViewMatrix)*velocity,0.);
         vec2 direction=motion.xy*clip.w-clip.xy*motion.w;
         vDirection=normalize(vec2(direction.x,-direction.y));
         gl_Position=clip;
-        gl_PointSize=clamp(90.*uPixelRatio*(.80+fract(variation*13.37)*.45)/-mv.z,1.,12.);
-        float edges=smoothstep(0.,1.,p.y)*(1.-smoothstep(19.,20.,p.y));
-        edges*=(1.-smoothstep(23.,25.,abs(p.x)))*(1.-smoothstep(23.,25.,abs(p.z)));
-        vOpacity=(1.-smoothstep(7.,45.,-mv.z))*smoothstep(.5,2.,-mv.z)*edges*.44;
+        gl_PointSize=clamp(94.*uPixelRatio*(.65+fract(variation*13.37)*.70)/-mv.z,1.,14.);
+        float edges=smoothstep(0.,.8,p.y)*(1.-smoothstep(13.,14.,p.y));
+        edges*=(1.-smoothstep(16.,18.,abs(p.x)))*(1.-smoothstep(16.,18.,abs(p.z)));
+        vOpacity=(1.-smoothstep(12.,38.,-mv.z))*smoothstep(.6,2.5,-mv.z)*edges*(.55+variation*.25);
       }`,
     fragmentShader: `varying float vOpacity;varying vec2 vDirection;
       void main(){vec2 p=(gl_PointCoord-.5)*2.;float along=dot(p,vDirection),across=dot(p,vec2(-vDirection.y,vDirection.x));float a=1.-smoothstep(.10,1.,length(vec2(across*2.,along)));gl_FragColor=vec4(.94,.97,1.,a*vOpacity);}`,
@@ -424,22 +434,11 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
   });
   const snow = new THREE.Points(snowGeometry, snowMaterial); snow.frustumCulled = false; scene.add(snow);
 
-  const connectionGeometry = new THREE.BufferGeometry();
-  const connections = new Float32Array(12 * 6);
-  connectionGeometry.setAttribute("position", new THREE.BufferAttribute(connections, 3));
-  const connectionMaterial = new THREE.LineBasicMaterial({ color: 0xe5f2ff, transparent: true, opacity: 0, depthTest: false });
-  const lines = new THREE.LineSegments(connectionGeometry, connectionMaterial); lines.frustumCulled = false; scene.add(lines);
-  const labelCanvas = document.createElement("canvas"); labelCanvas.width = 512; labelCanvas.height = 64;
-  const labelContext = labelCanvas.getContext("2d")!;
-  labelContext.font = "26px monospace"; labelContext.textAlign = "center"; labelContext.fillStyle = "white";
-  for (let i = 0; i < 8; i++) labelContext.fillText(String(17 + i * 7), i * 64 + 32, 36);
-  const labelTexture = new THREE.CanvasTexture(labelCanvas);
-  const labels = Array.from({ length: 6 }, (_, i) => {
-    const map = labelTexture.clone(); map.repeat.set(1 / 8, 1); map.offset.x = i / 8;
-    const material = new THREE.SpriteMaterial({ map, transparent: true, opacity: 0, depthTest: false });
-    const sprite = new THREE.Sprite(material); sprite.scale.set(.27, .27, 1); scene.add(sprite); return sprite;
+  const renderTarget = new THREE.WebGLRenderTarget(1, 1, {
+    type: THREE.HalfFloatType,
+    samples: mobile ? 0 : Math.min(2, renderer.capabilities.maxSamples),
   });
-  const composer = new EffectComposer(renderer);
+  const composer = new EffectComposer(renderer, renderTarget);
   composer.addPass(new RenderPass(scene, camera));
   const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), .22, .32, .80);
   composer.addPass(bloom); composer.addPass(new OutputPass());
@@ -475,9 +474,9 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
       interactionPlane.setFromNormalAndCoplanarPoint(direction, camera.position.clone().addScaledVector(direction, 19.25));
       raycaster.ray.intersectPlane(interactionPlane, cursorPoint);
       igloo.worldToLocal(cursorPoint);
-      dampedCursor.lerp(cursorPoint, 1 - Math.exp(-delta * 3));
+      if (dampedCursor.x === 100) dampedCursor.copy(cursorPoint);
+      else dampedCursor.lerp(cursorPoint, 1 - Math.exp(-delta * 3));
     } else dampedCursor.set(100, 100, 100);
-    const affected: typeof blocks = [];
     hover = false;
     for (const block of blocks) {
       const distance = block.base.distanceTo(dampedCursor);
@@ -494,27 +493,13 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
       }
       block.mesh.position.copy(block.base).multiplyScalar(1 + block.amount);
       block.mesh.rotation.set(block.amount * Math.sin(block.id) * .5, block.amount * Math.cos(block.id * .9) * .5, block.amount * Math.sin(block.id * .7) * .4);
-      if (local > .2) { affected.push(block); hover = true; }
+      if (local > .2) hover = true;
     }
-    affected.sort((a, b) => a.base.distanceToSquared(dampedCursor) - b.base.distanceToSquared(dampedCursor));
-    const selected = affected.slice(0, 6);
-    connections.fill(0);
-    selected.forEach((block, index) => {
-      const start = igloo.localToWorld(block.mesh.position.clone()); start.y += .18;
-      labels[index].position.copy(start).add(new THREE.Vector3(-.12, .13, .13));
-      labels[index].material.opacity = Math.min(1, block.amount * 4);
-      const end = igloo.localToWorld(selected[(index + 1) % selected.length].mesh.position.clone());
-      start.toArray(connections, index * 6); end.toArray(connections, index * 6 + 3);
-    });
-    labels.forEach((label, index) => { if (index >= selected.length) label.material.opacity = 0; });
-    connectionGeometry.attributes.position.needsUpdate = true;
-    connectionGeometry.setDrawRange(0, selected.length * 2);
-    connectionMaterial.opacity = hover ? .6 : 0;
     snowMaterial.uniforms.uTime.value = reduced ? 0 : time;
     const displacement = Math.max(...blocks.map(block => block.amount));
     const illumination = THREE.MathUtils.smoothstep(displacement, .02, .20);
-    glowMaterial.opacity = illumination;
-    cavityLight.intensity = illumination * 30;
+    glowMaterial.opacity = illumination * .62;
+    cavityLight.intensity = illumination * 22;
     spillLight.intensity = illumination * 1.5;
     composer.render();
     canvas.dataset.ready = "true";
@@ -531,10 +516,10 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
     dispose() {
       landscape.dispose();
       scene.traverse(object => {
-        if (object instanceof THREE.Mesh || object instanceof THREE.Points || object instanceof THREE.LineSegments) object.geometry.dispose();
+        if (object instanceof THREE.Mesh || object instanceof THREE.Points) object.geometry.dispose();
       });
-      for (const material of [ice, photoIce, innerIce, sideIce, archInside, terrainMaterial, glowMaterial, interior.material, snowMaterial, connectionMaterial, ...labels.map(label => label.material)]) material.dispose();
-      for (const texture of [frost, bump, terrainMap, terrainBump, snowAlbedo, surfacePlate, terrainPlate, labelTexture, ...labels.map(label => label.material.map!)]) texture.dispose();
+      for (const material of [ice, photoIce, innerIce, sideIce, archInside, terrainMaterial, glowMaterial, interior.material, snowMaterial]) material.dispose();
+      for (const texture of [frost, bump, terrainMap, terrainBump, snowAlbedo, surfacePlate, terrainPlate]) texture.dispose();
       sun.shadow.map?.dispose();
       composer.passes.forEach(pass => pass.dispose()); composer.dispose();
       renderer.dispose();

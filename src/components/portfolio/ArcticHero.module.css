@@ -149,10 +149,6 @@
   visibility: hidden;
 }
 
-.stage:has(canvas[data-ready="true"]) .toggle {
-  visibility: visible;
-}
-
 .toggle:hover {
   background: #26384d;
 }

@@ -40,7 +40,7 @@ export function applyTerrainProjection(
           float nearSnow=1.-smoothstep(19.,42.,vTerrainProjection.w);
           float sunFacing=dot(normalize(vTerrainNormal),normalize(vec3(.8,.55,-.7)));
           float snowShadow=nearSnow*(1.-smoothstep(.45,.90,sunFacing));
-          color*=mix(vec3(1.),vec3(.45,.49,.55),snowShadow);
+          color*=mix(vec3(1.),vec3(.58,.62,.69),snowShadow);
           vec3 v=clamp(terrainInverseOutput*color,0.,.985);
           vec3 a=v*.983729-1.,b=v*.432951-.0245786,c=v*.238081+.000090537;
           vec3 fitted=(-b-sqrt(max(b*b-4.*a*c,vec3(0.))))/(2.*a);
@@ -61,7 +61,7 @@ export function applyTerrainProjection(
         float uncoveredLight=smoothstep(-.2,.8,dot(normalize(vTerrainNormal),normalize(vec3(.8,.55,-.7))));
         uncoveredSnow*=mix(.84,1.06,uncoveredLight)*mix(.40,1.,getShadowMask());
         outgoingLight=mix(outgoingLight,uncoveredSnow,.88);
-        vec3 photographedSnow=terrainRadiance(texture2D(terrainPhoto,clamp(terrainUv,0.,1.)).rgb*.78);
+        vec3 photographedSnow=terrainRadiance(texture2D(terrainPhoto,clamp(terrainUv,0.,1.),.65).rgb*.78);
         photographedSnow*=mix(.40,1.,getShadowMask());
         outgoingLight=mix(outgoingLight,photographedSnow,terrainWeight);
         float distantGround=smoothstep(23.,42.,vTerrainProjection.w)*(1.-smoothstep(1.,5.,vTerrainWorld.y))*smoothstep(0.,.03,margin);
@@ -71,7 +71,8 @@ export function applyTerrainProjection(
       shader.fragmentShader = shader.fragmentShader.replace("#include <fog_fragment>", `
         vec3 photographedFog=gl_FragColor.rgb;
         #include <fog_fragment>
-        gl_FragColor.rgb=mix(gl_FragColor.rgb,photographedFog,terrainSupport);`);
+        float distantHaze=smoothstep(30.,100.,vTerrainProjection.w)*.65;
+        gl_FragColor.rgb=mix(gl_FragColor.rgb,photographedFog,terrainSupport*(1.-distantHaze));`);
     };
     material.needsUpdate = true;
   }
