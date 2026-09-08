@@ -206,6 +206,7 @@ components:
 ### Cards / Containers
 
 - **Project Visual:** 코발트 또는 은빛 무대 안에 16 대 10 실제 화면과 28px 브라우저 도구막대를 배치한다. 스크롤 위치에 따라 화면이 가볍게 기울고 이동한다.
+- **Project Order:** 대표 사례는 EHR Harness와 VIBE-HR 순서로 배치한다. VIBE-HR은 2026-09-08 공개 데모의 로그인 화면을 캡처한 WebP를 사용하며, Jarvis는 기존 대시보드 이미지와 함께 Always building. 목록의 첫 항목으로 표시한다.
 - **Lab Preview:** 활성 프로젝트의 실제 이미지를 확대 상태에서 제자리로 전환한다. 캡션은 은빛 직사각형으로 이미지 왼쪽 아래에 붙인다.
 - **Case Narrative:** 문제, 접근, 결과의 짧은 텍스트 레이블 열과 본문 열을 나누고 각 행의 상단을 가는 선으로 구분한다.
 

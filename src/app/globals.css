@@ -557,20 +557,20 @@ svg {
   color: #b8c4da;
   margin-top: 28px;
 }
-.case-jarvis {
+.case-vibe-hr {
   padding-top: 76px;
   border-top: 1px solid var(--line);
 }
-.case-jarvis .project-visual {
+.case-vibe-hr .project-visual {
   background: #c8d0dc;
 }
-.case-jarvis .project-visual-title {
+.case-vibe-hr .project-visual-title {
   color: #303b50;
 }
-.case-jarvis .project-visual-note {
+.case-vibe-hr .project-visual-note {
   color: #3a4760;
 }
-.case-jarvis .project-screen {
+.case-vibe-hr .project-screen {
   box-shadow: 0 24px 48px rgba(24, 40, 67, 0.23);
 }
 .statement-section {
@@ -1219,7 +1219,7 @@ svg {
   .case-narrative h4 {
     font-size: 12px;
   }
-  .case-jarvis {
+  .case-vibe-hr {
     padding-top: 44px;
   }
   .statement-section {

@@ -6,7 +6,7 @@ import { ArrowUpRight } from "lucide-react";
 import { labAds } from "@/data/siteContent";
 
 const previews: Record<string, string> = {
-  "vibe-hr": "/images/hr-thumb-new.png",
+  jarvis: "/images/jarvis-thumb.png",
   "vibe-grid": "/images/grid-thumb-new.png",
   "hire-flow": "/images/rec-thumb-new.png",
   maru: "/images/shop-thumb-new.png",

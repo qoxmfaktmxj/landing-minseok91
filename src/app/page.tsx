@@ -35,24 +35,24 @@ const projectGuides: Record<
       ],
     ],
   },
-  jarvis: {
-    summary: "인사 규정의 근거와 적용 날짜를 함께 확인하는 지식 플랫폼입니다.",
+  "vibe-hr": {
+    summary: "조직과 사원 정보부터 발령, 근태, 급여까지 다루는 웹 기반 인사시스템입니다.",
     terms: [
       [
-        "HR / LLM",
-        "HR은 인사 업무를, LLM은 문서를 이해하고 답변을 생성하는 언어 모델을 뜻합니다.",
+        "HR",
+        "조직과 구성원의 인사 정보를 관리하는 업무를 뜻합니다.",
       ],
       [
-        "tool-use agent",
-        "답변에 필요한 근거를 검색하는 등 도구를 사용하도록 설계한 AI입니다.",
+        "발령",
+        "입사, 부서 이동, 승진처럼 사원의 소속과 직무가 달라지는 인사 처리입니다.",
       ],
       [
-        "CLI Proxy",
-        "명령줄 기반 중계 도구를 통해 구독형 언어 모델을 연결하는 방식입니다.",
+        "급여 Run",
+        "지급 대상자와 계산 내역을 묶어 조회하고 관리하는 급여 처리 단위입니다.",
       ],
       [
-        "Git Wiki / 기준일",
-        "문서의 변경 이력을 관리하고, 규정이 적용되는 날짜를 함께 확인합니다.",
+        "AG Grid",
+        "사원 목록처럼 많은 데이터를 표 형태로 조회하고 편집하는 화면 도구입니다.",
       ],
     ],
   },
@@ -135,7 +135,7 @@ export default function Home() {
                 <ProjectVisual
                   src={story.previewImage}
                   alt={story.previewAlt}
-                  name={index === 0 ? "EHR HARNESS" : "JARVIS"}
+                  name={index === 0 ? "EHR HARNESS" : "VIBE-HR"}
                 />
                 <div className="case-technology">
                   {story.tech.map((tech) => (
@@ -181,7 +181,7 @@ export default function Home() {
                   target={story.docMode ? undefined : "_blank"}
                   rel={story.docMode ? undefined : "noopener noreferrer"}
                 >
-                  {story.docMode ? "하네스 문서 읽기" : "Jarvis 살펴보기"}
+                  {story.docMode ? "하네스 문서 읽기" : "VIBE-HR 살펴보기"}
                   {story.docMode ? (
                     <ArrowRight size={18} aria-hidden="true" />
                   ) : (

@@ -97,21 +97,21 @@ export const featureStories: FeatureStoryItem[] = [
     docMode: true,
   },
   {
-    id: "jarvis",
-    kicker: "연속 기획 / HR 근거 기반 AI",
-    title: "HR 지식을 공식 근거와 함께 답하는 Jarvis",
+    id: "vibe-hr",
+    kicker: "프로젝트 / HR 업무 시스템",
+    title: "인사 업무를 웹으로 옮긴 VIBE-HR",
     problem:
-      "식대 비과세 한도, 퇴직소득 원천징수처럼 HR과 세무 규정은 기준일마다 한도와 세율이 달라지지만, 일반적인 AI 답변은 어떤 규정과 기준일에 근거한 것인지 확인하기 어렵습니다.",
+      "조직과 사원 정보, 발령, 근태, 급여가 서로 연결되는 인사 업무는 개별 화면만 구현해서는 실제 처리 흐름을 확인하기 어렵습니다.",
     approach:
-      "HR 규정과 공식 문서를 Git 기반 위키로 정리하고, LLM이 관련 근거를 직접 검색하고 인용하며 기준일(effective date)까지 함께 제시하도록 tool-use agent를 설계했습니다. CLI Proxy를 통해 구독형 LLM을 연결하고 문서 이력과 검토 흐름까지 함께 관리합니다.",
+      "기존 EHR 업무를 바탕으로 Next.js와 Spring Boot, PostgreSQL로 인사시스템을 재구성했습니다. 공통 그리드와 메뉴 권한을 정리하고 사원관리, 발령, 신청과 승인, 급여 조회 화면을 하나의 흐름으로 연결하고 있습니다.",
     result:
-      "HR 실무 질문을 공식 근거와 기준일에 따라 확인하고 답변의 출처와 변경 이력까지 추적할 수 있는 HR 컴플라이언스 지식 플랫폼을 구축했습니다.",
-    url: "https://jarvis.minseok91.cloud/",
-    urlLabel: "jarvis.minseok91.cloud",
-    previewImage: "/images/jarvis-thumb.png",
-    previewAlt: "Jarvis HR Evidence Wiki 컴플라이언스 대시보드 화면",
-    tech: ["Next.js", "PostgreSQL", "Git Wiki", "LLM Agent"],
-    accessNote: "공개 데모, 로그인이 필요할 수 있습니다",
+      "법인과 조직 조회, 사원관리, 발령 처리, 신청과 승인, 급여 Run과 대상자 상세 조회를 구현했습니다. 일부 후속 업무는 계속 개발 중이며, 체험용 계정으로 주요 화면을 살펴볼 수 있습니다.",
+    url: "https://hr.minseok91.cloud/",
+    urlLabel: "hr.minseok91.cloud",
+    previewImage: "/images/vibe-hr-login.webp",
+    previewAlt: "분홍빛 건축물과 수면을 배경으로 한 VIBE-HR 로그인 화면",
+    tech: ["Next.js", "Spring Boot", "PostgreSQL", "AG Grid"],
+    accessNote: "공개 데모, 체험용 계정 admin / admin",
   },
 ];
 
@@ -135,10 +135,10 @@ export interface LabAd {
 
 export const labAds: LabAd[] = [
   {
-    id: "vibe-hr",
-    name: "VIBE HR",
-    description: "경량 인사시스템 라이브 데모 (admin / admin)",
-    href: "https://hr.minseok91.cloud/",
+    id: "jarvis",
+    name: "Jarvis",
+    description: "HR 규정을 공식 근거와 기준일에 따라 확인하는 AI 지식 플랫폼",
+    href: "https://jarvis.minseok91.cloud/",
   },
   {
     id: "vibe-grid",
