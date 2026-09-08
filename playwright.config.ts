@@ -11,10 +11,19 @@ export default defineConfig({
     viewport: { width: 1440, height: 900 },
     screenshot: "only-on-failure",
     trace: "retain-on-failure",
-    launchOptions: process.platform === "win32" && process.env.PLAYWRIGHT_HARDWARE_GPU === "1"
-      ? { args: ["--use-angle=d3d11", "--enable-gpu", "--ignore-gpu-blocklist"] }
-      : undefined,
   },
+  projects: [
+    {
+      name: "chromium",
+      use: {
+        browserName: "chromium",
+        launchOptions: process.platform === "win32" && process.env.PLAYWRIGHT_HARDWARE_GPU === "1"
+          ? { args: ["--use-angle=d3d11", "--enable-gpu", "--ignore-gpu-blocklist"] }
+          : undefined,
+      },
+    },
+    { name: "webkit", use: { browserName: "webkit" }, testIgnore: "**/*.chromium.spec.ts" },
+  ],
   webServer: {
     command: "node node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3112",
     url: "http://127.0.0.1:3112",

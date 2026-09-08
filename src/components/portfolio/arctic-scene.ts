@@ -113,30 +113,23 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
   if (signal.aborted) throw new DOMException("Scene initialization cancelled", "AbortError");
   const mobile = window.matchMedia("(pointer: coarse)").matches;
   const texturePath = mobile ? "/images/arctic/mobile" : "/images/arctic";
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true, powerPreference: "low-power" });
   const loader = new THREE.TextureLoader();
-  const textureResults = await Promise.allSettled([
-    loader.loadAsync(`${texturePath}/rough_plaster_03-diffuse.webp`),
-    loader.loadAsync(`${texturePath}/rough_plaster_03-nor_gl.webp`),
-    loader.loadAsync(`${texturePath}/aerial_rocks_02-diffuse.webp`),
-    loader.loadAsync(`${texturePath}/aerial_rocks_02-nor_gl.webp`),
-    loader.loadAsync(`${texturePath}/snow_02-diffuse.webp`),
-    loader.loadAsync("/images/arctic/surface-plate-six.webp"),
-    loader.loadAsync("/images/arctic/terrain-light-ridges.webp"),
-  ]);
-  const textures = textureResults.flatMap(result => result.status === "fulfilled" ? [result.value] : []);
-  if (signal.aborted || textures.length !== textureResults.length) {
-    textures.forEach(texture => texture.dispose());
-    if (signal.aborted) throw new DOMException("Scene initialization cancelled", "AbortError");
-    throw new Error("The arctic surface textures could not be loaded.");
-  }
+  const textures: THREE.Texture[] = [];
+  const texturesReady = Promise.allSettled([
+    `${texturePath}/rough_plaster_03-diffuse.webp`,
+    `${texturePath}/rough_plaster_03-nor_gl.webp`,
+    `${texturePath}/aerial_rocks_02-diffuse.webp`,
+    `${texturePath}/aerial_rocks_02-nor_gl.webp`,
+    `${texturePath}/snow_02-diffuse.webp`,
+    "/images/arctic/surface-plate-six.webp",
+    "/images/arctic/terrain-light-ridges.webp",
+  ].map(url => new Promise<void>((resolve, reject) => {
+    textures.push(loader.load(url, () => resolve(), undefined, reject));
+  }))).then(results => !signal.aborted && results.every(result => result.status === "fulfilled"));
   const [frost, bump, terrainMap, terrainBump, snowAlbedo, surfacePlate, terrainPlate] = textures;
-  let renderer: THREE.WebGLRenderer;
-  try {
-    renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true, powerPreference: "low-power" });
-  } catch (error) {
-    textures.forEach(texture => texture.dispose());
-    throw error;
-  }
+  let shaderFailed = false;
+  renderer.debug.onShaderError = () => { shaderFailed = true; };
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1.25 : 1.5));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -175,9 +168,29 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
     texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
     texture.repeat.set(2.4, 2.4);
   }
+  const reveal = { value: 1 };
+  const addMaterialReveal = (shader: Parameters<THREE.MeshStandardMaterial["onBeforeCompile"]>[0]) => {
+    shader.uniforms.uIceReveal = reveal;
+    shader.vertexShader = `varying vec2 vRevealUv; varying float vRevealY;\n${shader.vertexShader}`;
+    shader.vertexShader = shader.vertexShader.replace("#include <begin_vertex>", "#include <begin_vertex>\nvRevealUv = uv; vRevealY = (modelMatrix * vec4(transformed, 1.)).y;");
+    shader.fragmentShader = `uniform float uIceReveal; varying vec2 vRevealUv; varying float vRevealY;\n${shader.fragmentShader}`;
+    shader.fragmentShader = shader.fragmentShader.replace("#include <tonemapping_fragment>", `
+      if (uIceReveal < 1.) {
+        float scanHeight = mix(4.5, -.8, uIceReveal);
+        float solid = smoothstep(scanHeight - .12, scanHeight + .12, vRevealY);
+        float border = min(min(vRevealUv.x, vRevealUv.y), min(1. - vRevealUv.x, 1. - vRevealUv.y));
+        float outline = 1. - smoothstep(.0, max(fwidth(border) * 1.5, .008), border);
+        if (solid < .01 && outline < .15) discard;
+        vec3 wire = vec3(.85, 1., 1.1) * pow(outline, .3);
+        gl_FragColor.rgb = mix(wire, gl_FragColor.rgb, solid);
+        float scanLight = 1. - smoothstep(.02, .24, abs(vRevealY - scanHeight));
+        gl_FragColor.rgb += vec3(.7, .85, 1.) * scanLight * .9;
+      }
+      #include <tonemapping_fragment>`);
+  };
   const ice = new THREE.MeshStandardMaterial({ color: 0xd4deeb, map: frost, normalMap: bump, normalScale: new THREE.Vector2(.28, .28), roughness: .76, metalness: 0 });
   ice.onBeforeCompile = shader => {
-    shader.vertexShader = shader.vertexShader.replace("#include <common>", "#include <common>\nattribute vec2 frostUv; attribute float frostMotion; varying vec2 vFrostCoord; varying float vFrostMotion;").replace("#include <begin_vertex>", "#include <begin_vertex>\nvFrostCoord = frostUv; vFrostMotion = frostMotion;");
+    shader.vertexShader = shader.vertexShader.replace("#include <common>", "#include <common>\nattribute vec2 frostUv; attribute float frostBaseY; varying vec2 vFrostCoord; varying float vFrostMotion;").replace("#include <begin_vertex>", "#include <begin_vertex>\nvFrostCoord = frostUv; vFrostMotion = max(0., modelMatrix[3].y / frostBaseY - 1.);");
     shader.fragmentShader = shader.fragmentShader.replace("#include <common>", "#include <common>\nvarying vec2 vFrostCoord; varying float vFrostMotion;").replace("#include <map_fragment>", `#include <map_fragment>
       float frostGrain = texture2D(map, vMapUv * 2.0).r;
       float frostBorder = smoothstep(.37, .50, max(abs(vFrostCoord.x - .5), abs(vFrostCoord.y - .5)) + (frostGrain - .5) * .045);
@@ -191,6 +204,7 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
       float frostRim = pow(1.0 - max(0.0, dot(normalize(vNormal), normalize(vViewPosition))), 5.0);
       totalEmissiveRadiance += vec3(.63, .76, .94) * (frostRim * .09 + pow(frostBorder, 3.0) * .06);
     `);
+    addMaterialReveal(shader);
   };
   const plateCamera = new THREE.PerspectiveCamera(30, 1586 / 992, .1, 1000);
   plateCamera.position.copy(baseCamera);
@@ -311,8 +325,9 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
       diffuseColor.rgb=vec3(.80,.91,1.10)*iceLuma*(1.-seam*.45);`);
     shader.fragmentShader = shader.fragmentShader.replace("#include <emissivemap_fragment>", `#include <emissivemap_fragment>
       totalEmissiveRadiance+=vec3(.70,.84,1.02)*(.055+iceLuma*.22)*(1.-seam*.60);`);
+    addMaterialReveal(shader);
   };
-  const blocks: { mesh: THREE.Mesh; base: THREE.Vector3; amount: number; target: number; id: number }[] = [];
+  const blocks: { mesh: THREE.Mesh; base: THREE.Vector3; amount: number; target: number; idle: number; id: number }[] = [];
   const addBlock = (geometry: THREE.BufferGeometry, center: THREE.Vector3, innerFace = -1) => {
     if (!geometry.attributes.frostUv) geometry.setAttribute("frostUv", geometry.attributes.uv.clone());
     // Bake the original world projection into the mesh. It moves with each block.
@@ -330,7 +345,8 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
     }
     geometry.setAttribute("basePlateCoordinate", new THREE.BufferAttribute(coordinates, 4));
     geometry.setAttribute("baseHeight", new THREE.BufferAttribute(baseHeights, 1));
-    geometry.setAttribute("frostMotion", new THREE.BufferAttribute(new Float32Array(positions.count), 1).setUsage(THREE.DynamicDrawUsage));
+    // 초기 중심 높이와 모델 행렬에서 벌어짐을 구해 매 프레임 정점 전송을 피한다.
+    geometry.setAttribute("frostBaseY", new THREE.BufferAttribute(new Float32Array(positions.count).fill(center.y), 1));
     const materials = [ice, ice, ice, ice, ice, ice];
     if (innerFace === 5) for (let face = 0; face < 4; face++) materials[face] = sideIce;
     if (innerFace >= 0) materials[innerFace] = innerFace === 3 ? archInside : innerIce;
@@ -341,7 +357,7 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
     mesh.position.copy(center);
     mesh.castShadow = mesh.receiveShadow = true;
     igloo.add(mesh);
-    blocks.push({ mesh, base: center.clone(), amount: 0, target: 0, id: blocks.length + 1 });
+    blocks.push({ mesh, base: center.clone(), amount: 0, target: 0, idle: 0, id: blocks.length + 1 });
   };
   const levels = [-.55, .20, 1.05, 1.86, 2.64, 3.33, 3.73];
   const counts = [11, 10, 13, 12, 10, 6];
@@ -391,6 +407,29 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
   }
   const interior = new THREE.Mesh(new THREE.PlaneGeometry(1.7, 1.65), new THREE.MeshBasicMaterial({ color: 0x53647a }));
   interior.position.set(0, .275, .99); igloo.add(interior);
+
+  // 등장 순간에만 보이는 가벼운 삼각 연결망이다.
+  const introPoints = Array.from({ length: 49 }, (_, index) => new THREE.Vector3(
+    ((index % 7) - 3) * 3.3 + (hash(index, 11) - .5),
+    hash(index, 23) * 2.4 - .2,
+    (Math.floor(index / 7) - 3) * 3.3 + (hash(index, 37) - .5),
+  ));
+  const introPositions: number[] = [];
+  introPoints.forEach((point, index) => {
+    for (const offset of [1, 7, 8]) {
+      const next = introPoints[index + offset];
+      if (!next || (offset !== 7 && index % 7 === 6)) continue;
+      if (Math.hypot(point.x, point.z) < 3.8 || Math.hypot(next.x, next.z) < 3.8) continue;
+      introPositions.push(point.x, point.y, point.z, next.x, next.y, next.z);
+    }
+  });
+  const introGeometry = new THREE.BufferGeometry();
+  introGeometry.setAttribute("position", new THREE.Float32BufferAttribute(introPositions, 3));
+  const introMaterial = new THREE.LineBasicMaterial({ color: 0xe0edff, transparent: true, opacity: 0, depthWrite: false });
+  const introLines = new THREE.LineSegments(introGeometry, introMaterial);
+  scene.add(introLines);
+  const introDuration = mobile ? 1.8 : 2.6;
+  let introTime = 0, introFinished = false;
 
   const snowCount = mobile ? 600 : 1200;
   const snowPositions = new Float32Array(snowCount * 3);
@@ -455,17 +494,51 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
     width = canvas.clientWidth; height = canvas.clientHeight;
     camera.aspect = width / height;
     camera.zoom = Math.min(1, camera.aspect * 1.25);
+    if (width >= 520 && height <= 500) {
+      const headerHeight = width < 768 ? 105 : 88;
+      camera.zoom *= Math.min(.88, (height - headerHeight - 96) / (height * .55));
+      camera.setViewOffset(width, height, -width * .18, -(headerHeight - 96) / 2, width, height);
+    } else if (width < 520 && height < 700) {
+      camera.zoom *= .8;
+      camera.setViewOffset(width, height, 0, -height * .06, width, height);
+    } else camera.clearViewOffset();
     camera.updateProjectionMatrix();
     renderer.setSize(width, height, false); composer.setSize(width, height);
     landscape.resize(canvas.width, canvas.height);
   };
-  const render = (time: number, delta: number, reduced: boolean) => {
+  const render = (time: number, delta: number, reduced: boolean, assetsReady: boolean) => {
+    if (reduced) introFinished = true;
+    if (!introFinished && assetsReady) {
+      introTime = Math.min(introDuration, introTime + delta);
+      introFinished = introTime >= introDuration;
+    }
+    const introProgress = introFinished ? 1 : introTime / introDuration;
+    const materialize = THREE.MathUtils.smoothstep(introProgress, 0, 1);
+    reveal.value = materialize;
+    const landscapeAlpha = THREE.MathUtils.smoothstep(introProgress, .12, .92);
+    terrain.visible = landscapeAlpha > 0;
+    terrainMaterial.opacity = landscapeAlpha;
+    if (terrainMaterial.transparent !== (landscapeAlpha < 1)) {
+      terrainMaterial.transparent = landscapeAlpha < 1;
+      terrainMaterial.needsUpdate = true;
+    }
+    for (const mesh of landscape.meshes) {
+      mesh.visible = landscapeAlpha > 0;
+      (mesh.material as THREE.MeshStandardMaterial).opacity = landscapeAlpha;
+    }
+    introLines.visible = !introFinished;
+    introMaterial.opacity = (1 - THREE.MathUtils.smoothstep(introProgress, .2, .9)) * .42;
+    introLines.scale.setScalar(1 + (1 - materialize) * .18);
+    introLines.rotation.y = (1 - materialize) * .12;
+    interior.visible = materialize > .65;
     const ease = reduced ? 1 : 1 - Math.exp(-delta * 2.15);
     dampedPointer.lerp(pointer.x === 2 ? new THREE.Vector2() : pointer, ease);
     cameraOffset.copy(baseCamera).sub(lookTarget);
     const spherical = new THREE.Spherical().setFromVector3(cameraOffset);
     spherical.theta += reduced ? 0 : dampedPointer.x * .11;
     spherical.phi += reduced ? 0 : dampedPointer.y * .039;
+    spherical.theta += (1 - materialize) * .12;
+    spherical.phi -= (1 - materialize) * (mobile ? .30 : .60);
     camera.position.copy(lookTarget).add(cameraOffset.setFromSpherical(spherical));
     camera.lookAt(lookTarget);
     if (pointer.x !== 2 && !reduced) {
@@ -478,42 +551,53 @@ export async function createArcticScene(canvas: HTMLCanvasElement, signal: Abort
       else dampedCursor.lerp(cursorPoint, 1 - Math.exp(-delta * 3));
     } else dampedCursor.set(100, 100, 100);
     hover = false;
+    let displacement = 0, interaction = 0, idleDisplacement = 0;
     for (const block of blocks) {
       const distance = block.base.distanceTo(dampedCursor);
-      const local = reduced ? 0 : (1 - THREE.MathUtils.smoothstep(distance, 1, 3)) * THREE.MathUtils.smoothstep(block.base.y, .45, .70);
-      const breath = reduced ? 0 : Math.max(0, Math.sin(time * .18 + block.id * .2)) * .012 * THREE.MathUtils.smoothstep(block.base.y, .45, .70);
-      const target = local * (.28 + hash(block.id, 7) * .22) + breath;
+      const heightGate = THREE.MathUtils.smoothstep(block.base.y, .45, .70);
+      const local = reduced ? 0 : (1 - THREE.MathUtils.smoothstep(distance, 1, 3)) * heightGate;
+      const wave = Math.max(0, Math.sin(time * .78 + block.base.x * .8 + block.base.z * .45));
+      const pulse = .35 + (.5 + .5 * Math.sin(time * .34)) * .65;
+      const idleTarget = wave * wave * pulse * (.10 + hash(block.id, 19) * .05) * heightGate * THREE.MathUtils.smoothstep(introProgress, .6, 1);
+      block.idle = THREE.MathUtils.lerp(block.idle, idleTarget, 1 - Math.exp(-delta * 1.6));
+      const target = local * (.28 + hash(block.id, 7) * .22);
       block.target = THREE.MathUtils.lerp(block.target, target, 1 - Math.exp(-delta * 3.7));
       block.amount = THREE.MathUtils.lerp(block.amount, block.target, 1 - Math.exp(-delta * 3.7));
-      if (reduced) block.amount = block.target = 0;
-      const motion = block.mesh.geometry.getAttribute("frostMotion") as THREE.BufferAttribute;
-      if (Math.abs(motion.getX(0) - block.amount) > .00001) {
-        (motion.array as Float32Array).fill(block.amount);
-        motion.needsUpdate = true;
-      }
-      block.mesh.position.copy(block.base).multiplyScalar(1 + block.amount);
-      block.mesh.rotation.set(block.amount * Math.sin(block.id) * .5, block.amount * Math.cos(block.id * .9) * .5, block.amount * Math.sin(block.id * .7) * .4);
+      if (reduced) block.amount = block.target = block.idle = 0;
+      const motion = Math.max(block.amount, block.idle);
+      const spread = motion + (1 - materialize) * .13 * heightGate;
+      block.mesh.position.copy(block.base).multiplyScalar(1 + spread);
+      block.mesh.rotation.set(spread * Math.sin(block.id) * .5, spread * Math.cos(block.id * .9) * .5, spread * Math.sin(block.id * .7) * .4);
+      displacement = Math.max(displacement, motion);
+      interaction = Math.max(interaction, block.amount);
+      idleDisplacement = Math.max(idleDisplacement, block.idle);
       if (local > .2) hover = true;
     }
     snowMaterial.uniforms.uTime.value = reduced ? 0 : time;
-    const displacement = Math.max(...blocks.map(block => block.amount));
     const illumination = THREE.MathUtils.smoothstep(displacement, .02, .20);
     glowMaterial.opacity = illumination * .62;
     cavityLight.intensity = illumination * 22;
     spillLight.intensity = illumination * 1.5;
     composer.render();
-    canvas.dataset.ready = "true";
+    if (shaderFailed) throw new Error("얼음 장면의 셰이더를 컴파일하지 못했습니다.");
+    canvas.dataset.ready = assetsReady ? "true" : "loading";
+    canvas.dataset.preview = "true";
     canvas.dataset.hover = String(hover);
     canvas.dataset.displacement = displacement.toFixed(3);
+    canvas.dataset.interaction = interaction.toFixed(3);
+    canvas.dataset.idle = idleDisplacement.toFixed(3);
+    canvas.dataset.intro = introFinished ? "complete" : "running";
+    canvas.dataset.introProgress = introProgress.toFixed(3);
     canvas.dataset.frames = String(++frames);
     canvas.dataset.camera = camera.position.toArray().map(value => value.toFixed(3)).join(",");
   };
   resize();
   return {
-    resize, render,
+    resize, render, texturesReady,
     pointer(x: number, y: number) { pointer.set(x, y); },
     pointerLeave() { pointer.set(2, 2); },
     dispose() {
+      introGeometry.dispose(); introMaterial.dispose();
       landscape.dispose();
       scene.traverse(object => {
         if (object instanceof THREE.Mesh || object instanceof THREE.Points) object.geometry.dispose();
