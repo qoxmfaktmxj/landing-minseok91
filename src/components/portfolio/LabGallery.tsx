@@ -64,7 +64,7 @@ export default function LabGallery() {
                 </div>
                 <span className="lab-link-action">
                   <ArrowUpRight size={23} aria-hidden="true" />
-                  <span className="link-destination">새 탭</span>
+                  <span className="sr-only">새 탭에서 열림</span>
                 </span>
               </a>
             ))}

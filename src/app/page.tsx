@@ -91,7 +91,7 @@ export default function Home() {
               >
                 GitHub에서 더 알아보기{" "}
                 <ArrowUpRight size={17} aria-hidden="true" />
-                <span className="link-destination">새 탭</span>
+                <span className="sr-only">새 탭에서 열림</span>
               </a>
             </div>
           </div>
@@ -188,48 +188,30 @@ export default function Home() {
                     <ArrowUpRight size={18} aria-hidden="true" />
                   )}
                   {!story.docMode && (
-                    <span className="link-destination">새 탭</span>
+                    <span className="sr-only">새 탭에서 열림</span>
                   )}
                 </a>
               </div>
             </article>
           ))}
         </section>
-        <section
-          className="statement-section section-shell"
-          aria-label="개발 원칙"
-        >
-          <svg
-            className="statement-symbol"
-            viewBox="0 0 100 100"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M10 50h80M50 10v80M22 22l56 56M22 78l56-56"
-              stroke="currentColor"
-              strokeWidth="3"
-            />
-            <circle
-              cx="50"
-              cy="50"
-              r="27"
-              stroke="currentColor"
-              strokeWidth="3"
-            />
-          </svg>
-          <p>
+        <figure className="statement-section section-shell">
+          <blockquote>
             {pullQuote.split("\n").map((line, i) => (
               <span
                 key={line}
                 className={i === 1 ? "statement-emphasis" : undefined}
               >
                 {line}
+                {i === 0 ? " " : null}
               </span>
             ))}
-          </p>
-          <span className="statement-credit">김민석 / Backend Developer</span>
-        </section>
+          </blockquote>
+          <figcaption className="statement-credit">
+            <span>김민석</span>
+            <span className="statement-role">Backend Developer</span>
+          </figcaption>
+        </figure>
         <section
           id="lab"
           className="lab-section section-shell"
@@ -242,11 +224,6 @@ export default function Home() {
               <br />
               building<span>.</span>
             </h2>
-            <p>
-              아이디어는 직접 만들어보며 확인합니다.
-              <br />
-              아래 프로젝트는 외부 데모로 새 탭에서 열립니다.
-            </p>
           </div>
           <LabGallery />
         </section>
@@ -294,7 +271,7 @@ export default function Home() {
             >
               {link.label}
               <ArrowUpRight size={14} aria-hidden="true" />
-              <span className="link-destination">새 탭</span>
+              <span className="sr-only">새 탭에서 열림</span>
             </a>
           ))}
         </div>

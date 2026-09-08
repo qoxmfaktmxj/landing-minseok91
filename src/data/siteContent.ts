@@ -47,7 +47,7 @@ export const profileColumn = {
   body: "업무시스템 개발 9년 차로, 2022년부터 HR 시스템의 구축과 운영을 담당했습니다. 현재 인사시스템 유지보수 파트를 이끌며 고객 요구사항 협의와 팀원 교육을 맡고 있습니다. 사내 업무시스템과 LLM Wiki를 하나의 사이트로 통합했고, 현재 Oracle 데이터 이관과 타 시스템 연계를 진행하고 있습니다.",
 };
 
-export const pullQuote = "먼저 AI가\n잘 일할 수 있는 환경을\n설계합니다.";
+export const pullQuote = "업무를 이해하고,\nAI를 실무에 연결합니다.";
 
 export interface StatItem {
   value: number | null;
