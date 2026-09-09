@@ -31,7 +31,7 @@ const projectGuides: Record<
       ],
       [
         "MyBatis / superpowers",
-        "MyBatis는 Java와 SQL을 연결하는 도구이며, superpowers는 AI 코딩 작업 절차를 지원하는 도구입니다.",
+        "MyBatis는 Java와 SQL을 연결하는 도구입니다. superpowers는 AI 코딩 작업 절차를 지원합니다.",
       ],
     ],
   },
@@ -120,9 +120,9 @@ export default function Home() {
               <span>work.</span>
             </h2>
             <p>
-              업무의 맥락을 이해하고,
+              업무의 맥락을 이해하고
               <br />
-              직접 만든 도구로 변화를 만듭니다.
+              업무를 개선할 도구를 직접 만듭니다.
             </p>
           </div>
           {featureStories.map((story, index) => (
@@ -235,9 +235,9 @@ export default function Home() {
         >
           <div className="contact-top">
             <h2 id="contact-heading">
-              다음 이야기를
+              다음 작업을
               <br />
-              함께 만들어볼까요?
+              함께 해볼까요?
             </h2>
             <a
               className="contact-arrow"
@@ -250,7 +250,7 @@ export default function Home() {
           <div className="contact-bottom">
             <EmailContact />
             <p>
-              복잡한 업무를 이해하고,
+              복잡한 업무를 이해하고
               <br />더 나은 시스템을 만드는 일.
             </p>
           </div>

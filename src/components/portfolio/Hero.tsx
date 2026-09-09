@@ -33,7 +33,7 @@ export default function Hero() {
         </div>
         <div className={styles.caption}>
           <span className={styles.indicator} />
-          <span>복잡한 맥락을, 하나의 흐름으로.</span>
+          <span>복잡한 맥락을 하나의 흐름으로 정리합니다.</span>
         </div>
       </div>
       <div className={styles.bottom}>

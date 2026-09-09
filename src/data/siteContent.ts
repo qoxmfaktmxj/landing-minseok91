@@ -37,14 +37,14 @@ export const frontPage = {
     [{ text: "AI로 필요한 서비스를 만들고 있습니다." }],
     [{ text: "팀에서 함께 쓸 AI 도구도 직접 만듭니다." }],
   ] as HeadlineSegment[][],
-  lede: "사내 AI TFT를 리더로서 마무리했으며, 그 성과를 바탕으로 Claude Code 전사 도입이 결정됐습니다. HR 업무 이해를 바탕으로 AI 도구와 업무시스템을 직접 만들고 사용자 교육까지 수행합니다.",
+  lede: "사내 AI TFT를 이끌어 마무리했습니다. 그 성과를 바탕으로 Claude Code 전사 도입이 결정됐습니다. HR 업무를 이해하고 AI 도구와 업무시스템을 직접 만들며 사용자 교육도 맡고 있습니다.",
   byline: "BY KIM MINSEOK / BACKEND DEVELOPER / 본지 단독",
 };
 
 export const profileColumn = {
   kicker: "PROFILE / 인물",
   title: "업무를 이해하고 AI로 개선하는 개발자",
-  body: "업무시스템 개발 9년 차로, 2022년부터 HR 시스템의 구축과 운영을 담당했습니다. 현재 인사시스템 유지보수 파트를 이끌며 고객 요구사항 협의와 팀원 교육을 맡고 있습니다. 사내 업무시스템과 LLM Wiki를 하나의 사이트로 통합했고, 현재 Oracle 데이터 이관과 타 시스템 연계를 진행하고 있습니다.",
+  body: "업무시스템 개발 9년 차입니다. 2022년부터 HR 시스템을 구축하고 운영했습니다. 현재 인사시스템 유지보수 파트를 이끌며 고객과 요구사항을 협의하고 팀원 교육을 맡고 있습니다. 사내 업무시스템과 LLM Wiki를 하나의 사이트로 통합했고 현재 Oracle 데이터 이관과 타 시스템 연계를 진행하고 있습니다.",
 };
 
 export const pullQuote = "업무를 이해하고,\nAI를 실무에 연결합니다.";
@@ -81,13 +81,13 @@ export const featureStories: FeatureStoryItem[] = [
   {
     id: "ehr-harness",
     kicker: "특집 / FEATURE STORY",
-    title: "레거시 인사시스템에 ‘AI 코딩 하네스’를 입히다",
+    title: "레거시 인사시스템을 위한 AI 코딩 하네스",
     problem:
-      "Oracle 프로시저로 뒤엉킨 레거시 인사시스템(EHR)은 구조가 방대해 AI 코딩 에이전트가 맥락을 잡지 못합니다. 잘못된 코드와 답변이 나오는 이유입니다.",
+      "레거시 인사시스템(EHR)은 Oracle 프로시저가 복잡하게 얽혀 있고 구조도 방대합니다. AI 코딩 에이전트가 맥락을 잡지 못해 잘못된 코드와 답변을 내놓습니다.",
     approach:
-      "고객사별 인사 규정과 권한, 결재 구조를 AI가 참고하도록 업무 맥락과 코드 분석 기준, 검증 절차를 제공하는 EHR Harness Plugin을 단독으로 설계하고 개발했습니다. 프로젝트별 규칙과 코드 탐색, 변경 영향 검토를 표준화했습니다.",
+      "EHR Harness Plugin을 단독으로 설계하고 개발했습니다. AI가 고객사별 인사 규정과 권한, 결재 구조를 참고할 수 있도록 업무 맥락과 코드 분석 기준, 검증 절차를 담았습니다. 프로젝트별 규칙과 코드 탐색, 변경 영향 검토를 표준화했습니다.",
     result:
-      "2개 팀 30명 이상에게 배포되어 활용됐고, 소속 팀의 공식 개발방법론으로 채택됐습니다. 이후에도 사용자 피드백을 반영해 버전 업데이트를 진행하고 있습니다. 사내 AI 교육은 4회 수행했으며, AI TFT 성과를 바탕으로 Claude Code 전사 도입이 결정됐습니다.",
+      "2개 팀 30명 이상에게 배포해 활용됐으며 소속 팀의 공식 개발방법론으로 채택됐습니다. 이후에도 사용자 피드백을 반영해 버전을 업데이트하고 있습니다. 사내 AI 교육을 4회 진행했고 AI TFT 성과를 바탕으로 Claude Code 전사 도입이 결정됐습니다.",
     url: "/README_HARNESS.html",
     urlLabel: "README_HARNESS",
     previewImage: "/images/harness-thumb-cinematic.png",
@@ -101,11 +101,11 @@ export const featureStories: FeatureStoryItem[] = [
     kicker: "프로젝트 / HR 업무 시스템",
     title: "인사 업무를 웹으로 옮긴 VIBE-HR",
     problem:
-      "조직과 사원 정보, 발령, 근태, 급여가 서로 연결되는 인사 업무는 개별 화면만 구현해서는 실제 처리 흐름을 확인하기 어렵습니다.",
+      "인사 업무에서는 조직과 사원 정보, 발령, 근태, 급여가 서로 연결됩니다. 개별 화면만 구현해서는 실제 처리 흐름을 확인하기 어렵습니다.",
     approach:
       "기존 EHR 업무를 바탕으로 Next.js와 Spring Boot, PostgreSQL로 인사시스템을 재구성했습니다. 공통 그리드와 메뉴 권한을 정리하고 사원관리, 발령, 신청과 승인, 급여 조회 화면을 하나의 흐름으로 연결하고 있습니다.",
     result:
-      "법인과 조직 조회, 사원관리, 발령 처리, 신청과 승인, 급여 Run과 대상자 상세 조회를 구현했습니다. 일부 후속 업무는 계속 개발 중이며, 체험용 계정으로 주요 화면을 살펴볼 수 있습니다.",
+      "법인과 조직 조회, 사원관리, 발령 처리, 신청과 승인, 급여 Run과 대상자 상세 조회를 구현했습니다. 일부 후속 업무는 계속 개발 중입니다. 체험용 계정으로 주요 화면을 살펴볼 수 있습니다.",
     url: "https://hr.minseok91.cloud/",
     urlLabel: "hr.minseok91.cloud",
     previewImage: "/images/vibe-hr-login.webp",
