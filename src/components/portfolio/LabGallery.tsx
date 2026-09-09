@@ -10,6 +10,7 @@ const previews: Record<string, string> = {
   "vibe-grid": "/images/grid-thumb-new.png",
   "hire-flow": "/images/rec-thumb-new.png",
   maru: "/images/shop-thumb-new.png",
+  worldcup: "/images/worldcup-thumb.png",
 };
 
 export default function LabGallery() {
